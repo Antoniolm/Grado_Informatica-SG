@@ -16,22 +16,20 @@ import javax.media.j3d.Texture;
  * @author LENOVO
  */
 public class Estrella extends Astro{
-    public Estrella(double radi,double distanciaPadr,double tiempoRotPropi,double tiempoRotPadr){
+    public Estrella(float radi,float distanciaPadr,float tiempoRotPropi,float tiempoRotPadr){
         super(radi,distanciaPadr,tiempoRotPropi,tiempoRotPadr);
         // Vamos a hacer el grafo de escena, una esfera
         // Se necesita una geometría y un aspecto
         Appearance appearance = new Appearance();
         appearance.setPolygonAttributes(new PolygonAttributes (PolygonAttributes.POLYGON_FILL, PolygonAttributes.CULL_BACK, 0.0f)); 
 
-        this.setGeometry(new Sphere((float) super.radio).getShape().getGeometry());
-        this.setAppearance(appearance);
+        Sphere sphere = new Sphere((float) super.radio, appearance);
+        this.addChild(sphere);
     
     }
     @Override
-    public BranchGroup add(Astro planet){
-        BranchGroup plant=new BranchGroup();
-        plant.addChild(planet);
-        return plant;
+    public void add(Astro astro){
+        this.addChild(astro);
     }
 }
 

@@ -13,13 +13,14 @@ import javax.media.j3d.Texture;
  *
  * @author LENOVO
  */
-public abstract class Astro extends Shape3D{
+public abstract class Astro extends BranchGroup{
     Texture textura;
-    double radio;
-    double distanciaPadre;
-    double tiempoRotPropio;
-    double tiempoRotPadre;
-    Astro(double radi,double distanciaPadr,double tiempoRotPropi,double tiempoRotPadr){
+    float radio;
+    float distanciaPadre;
+    float tiempoRotPropio;
+    float tiempoRotPadre;
+    
+    Astro(float radi,float distanciaPadr,float tiempoRotPropi,float tiempoRotPadr){
         radio=radi;
         distanciaPadre=distanciaPadr;
         tiempoRotPropio=tiempoRotPropi;
@@ -32,7 +33,6 @@ public abstract class Astro extends Shape3D{
     public void reanudarMovimiento(){
     
     }
-    abstract public BranchGroup add(Astro planet);
-    
+    public abstract void add(Astro astro);
     
 }
