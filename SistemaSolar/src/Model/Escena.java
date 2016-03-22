@@ -43,10 +43,30 @@ public class Escena {
    // universe.getViewingPlatform().setNominalViewingTransform();
     // Como raíz se usa un BrachGroup
     Astro sol=new Estrella(4.0f,0.0f,2.0f,2.0f);
-    Astro tierra=new Planeta(2.0f,10.0f,2.0f,2.0f);
-    Astro luna=new Satelite(0.5f,3.0f,2.0f,2.0f);
     
+    Astro mercurio= new Planeta(0.5f,5.0f,2.0f,2.0f);
+    
+    Astro venus= new Planeta(0.75f,7.0f,2.0f,2.0f);
+    
+    Astro tierra=new Planeta(2.0f,10.0f,2.0f,2.0f);
+        Astro luna=new Satelite(0.5f,3.0f,2.0f,2.0f);
+        
+    Astro marte= new Planeta(2.0f,10.0f,2.0f,2.0f);
+    
+    Astro jupiter= new Planeta(2.0f,10.0f,2.0f,2.0f);
+    
+    Astro saturno= new Planeta(2.0f,10.0f,2.0f,2.0f);
+    
+    Astro urano= new Planeta(2.0f,10.0f,2.0f,2.0f);
+    
+    Astro neptuno= new Planeta(2.0f,10.0f,2.0f,2.0f);
+    
+    Astro pluton= new Planeta(2.0f,10.0f,2.0f,2.0f);
+    
+
     tierra.add(luna);
+    sol.add(mercurio);
+    sol.add(venus);
     sol.add(tierra);
     
     
