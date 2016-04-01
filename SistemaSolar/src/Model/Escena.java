@@ -51,39 +51,64 @@ public class Escena {
     
     // Se crea y se añade el fondo
     background = new Fondo();
-    
+    ////////////////////////////////////////////////
+    //NAVE
+    ///////////////////////////////////////////////
+    //Raptor/FA-22_Raptor.obj
+    //naveFuturama\\low_poly_express_ship.obj
+   Nave planetExpress= new Nave("naveFuturama\\\\low_poly_express_ship.obj");
+   universe.addBranchGraph(planetExpress);
+   
    
     // Como raíz se usa un BrachGroup
     Astro sol=new Estrella("imgs/sol.jpg",4.0f,0.0f,2.0f,2.0f);
     
-    Astro mercurio= new Planeta("imgs/mercurio.jpg",1.2f,6.0f,0.5f,2.0f);
+    Astro mercurio= new Planeta("imgs/mercurio.jpg",1.2f,6.0f,1.7f,0.3f);
     
-    Astro venus= new Planeta("imgs/venus.jpg",1.7f,10.0f,0.3f,1.8f);
+    Astro venus= new Planeta("imgs/venus.jpg",1.7f,10.0f,2.0f,0.5f);
     
-    Astro tierra=new Planeta("imgs/tierra.jpg",0.7f,14.0f,1.0f,1.4f);
-        Astro luna=new Satelite("imgs/luna.jpg",0.3f,1.50f,2.0f,2.0f);
+    Astro tierra=new Planeta("imgs/tierra.jpg",0.7f,14.0f,1.0f,0.7f);
+        Astro luna=new Satelite("imgs/luna.jpg",0.3f,1.50f,2.0f,1.0f);
         
-    Astro marte= new Planeta("imgs/marte.jpg",1.5f,17.5f,1.0f,1.3f);
+    Astro marte= new Planeta("imgs/marte.jpg",1.5f,17.5f,1.0f,0.9f);
+        Astro fobos=new Satelite("imgs/fobos.jpg",0.5f,2.3f,2.0f,1.0f);
+        Astro deimos=new Satelite("imgs/deimos.jpg",0.3f,3.5f,2.0f,3.0f);
+        
     
-    Astro jupiter= new Planeta("imgs/jupiter.jpg",3.0f,25.0f,2.0f,1.0f);
+    Astro jupiter= new Planeta("imgs/jupiter.jpg",3.0f,25.0f,0.3f,1.0f);
+        Astro io=new Satelite("imgs/io.jpg",0.2f,3.50f,2.0f,1.7f);
+        Astro europa=new Satelite("imgs/europa.png",0.2f,4.2f,2.0f,3.5f);
+        Astro calisto=new Satelite("imgs/calisto.jpg",0.3f,4.9f,2.0f,6.0f);
+       
+    Astro saturno= new Planeta("imgs/saturno.jpg",2.7f,35.0f,0.3f,1.3f);
     
-    Astro saturno= new Planeta("imgs/saturno.jpg",2.7f,35.0f,2.0f,0.9f);
-    
-    Astro urano= new Planeta("imgs/urano.jpg",2.25f,42.0f,1.7f,0.7f);
-    
-    Astro neptuno= new Planeta("imgs/neptuno.jpg",2.0f,48.0f,1.7f,0.5f);
-    
-    Astro pluton= new Planeta("imgs/pluton.jpg",0.7f,52.0f,1.6f,0.3f);
+    Astro urano= new Planeta("imgs/urano.jpg",2.25f,42.0f,0.5f,1.4f);
+        Astro miranda=new Satelite("imgs/miranda.jpg",0.1f,3.0f,2.0f,1.4f);
+        Astro ariel=new Satelite("imgs/ariel.jpg",0.2f,3.70f,2.0f,2.5f);
+        Astro titania=new Satelite("imgs/titania.jpg",0.2f,4.30f,2.0f,6.0f);
+    Astro neptuno= new Planeta("imgs/neptuno.jpg",2.0f,48.0f,1.5f,1.8f);
+        Astro triton=new Satelite("imgs/triton.png",0.3f,2.60f,2.0f,-3.0f);
+    Astro pluton= new Planeta("imgs/pluton.jpg",0.7f,52.0f,0.4f,2.0f);
     
     tierra.add(luna);
     sol.add(mercurio);
     sol.add(venus);
     sol.add(tierra);
     sol.add(marte);
+        marte.add(fobos);
+        marte.add(deimos);
     sol.add(jupiter);
+        jupiter.add(io);
+        jupiter.add(europa);
+        jupiter.add(calisto);
     sol.add(saturno);
+        
     sol.add(urano);
+        urano.add(titania);
+        urano.add(ariel);
+        urano.add(miranda);
     sol.add(neptuno);
+        neptuno.add(triton);
     sol.add(pluton);
     
     
@@ -109,7 +134,7 @@ public class Escena {
 
     // El comportamiento, para mover la camara con el raton
     OrbitBehavior orbit = new OrbitBehavior(canvas, OrbitBehavior.REVERSE_ALL);
-    orbit.setSchedulingBounds(new BoundingSphere(new Point3d (0.0f, 0.0f, 0.0f), 100.0f));
+    orbit.setSchedulingBounds(new BoundingSphere(new Point3d (0.0f, 0.0f, 0.0f), 300.0f));
     orbit.setZoomFactor (2.0f);
     viewingPlatform.setViewPlatformBehavior(orbit);
     
@@ -117,7 +142,7 @@ public class Escena {
     Viewer viewer = new Viewer (canvas);
     View view = viewer.getView();
     view.setFieldOfView(Math.toRadians(45));
-    view.setBackClipDistance(50.0);
+    view.setBackClipDistance(300.0);
 
     // Se construye y devuelve el Universo con los parametros definidos
     return new SimpleUniverse (viewingPlatform, viewer);

@@ -27,7 +27,7 @@ public class Fondo extends BranchGroup{
     // Se crea el objeto para el fondo y 
     //     se le asigna un área de influencia
     Background background = new Background ();
-    background.setApplicationBounds (new BoundingSphere (new Point3d (0.0, 0.0, 0.0), 100.0));
+    background.setApplicationBounds (new BoundingSphere (new Point3d (0.0, 0.0, 0.0), 300.0));
     
     // Se crea un aspecto basado en la textura a mostrar
     Appearance app = new Appearance ();

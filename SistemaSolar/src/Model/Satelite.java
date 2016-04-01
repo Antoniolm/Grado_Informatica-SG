@@ -53,6 +53,23 @@ public class Satelite extends Astro{
         Primitive.ENABLE_APPEARANCE_MODIFY, 64, 
         appearance);
 
+        /////////////////////////////////////////////////////////////////////////////
+        //ROTACION SOBRE LA ESTRELLA
+        ////////////////////////////////////////////////////////////////////////////
+        TransformGroup rotacionpadre = new TransformGroup();
+        // Se le permite que se cambie en tiempo de ejecución
+        rotacionpadre.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+        // Se crea la matriz de rotación
+        Transform3D yAxipadre = new Transform3D();
+        // Se crea un interpolador, un valor numérico que se ira modificando en tiempo de ejecución
+        Alpha valuepadre = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0, (long) (4500*tiempoRotPadre), 0, 0, 0, 0, 0);
+        // Se crea el interpolador de rotación, las figuras iran rotando
+        RotationInterpolator rotatorpadre = new RotationInterpolator(valuepadre, rotacionpadre, yAxipadre,
+                0.0f, (float) Math.PI * 2);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
+        // Se le pone el entorno de activación y se activa
+        rotatorpadre.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 300.0));
+        rotatorpadre.setEnable(true);
+        rotacionpadre.addChild(rotatorpadre);
 
         /////////////////////////////////////////////////////////////////////////////
         //ROTACION SOBRE SI MISMO
@@ -69,7 +86,7 @@ public class Satelite extends Astro{
         RotationInterpolator rotator = new RotationInterpolator(value, nodorotacionSatelite, yAxis,
                 0.0f, (float) Math.PI * tiempoRotPropio);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
         // Se le pone el entorno de activación y se activa
-        rotator.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0));
+        rotator.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 300.0));
         rotator.setEnable(true);
         nodorotacionSatelite.addChild(rotator);
         
@@ -89,7 +106,8 @@ public class Satelite extends Astro{
         ////////////////////////////////////////////////////////////////////////////
         nodorotacionSatelite.addChild(sphere);
         translacion.addChild(nodorotacionSatelite);
-        this.addChild(translacion);
+        rotacionpadre.addChild(translacion);
+        this.addChild(rotacionpadre);
     }
 
     public void add(Astro planet) {

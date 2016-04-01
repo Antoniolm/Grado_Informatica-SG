@@ -68,13 +68,12 @@ public class Planeta extends Astro {
         // Se crea la matriz de rotación
         Transform3D yAxis = new Transform3D();
         // Se crea un interpolador, un valor numérico que se ira modificando en tiempo de ejecución
-        Alpha value = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0,
-                4000, 0, 0, 0, 0, 0);
+        Alpha value = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0, (long) (4500*tiempoRotPropio), 0, 0, 0, 0, 0);
         // Se crea el interpolador de rotación, las figuras iran rotando
         RotationInterpolator rotator = new RotationInterpolator(value, nodorotacionSatelite, yAxis,
-                0.0f, (float) Math.PI * tiempoRotPropio);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
+                0.0f, (float) Math.PI * 2);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
         // Se le pone el entorno de activación y se activa
-        rotator.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0));
+        rotator.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 300.0));
         rotator.setEnable(true);
         nodorotacionSatelite.addChild(rotator);
         
@@ -87,13 +86,12 @@ public class Planeta extends Astro {
         // Se crea la matriz de rotación
         Transform3D yAxiestrella = new Transform3D();
         // Se crea un interpolador, un valor numérico que se ira modificando en tiempo de ejecución
-        Alpha valueestrella = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0,
-                4000, 0, 0, 0, 0, 0);
+        Alpha valueestrella = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0, (long) (4500*tiempoRotPadre), 0, 0, 0, 0, 0);
         // Se crea el interpolador de rotación, las figuras iran rotando
         RotationInterpolator rotatorestrella = new RotationInterpolator(valueestrella, rotacionestrella, yAxiestrella,
-                0.0f, (float) Math.PI * tiempoRotPadre);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
+                0.0f, (float) Math.PI * 2);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
         // Se le pone el entorno de activación y se activa
-        rotatorestrella.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0));
+        rotatorestrella.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 300.0));
         rotatorestrella.setEnable(true);
         rotacionestrella.addChild(rotatorestrella);
         
