@@ -56,7 +56,8 @@ public class Escena {
     ///////////////////////////////////////////////
     //Raptor/FA-22_Raptor.obj
     //naveFuturama\\low_poly_express_ship.obj
-   Nave planetExpress= new Nave("naveFuturama\\\\low_poly_express_ship.obj");
+    //naveFuturama\\low_poly_express_ship.obj
+   Nave planetExpress= new Nave("IronHide\\RB-IronHide.obj");
    universe.addBranchGraph(planetExpress);
    
    
