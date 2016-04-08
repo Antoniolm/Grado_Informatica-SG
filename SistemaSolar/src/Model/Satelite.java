@@ -113,5 +113,10 @@ public class Satelite extends Astro{
     public void add(Astro planet) {
         
     }
+
+    @Override
+    public void onoffMovimiento() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

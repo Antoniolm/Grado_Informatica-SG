@@ -87,5 +87,10 @@ public class Estrella extends Astro{
     public void add(Astro astro){
         this.addChild(astro);
     }
+
+    @Override
+    public void onoffMovimiento() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
 

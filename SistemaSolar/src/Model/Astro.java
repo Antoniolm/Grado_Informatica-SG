@@ -19,20 +19,17 @@ public abstract class Astro extends BranchGroup{
     float distanciaPadre;
     float tiempoRotPropio;
     float tiempoRotPadre;
+    boolean movimiento;
     
     Astro(float radi,float distanciaPadr,float tiempoRotPropi,float tiempoRotPadr){
         radio=radi;
         distanciaPadre=distanciaPadr;
         tiempoRotPropio=tiempoRotPropi;
         tiempoRotPadre=tiempoRotPadr;
+        movimiento=true;
         
     }
-    public void paraMovimiento(){
-    
-    }
-    public void reanudarMovimiento(){
-    
-    }
+    public abstract void onoffMovimiento();
     public abstract void add(Astro astro);
     
 }

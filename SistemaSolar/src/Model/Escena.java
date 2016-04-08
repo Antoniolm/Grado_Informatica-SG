@@ -117,6 +117,9 @@ public class Escena {
     universe.addBranchGraph(aLight);
     universe.addBranchGraph(background);
     
+    //Agregamos el picking
+    Picking picar=new Picking(canvas);
+    picar.setStatus(sol);
     
     // Se muestra la ventana
     visualizationWindow.setVisible(true);

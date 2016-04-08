@@ -29,6 +29,7 @@ import javax.vecmath.Vector3f;
  */
 public class Planeta extends Astro {
     private TransformGroup nodorotacionSatelite;
+    RotationInterpolator rotator;
     public Planeta(String textura, float radi,float distanciaPadr,float tiempoRotPropi,float tiempoRotPadr){
         super(radi,distanciaPadr,tiempoRotPropi,tiempoRotPadr);
         
@@ -51,7 +52,8 @@ public class Planeta extends Astro {
         Primitive.GENERATE_TEXTURE_COORDS |
         Primitive.ENABLE_APPEARANCE_MODIFY, 64, 
         appearance);
-
+        //Activamos la seleccion de la esfera
+        sphere.setPickable(true);
         
         TransformGroup translacion = new TransformGroup();
         Vector3f vector=new Vector3f(distanciaPadre,0.0f,0.0f);
@@ -68,9 +70,9 @@ public class Planeta extends Astro {
         // Se crea la matriz de rotación
         Transform3D yAxis = new Transform3D();
         // Se crea un interpolador, un valor numérico que se ira modificando en tiempo de ejecución
-        Alpha value = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0, (long) (4500*tiempoRotPropio), 0, 0, 0, 0, 0);
+        Alpha valor = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0, (long) (4500*tiempoRotPropio), 0, 0, 0, 0, 0);
         // Se crea el interpolador de rotación, las figuras iran rotando
-        RotationInterpolator rotator = new RotationInterpolator(value, nodorotacionSatelite, yAxis,
+        rotator = new RotationInterpolator(valor, nodorotacionSatelite, yAxis,
                 0.0f, (float) Math.PI * 2);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
         // Se le pone el entorno de activación y se activa
         rotator.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 300.0));
@@ -113,4 +115,12 @@ public class Planeta extends Astro {
     public void add(Astro astro) {
         nodorotacionSatelite.addChild(astro);
     }
+
+    @Override
+    public void onoffMovimiento() {
+       movimiento=!movimiento;
+       rotator.setEnable(movimiento);
+        System.out.println("Yeeeeeeeeeeeeeeeeeeee");
+    }
+    
 }

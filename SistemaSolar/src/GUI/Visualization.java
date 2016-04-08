@@ -22,7 +22,7 @@ public class Visualization extends javax.swing.JFrame {
     initComponents();
     // Varios atributos de la ventana
     setTitle("Java 3D Visualization Window");
-    setSize(700, 700);
+    setSize(1600, 900);
     setLocation (100, 100);
     // Se le inserta el canvas
     Container contentPane = this.getContentPane();
