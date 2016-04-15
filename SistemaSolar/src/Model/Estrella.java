@@ -68,7 +68,7 @@ public class Estrella extends Astro{
         1000.0); // Extent
         
         Color3f white = new Color3f (1.0f, 1.0f, 1.0f);;
-        Point3f posicion=new Point3f (4.0f, 0.0f, 0.0f);
+        Point3f posicion=new Point3f (0.0f, 0.0f, 0.0f);
         Point3f atenuacion=new Point3f (1.0f, 0.0f, 0.0f);
         luzPuntual = new PointLight(white,posicion,atenuacion);
         luzPuntual.setCapability(PointLight.ALLOW_STATE_WRITE);

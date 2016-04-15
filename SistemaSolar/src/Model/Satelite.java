@@ -52,6 +52,8 @@ public class Satelite extends Astro{
         Primitive.GENERATE_TEXTURE_COORDS |
         Primitive.ENABLE_APPEARANCE_MODIFY, 64, 
         appearance);
+        //sphere.setUserData(this);
+        sphere.setPickable(true);
 
         /////////////////////////////////////////////////////////////////////////////
         //ROTACION SOBRE LA ESTRELLA

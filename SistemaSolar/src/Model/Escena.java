@@ -18,12 +18,17 @@ import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.Light;
+import javax.media.j3d.Locale;
+import javax.media.j3d.PhysicalBody;
+import javax.media.j3d.PhysicalEnvironment;
 import javax.media.j3d.PolygonAttributes;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Texture;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.media.j3d.View;
+import javax.media.j3d.ViewPlatform;
+import javax.media.j3d.VirtualUniverse;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
@@ -40,11 +45,16 @@ public class Escena {
      // Se obtiene la configuración gráfica del sistema y se crea el Canvas3D que va a mostrar la imagen
     Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
     canvas.setSize(800, 600);
+    Canvas3D canvas2 = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
+    canvas2.setSize(800, 600);
     // Se construye la ventana de visualización
-    Visualization visualizationWindow = new Visualization (canvas);
-    
+     Visualization visualizationWindow = new Visualization (canvas,800,600,0,0);
+     Visualization visualizationWindow2 = new Visualization (canvas2,800,600,800,0);
     // Se crea el universo y la rama de la vista con ese canvas
-    SimpleUniverse universe = createUniverse(canvas);
+    VirtualUniverse universe = new VirtualUniverse();
+    Locale local=new Locale(universe);
+    local.addBranchGraph(createViews(canvas));
+    local.addBranchGraph(createViews(canvas2));
    // universe.getViewingPlatform().setNominalViewingTransform();
    
     Luz aLight= new Luz();
@@ -58,7 +68,7 @@ public class Escena {
     //naveFuturama\\low_poly_express_ship.obj
     //naveFuturama\\low_poly_express_ship.obj
    Nave planetExpress= new Nave("IronHide\\RB-IronHide.obj");
-   universe.addBranchGraph(planetExpress);
+   local.addBranchGraph(planetExpress);
    
    
     // Como raíz se usa un BrachGroup
@@ -113,42 +123,47 @@ public class Escena {
     sol.add(pluton);
     
     
-    universe.addBranchGraph(sol);
-    universe.addBranchGraph(aLight);
-    universe.addBranchGraph(background);
+    local.addBranchGraph(sol);
+    local.addBranchGraph(aLight);
+    local.addBranchGraph(background);
     
     //Agregamos el picking
     Picking picar=new Picking(canvas);
     picar.setStatus(sol);
+    BranchGroup prueba=new BranchGroup();
+    prueba.addChild(picar);
+    local.addBranchGraph(prueba);
     
     // Se muestra la ventana
     visualizationWindow.setVisible(true);
+    visualizationWindow2.setVisible(true);
     }
      
-  private SimpleUniverse createUniverse (Canvas3D canvas) {
-    // Se crea manualmente un ViewingPlatform para poder personalizarlo y asignárselo al universo
-    ViewingPlatform viewingPlatform = new ViewingPlatform();
+  private BranchGroup createViews (Canvas3D canvas) {
+      BranchGroup vistagroup=new BranchGroup();
     
-    // La transformación de vista, dónde se está, a dónde se mira, Vup
-    TransformGroup viewTransformGroup = viewingPlatform.getViewPlatformTransform();
-    Transform3D viewTransform3D = new Transform3D();
-    viewTransform3D.lookAt (new Point3d (20,20,20), new Point3d (0,0,0), new Vector3d (0,1,0));
-    viewTransform3D.invert();
-    viewTransformGroup.setTransform (viewTransform3D);
+      ViewPlatform viewplat=new ViewPlatform();
+      viewplat.setActivationRadius(40.0f);
+      
+      PhysicalBody pbody=new PhysicalBody();
+      PhysicalEnvironment penvi=new PhysicalEnvironment();
+      
+      
+      View vista=new View();
+      vista.setFrontClipDistance(0.02);
+      vista.setBackClipDistance(40);
+      vista.addCanvas3D(canvas);
+      vista.setPhysicalBody(pbody);
+      vista.setPhysicalEnvironment(penvi);
+      vista.attachViewPlatform(viewplat);
 
-    // El comportamiento, para mover la camara con el raton
-    OrbitBehavior orbit = new OrbitBehavior(canvas, OrbitBehavior.REVERSE_ALL);
-    orbit.setSchedulingBounds(new BoundingSphere(new Point3d (0.0f, 0.0f, 0.0f), 300.0f));
-    orbit.setZoomFactor (2.0f);
-    viewingPlatform.setViewPlatformBehavior(orbit);
-    
-    // Se establece el angulo de vision a 45 grados y el plano de recorte trasero
-    Viewer viewer = new Viewer (canvas);
-    View view = viewer.getView();
-    view.setFieldOfView(Math.toRadians(45));
-    view.setBackClipDistance(300.0);
+      Transform3D transform = new Transform3D();
+      transform.setTranslation(new Vector3f(0.0f, 0.0f, 60.0f));
+      TransformGroup transformgr = new TransformGroup(transform);
+      transformgr.addChild(viewplat);
+      vistagroup.addChild(transformgr);
 
     // Se construye y devuelve el Universo con los parametros definidos
-    return new SimpleUniverse (viewingPlatform, viewer);
+    return vistagroup;
   }
 }

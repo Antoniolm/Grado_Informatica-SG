@@ -52,6 +52,7 @@ public class Planeta extends Astro {
         Primitive.GENERATE_TEXTURE_COORDS |
         Primitive.ENABLE_APPEARANCE_MODIFY, 64, 
         appearance);
+        sphere.setUserData(this);
         //Activamos la seleccion de la esfera
         sphere.setPickable(true);
         
@@ -120,7 +121,6 @@ public class Planeta extends Astro {
     public void onoffMovimiento() {
        movimiento=!movimiento;
        rotator.setEnable(movimiento);
-        System.out.println("Yeeeeeeeeeeeeeeeeeeee");
     }
     
 }

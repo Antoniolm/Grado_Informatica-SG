@@ -18,12 +18,12 @@ public class Visualization extends javax.swing.JFrame {
   /**
    * Creates new form Visualization
    */
-  public Visualization(Canvas3D canvas) {
+  public Visualization(Canvas3D canvas,int width,int height,int x,int y) {
     initComponents();
     // Varios atributos de la ventana
     setTitle("Java 3D Visualization Window");
-    setSize(1600, 900);
-    setLocation (100, 100);
+    setSize(width, height);
+    setLocation (x, y);
     // Se le inserta el canvas
     Container contentPane = this.getContentPane();
     contentPane.setLayout(new BorderLayout());
