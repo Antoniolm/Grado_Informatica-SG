@@ -32,6 +32,8 @@ import javax.media.j3d.ViewPlatform;
 import javax.media.j3d.VirtualUniverse;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
+import javax.vecmath.Point3f;
+import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
@@ -56,14 +58,14 @@ public class Escena {
     Locale local=new Locale(universe);
     //Camaras
     Camara camaraplanta=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,true,0,new Point3d(0.0,140.0,0.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,0,-1));
+    //Camara camaraplanta=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,false,100.0f,new Point3d(5.0,5.0,2.0), new Point3d(0.0,5.0,0.0), new Vector3d(0,1,0));
     //Camara camarapers=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45.0f,new Point3d(50.0,50.0,50.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,1,0));
-    Camara camaraluna=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100.0f,new Point3d (0,0.5,0), new Point3d (-1,-0.25,0), new Vector3d (1,1,0));
+    //Camara camaraluna=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100.0f,new Point3d (0,0.5,0), new Point3d (-1,-0.25,0), new Vector3d (1,1,0));
+    Camara camaranave=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45.0f,new Point3d(0.0,0.5,0.0), new Point3d(-1.0,-0.25,0.0), new Vector3d(1,1,0));
     
     local.addBranchGraph(camaraplanta);
-    //local.addBranchGraph(camaraluna);
+    //local.addBranchGraph(camarapers);
     
-    Switch padre = new Switch ( ) ;
-    padre.setCapability ( Switch .ALLOW_SWITCH_WRITE) ;
     
    // universe.getViewingPlatform().setNominalViewingTransform();
    
@@ -77,9 +79,25 @@ public class Escena {
     //Raptor/FA-22_Raptor.obj
     //naveFuturama\\low_poly_express_ship.obj
     //naveFuturama\\low_poly_express_ship.obj
-   Nave planetExpress= new Nave("IronHide\\RB-IronHide.obj");
-   local.addBranchGraph(planetExpress);
+    
+    //public Nave(String textur, long duracion, Point3f[] recorrido, Quat4f[] angulos, float[] alphas){
+   Nave transformer= new Nave("IronHide\\RB-IronHide.obj",5000,
+                        new Point3f[]{
+                            new Point3f(-5f,5f,0f),new Point3f(-7f,5f,2f),
+                            new Point3f(-3f,5f,2f),new Point3f(0f,5f,0f)
+                        },
+                        new Quat4f[]{
+                            new Quat4f(0.0f,1.0f,0.0f,(float)Math.toRadians(0)),
+                            new Quat4f(1.0f,0.0f,0.0f,(float)Math.toRadians(315)),
+                            new Quat4f(0.0f,1.0f,0.0f,(float)Math.toRadians(0)),
+                            new Quat4f(1.0f,0.0f,0.0f,(float)Math.toRadians(45)),
+                        },
+                        new float[]{
+                            0.0f,0.33f,0.67f,1.0f
+                        });
    
+   transformer.addCamara(camaranave);
+   local.addBranchGraph(transformer);
    
     // Como raíz se usa un BrachGroup
     Astro sol=new Estrella("imgs/sol.jpg",4.0f,0.0f,2.0f,2.0f);
@@ -132,7 +150,7 @@ public class Escena {
         neptuno.add(triton);
     sol.add(pluton);
     
-    luna.addCamara(camaraluna);
+    //luna.addCamara(camaraluna);
     local.addBranchGraph(sol);
     local.addBranchGraph(aLight);
     local.addBranchGraph(background);
