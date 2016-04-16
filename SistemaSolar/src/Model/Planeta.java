@@ -122,5 +122,8 @@ public class Planeta extends Astro {
        movimiento=!movimiento;
        rotator.setEnable(movimiento);
     }
-    
+    @Override
+    public void addCamara(Camara cam){
+        nodorotacionSatelite.addChild(cam);
+   }
 }

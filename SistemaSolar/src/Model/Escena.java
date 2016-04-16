@@ -23,6 +23,7 @@ import javax.media.j3d.PhysicalBody;
 import javax.media.j3d.PhysicalEnvironment;
 import javax.media.j3d.PolygonAttributes;
 import javax.media.j3d.RotationInterpolator;
+import javax.media.j3d.Switch;
 import javax.media.j3d.Texture;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
@@ -53,8 +54,17 @@ public class Escena {
     // Se crea el universo y la rama de la vista con ese canvas
     VirtualUniverse universe = new VirtualUniverse();
     Locale local=new Locale(universe);
-    local.addBranchGraph(createViews(canvas));
-    local.addBranchGraph(createViews(canvas2));
+    //Camaras
+    Camara camaraplanta=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,true,0,new Point3d(0.0,140.0,0.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,0,-1));
+    //Camara camarapers=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45.0f,new Point3d(50.0,50.0,50.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,1,0));
+    Camara camaraluna=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100.0f,new Point3d (0,0.5,0), new Point3d (-1,-0.25,0), new Vector3d (1,1,0));
+    
+    local.addBranchGraph(camaraplanta);
+    //local.addBranchGraph(camaraluna);
+    
+    Switch padre = new Switch ( ) ;
+    padre.setCapability ( Switch .ALLOW_SWITCH_WRITE) ;
+    
    // universe.getViewingPlatform().setNominalViewingTransform();
    
     Luz aLight= new Luz();
@@ -122,7 +132,7 @@ public class Escena {
         neptuno.add(triton);
     sol.add(pluton);
     
-    
+    luna.addCamara(camaraluna);
     local.addBranchGraph(sol);
     local.addBranchGraph(aLight);
     local.addBranchGraph(background);
@@ -139,7 +149,7 @@ public class Escena {
     visualizationWindow2.setVisible(true);
     }
      
-  private BranchGroup createViews (Canvas3D canvas) {
+  private BranchGroup createViews (Canvas3D canvas,float distance) {
       BranchGroup vistagroup=new BranchGroup();
     
       ViewPlatform viewplat=new ViewPlatform();
@@ -158,7 +168,7 @@ public class Escena {
       vista.attachViewPlatform(viewplat);
 
       Transform3D transform = new Transform3D();
-      transform.setTranslation(new Vector3f(0.0f, 0.0f, 60.0f));
+      transform.setTranslation(new Vector3f(0.0f, 0.0f, distance));
       TransformGroup transformgr = new TransformGroup(transform);
       transformgr.addChild(viewplat);
       vistagroup.addChild(transformgr);

@@ -28,6 +28,8 @@ import javax.vecmath.Vector3f;
  * @author LENOVO
  */
 public class Satelite extends Astro{
+    private TransformGroup nodorotacionSatelite;
+    private TransformGroup translacion;
     public Satelite(String textura, float radi,float distanciaPadr,float tiempoRotPropi,float tiempoRotPadr){
         super(radi,distanciaPadr,tiempoRotPropi,tiempoRotPadr);
          Appearance appearance = new Appearance();
@@ -76,7 +78,7 @@ public class Satelite extends Astro{
         /////////////////////////////////////////////////////////////////////////////
         //ROTACION SOBRE SI MISMO
         ////////////////////////////////////////////////////////////////////////////
-        TransformGroup nodorotacionSatelite = new TransformGroup();
+        nodorotacionSatelite = new TransformGroup();
         // Se le permite que se cambie en tiempo de ejecución
         nodorotacionSatelite.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         // Se crea la matriz de rotación
@@ -97,7 +99,7 @@ public class Satelite extends Astro{
         /////////////////////////////////////////////////////////////////////////////
         //TRANSLACION
         ////////////////////////////////////////////////////////////////////////////
-        TransformGroup translacion = new TransformGroup();
+        translacion = new TransformGroup();
         Vector3f vector=new Vector3f(distanciaPadre,0.0f,0.0f);
         Transform3D transformtranslation = new Transform3D();
         transformtranslation.setTranslation(vector);
@@ -120,5 +122,9 @@ public class Satelite extends Astro{
     public void onoffMovimiento() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    @Override
+    public void addCamara(Camara cam){
+        translacion.addChild(cam);
+   }
     
 }
