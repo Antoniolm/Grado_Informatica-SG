@@ -8,6 +8,7 @@ package Model;
 import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.image.TextureLoader;
+import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
@@ -15,8 +16,11 @@ import javax.media.j3d.Light;
 import javax.media.j3d.Material;
 import javax.media.j3d.PointLight;
 import javax.media.j3d.PolygonAttributes;
+import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
@@ -30,7 +34,7 @@ public class Estrella extends Astro{
     
 
     Light luzPuntual;
-    
+    RotationInterpolator rotator;
     public Estrella(String textura,float radi,float distanciaPadr,float tiempoRotPropi,float tiempoRotPadr){
         super(radi,distanciaPadr,tiempoRotPropi,tiempoRotPadr);
         
@@ -59,9 +63,26 @@ public class Estrella extends Astro{
         Primitive.GENERATE_TEXTURE_COORDS |
         Primitive.ENABLE_APPEARANCE_MODIFY, 64, 
         appearance);
+        sphere.setUserData(this);
         
         //////////////////////////////////
-        
+                /////////////////////////////////////////////////////////////////////////////
+        //ROTACION SOBRE SI MISMO
+        ////////////////////////////////////////////////////////////////////////////
+        TransformGroup nodorotacion = new TransformGroup();
+        // Se le permite que se cambie en tiempo de ejecución
+        nodorotacion.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+        // Se crea la matriz de rotación
+        Transform3D yAxis = new Transform3D();
+        // Se crea un interpolador, un valor numérico que se ira modificando en tiempo de ejecución
+        Alpha valor = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0, (long) (4500*tiempoRotPropio), 0, 0, 0, 0, 0);
+        // Se crea el interpolador de rotación, las figuras iran rotando
+        rotator = new RotationInterpolator(valor, nodorotacion, yAxis,
+                0.0f, (float) Math.PI * 2);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
+        // Se le pone el entorno de activación y se activa
+        rotator.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 300.0));
+        rotator.setEnable(true);
+        nodorotacion.addChild(rotator);
         
         BoundingSphere worldBounds = new BoundingSphere(new Point3d(0.0, 0.0,
         0.0), // Center
@@ -78,8 +99,11 @@ public class Estrella extends Astro{
         luzPuntual.setInfluencingBounds(worldBounds);
         luzPuntual.setEnable(true);
         
-        this.addChild(sphere);
-        this.addChild(luzPuntual);
+        
+        nodorotacion.addChild(sphere);
+        nodorotacion.addChild(luzPuntual);
+        this.addChild(nodorotacion);
+        
         
     
     }
@@ -90,7 +114,6 @@ public class Estrella extends Astro{
 
     @Override
     public void onoffMovimiento() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     @Override
     public void addCamara(Camara cam){

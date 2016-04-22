@@ -5,12 +5,14 @@
  */
 package Model;
 
+import GUI.Control;
 import GUI.Visualization;
 import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
 import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import com.sun.j3d.utils.universe.Viewer;
 import com.sun.j3d.utils.universe.ViewingPlatform;
+import java.util.ArrayList;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Appearance;
@@ -59,12 +61,22 @@ public class Escena {
     //Camaras
     Camara camaraplanta=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,true,0,new Point3d(0.0,140.0,0.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,0,-1));
     //Camara camaraplanta=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,false,100.0f,new Point3d(5.0,5.0,2.0), new Point3d(0.0,5.0,0.0), new Vector3d(0,1,0));
-    //Camara camarapers=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45.0f,new Point3d(50.0,50.0,50.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,1,0));
-    //Camara camaraluna=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100.0f,new Point3d (0,0.5,0), new Point3d (-1,-0.25,0), new Vector3d (1,1,0));
+    Camara camarapers=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45.0f,new Point3d(50.0,50.0,50.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,1,0));
+    camarapers.removeCanvas();
+    Camara camaraluna=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100.0f,new Point3d (0,0.5,0), new Point3d (-1,-0.25,0), new Vector3d (1,1,0));
+    camaraluna.removeCanvas();
     Camara camaranave=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45.0f,new Point3d(0.0,0.5,0.0), new Point3d(-1.0,-0.25,0.0), new Vector3d(1,1,0));
+    camaranave.removeCanvas();
     
+    ArrayList<Camara> camaras=new ArrayList<Camara>();
+    camaras.add(camarapers);
+    camaras.add(camaraluna);
+    camaras.add(camaranave);
+    
+    Control nuevocontrol=new Control(camaras);
+    camarapers.addCanvas();
     local.addBranchGraph(camaraplanta);
-    //local.addBranchGraph(camarapers);
+    local.addBranchGraph(camarapers);
     
     
    // universe.getViewingPlatform().setNominalViewingTransform();
@@ -100,34 +112,34 @@ public class Escena {
    local.addBranchGraph(transformer);
    
     // Como raíz se usa un BrachGroup
-    Astro sol=new Estrella("imgs/sol.jpg",4.0f,0.0f,2.0f,2.0f);
+    Astro sol=new Estrella("imgs/sol.jpg",4.0f,0.0f,2.0f,4.0f);
     
-    Astro mercurio= new Planeta("imgs/mercurio.jpg",1.2f,6.0f,1.7f,0.3f);
+    Astro mercurio= new Planeta("imgs/mercurio.jpg",1.2f,6.0f,1.7f,2.3f);
     
-    Astro venus= new Planeta("imgs/venus.jpg",1.7f,10.0f,2.0f,0.5f);
+    Astro venus= new Planeta("imgs/venus.jpg",1.7f,10.0f,2.0f,2.5f);
     
-    Astro tierra=new Planeta("imgs/tierra.jpg",0.7f,14.0f,1.0f,0.7f);
-        Astro luna=new Satelite("imgs/luna.jpg",0.3f,1.50f,2.0f,1.0f);
+    Astro tierra=new Planeta("imgs/tierra.jpg",0.7f,14.0f,1.0f,2.7f);
+        Astro luna=new Satelite("imgs/luna.jpg",0.3f,1.50f,2.0f,3.0f);
         
-    Astro marte= new Planeta("imgs/marte.jpg",1.5f,17.5f,1.0f,0.9f);
-        Astro fobos=new Satelite("imgs/fobos.jpg",0.5f,2.3f,2.0f,1.0f);
-        Astro deimos=new Satelite("imgs/deimos.jpg",0.3f,3.5f,2.0f,3.0f);
+    Astro marte= new Planeta("imgs/marte.jpg",1.5f,17.5f,1.0f,2.9f);
+        Astro fobos=new Satelite("imgs/fobos.jpg",0.5f,2.3f,2.0f,3.0f);
+        Astro deimos=new Satelite("imgs/deimos.jpg",0.3f,3.5f,2.0f,5.0f);
         
     
-    Astro jupiter= new Planeta("imgs/jupiter.jpg",3.0f,25.0f,0.3f,1.0f);
-        Astro io=new Satelite("imgs/io.jpg",0.2f,3.50f,2.0f,1.7f);
-        Astro europa=new Satelite("imgs/europa.png",0.2f,4.2f,2.0f,3.5f);
-        Astro calisto=new Satelite("imgs/calisto.jpg",0.3f,4.9f,2.0f,6.0f);
+    Astro jupiter= new Planeta("imgs/jupiter.jpg",3.0f,25.0f,0.3f,3.0f);
+        Astro io=new Satelite("imgs/io.jpg",0.2f,3.50f,2.0f,3.7f);
+        Astro europa=new Satelite("imgs/europa.png",0.2f,4.2f,2.0f,5.5f);
+        Astro calisto=new Satelite("imgs/calisto.jpg",0.3f,4.9f,2.0f,8.0f);
        
-    Astro saturno= new Planeta("imgs/saturno.jpg",2.7f,35.0f,0.3f,1.3f);
+    Astro saturno= new Planeta("imgs/saturno.jpg",2.7f,35.0f,0.3f,3.3f);
     
-    Astro urano= new Planeta("imgs/urano.jpg",2.25f,42.0f,0.5f,1.4f);
-        Astro miranda=new Satelite("imgs/miranda.jpg",0.1f,3.0f,2.0f,1.4f);
-        Astro ariel=new Satelite("imgs/ariel.jpg",0.2f,3.70f,2.0f,2.5f);
-        Astro titania=new Satelite("imgs/titania.jpg",0.2f,4.30f,2.0f,6.0f);
-    Astro neptuno= new Planeta("imgs/neptuno.jpg",2.0f,48.0f,1.5f,1.8f);
-        Astro triton=new Satelite("imgs/triton.png",0.3f,2.60f,2.0f,-3.0f);
-    Astro pluton= new Planeta("imgs/pluton.jpg",0.7f,52.0f,0.4f,2.0f);
+    Astro urano= new Planeta("imgs/urano.jpg",2.25f,42.0f,0.5f,3.4f);
+        Astro miranda=new Satelite("imgs/miranda.jpg",0.1f,3.0f,2.0f,3.4f);
+        Astro ariel=new Satelite("imgs/ariel.jpg",0.2f,3.70f,2.0f,4.5f);
+        Astro titania=new Satelite("imgs/titania.jpg",0.2f,4.30f,2.0f,8.0f);
+    Astro neptuno= new Planeta("imgs/neptuno.jpg",2.0f,48.0f,1.5f,3.8f);
+        Astro triton=new Satelite("imgs/triton.png",0.3f,2.60f,2.0f,-5.0f);
+    Astro pluton= new Planeta("imgs/pluton.jpg",0.7f,52.0f,0.4f,4.0f);
     
     tierra.add(luna);
     sol.add(mercurio);
@@ -150,21 +162,31 @@ public class Escena {
         neptuno.add(triton);
     sol.add(pluton);
     
-    //luna.addCamara(camaraluna);
+    luna.addCamara(camaraluna);
+
+    
+    //Agregamos el picking
+    Picking picar=new Picking(canvas2);
+    picar.setSchedulingBounds(new BoundingSphere(new Point3d(0,0,0),300.0f));
+    picar.setStatus(sol);
+    BranchGroup bgpicking=new BranchGroup();
+    
+    bgpicking.addChild(picar);
+    sol.addChild(bgpicking);
+    //local.addBranchGraph(prueba);
+    
+    
+    
     local.addBranchGraph(sol);
     local.addBranchGraph(aLight);
     local.addBranchGraph(background);
     
-    //Agregamos el picking
-    Picking picar=new Picking(canvas);
-    picar.setStatus(sol);
-    BranchGroup prueba=new BranchGroup();
-    prueba.addChild(picar);
-    local.addBranchGraph(prueba);
+    
     
     // Se muestra la ventana
     visualizationWindow.setVisible(true);
     visualizationWindow2.setVisible(true);
+    nuevocontrol.setVisible(true);
     }
      
   private BranchGroup createViews (Canvas3D canvas,float distance) {

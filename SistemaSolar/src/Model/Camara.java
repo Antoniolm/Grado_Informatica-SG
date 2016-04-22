@@ -27,6 +27,7 @@ public class Camara extends BranchGroup{
     private boolean activada;
     public Camara(Canvas3D canva,float distance,float planodelantero,float planotrasero,float screenScl,boolean planta,float angulo,Point3d posicion,Point3d direccion,Vector3d vup){    
       canvas=canva;
+      activada=true;
       ViewPlatform viewplat=new ViewPlatform();
       viewplat.setActivationRadius(40.0f);
       
@@ -62,9 +63,8 @@ public class Camara extends BranchGroup{
         vista.removeCanvas3D(canvas);
         activada=false;
     }
-    public void addCanvas(Canvas3D canv){
-        canvas=canv;
-        vista.addCanvas3D(canvas);
+    public void addCanvas(){
+        vista.addCanvas3D(this.canvas);
         activada=true;
     }
     public boolean isActive(){

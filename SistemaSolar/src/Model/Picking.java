@@ -37,14 +37,13 @@ public class Picking extends Behavior{
     }
     public void setStatus( BranchGroup bg) {
         pickCanvas = new PickCanvas(canvas, bg);
-        pickCanvas.setTolerance((float) 0.0f ) ;
+        pickCanvas.setTolerance((float) 2.0f ) ;
         pickCanvas.setMode(PickInfo.PICK_GEOMETRY);
         pickCanvas.setFlags(PickInfo.NODE | PickInfo.CLOSEST_GEOM_INFO);
-        setEnable(true);
 }
     @Override
     public void initialize() {
-        setEnable(false);
+           setEnable(true);
         wakeupOn(condition);
     }
 
@@ -56,6 +55,7 @@ public class Picking extends Behavior{
         MouseEvent mouse = (MouseEvent) e[0];
         pickCanvas.setShapeLocation(mouse);
         PickInfo pi=pickCanvas.pickClosest();
+        
         if(pi!=null){
             
             Node p=pi.getNode();
