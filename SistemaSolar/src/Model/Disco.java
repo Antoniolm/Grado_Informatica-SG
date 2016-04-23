@@ -10,17 +10,15 @@ import com.sun.j3d.utils.geometry.NormalGenerator;
 import com.sun.j3d.utils.geometry.Stripifier;
 import java.util.ArrayList;
 import javax.media.j3d.Appearance;
-import javax.media.j3d.BranchGroup;
 import javax.media.j3d.GeometryArray;
 import javax.media.j3d.IndexedTriangleStripArray;
 import javax.media.j3d.Shape3D;
 import javax.media.j3d.Transform3D;
 import javax.vecmath.Point3d;
-import javax.vecmath.Point3f;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Disco extends Shape3D{
         float radioExterior,radioInterior;

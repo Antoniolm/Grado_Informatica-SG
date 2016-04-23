@@ -11,9 +11,7 @@ import com.sun.j3d.utils.image.TextureLoader;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
-import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Material;
-import javax.media.j3d.PolygonAttributes;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
@@ -25,11 +23,12 @@ import javax.vecmath.Vector3f;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Satelite extends Astro{
     private TransformGroup nodorotacionSatelite;
     private TransformGroup translacion;
+    
     public Satelite(String textura, float radi,float distanciaPadr,float tiempoRotPropi,float tiempoRotPadr){
         super(radi,distanciaPadr,tiempoRotPropi,tiempoRotPadr);
          Appearance appearance = new Appearance();
@@ -114,6 +113,7 @@ public class Satelite extends Astro{
         this.addChild(rotacionpadre);
     }
 
+    @Override
     public void add(Astro planet) {
         
     }

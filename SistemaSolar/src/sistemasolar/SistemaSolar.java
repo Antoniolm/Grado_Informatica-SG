@@ -9,7 +9,7 @@ import Model.Escena;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class SistemaSolar {
 

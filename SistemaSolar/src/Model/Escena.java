@@ -7,111 +7,105 @@ package Model;
 
 import GUI.Control;
 import GUI.Visualization;
-import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
-import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.universe.SimpleUniverse;
-import com.sun.j3d.utils.universe.Viewer;
-import com.sun.j3d.utils.universe.ViewingPlatform;
 import java.util.ArrayList;
-import javax.media.j3d.Alpha;
-import javax.media.j3d.AmbientLight;
-import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
-import javax.media.j3d.Light;
 import javax.media.j3d.Locale;
 import javax.media.j3d.PhysicalBody;
 import javax.media.j3d.PhysicalEnvironment;
-import javax.media.j3d.PolygonAttributes;
-import javax.media.j3d.RotationInterpolator;
-import javax.media.j3d.Switch;
-import javax.media.j3d.Texture;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.media.j3d.View;
 import javax.media.j3d.ViewPlatform;
 import javax.media.j3d.VirtualUniverse;
-import javax.vecmath.Color3f;
+import javax.vecmath.AxisAngle4f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
-import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Escena {
     private Fondo background;
     
     public Escena(){
-     // Se obtiene la configuración gráfica del sistema y se crea el Canvas3D que va a mostrar la imagen
+     // Se obtiene la configuración gráfica del sistema y se crean los Canvas3D que va a mostrar la imagen
     Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
     canvas.setSize(800, 600);
     Canvas3D canvas2 = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
     canvas2.setSize(800, 600);
-    // Se construye la ventana de visualización
+    
+    // Se construyen las ventanas de visualización
      Visualization visualizationWindow = new Visualization (canvas,800,600,0,0);
      Visualization visualizationWindow2 = new Visualization (canvas2,800,600,800,0);
-    // Se crea el universo y la rama de la vista con ese canvas
+     
+    // Se crea el universo
     VirtualUniverse universe = new VirtualUniverse();
     Locale local=new Locale(universe);
-    //Camaras
+    
+    //Se crean las camaras, (planta, perspectiva, luna y nave)
     Camara camaraplanta=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,true,0,new Point3d(0.0,140.0,0.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,0,-1));
-    //Camara camaraplanta=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,false,100.0f,new Point3d(5.0,5.0,2.0), new Point3d(0.0,5.0,0.0), new Vector3d(0,1,0));
+
     Camara camarapers=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45.0f,new Point3d(50.0,50.0,50.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,1,0));
-    camarapers.removeCanvas();
+    camarapers.removeCanvas(); 
     Camara camaraluna=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100.0f,new Point3d (0,0.5,0), new Point3d (-1,-0.25,0), new Vector3d (1,1,0));
     camaraluna.removeCanvas();
-    Camara camaranave=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45.0f,new Point3d(0.0,0.5,0.0), new Point3d(-1.0,-0.25,0.0), new Vector3d(1,1,0));
+    Camara camaranave=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45.0f,new Point3d (0,0.5,-0.25), new Point3d (0,0,1), new Vector3d(0,1,0));
     camaranave.removeCanvas();
     
+    //Array de camaras variables
     ArrayList<Camara> camaras=new ArrayList<Camara>();
     camaras.add(camarapers);
     camaras.add(camaraluna);
     camaras.add(camaranave);
     
+    //Ventana de control
     Control nuevocontrol=new Control(camaras);
     camarapers.addCanvas();
+    
+    
     local.addBranchGraph(camaraplanta);
     local.addBranchGraph(camarapers);
     
-    
-   // universe.getViewingPlatform().setNominalViewingTransform();
-   
+    //Se crea la luz ambiental
     Luz aLight= new Luz();
     
     // Se crea y se añade el fondo
     background = new Fondo();
-    ////////////////////////////////////////////////
-    //NAVE
-    ///////////////////////////////////////////////
-    //Raptor/FA-22_Raptor.obj
-    //naveFuturama\\low_poly_express_ship.obj
-    //naveFuturama\\low_poly_express_ship.obj
     
-    //public Nave(String textur, long duracion, Point3f[] recorrido, Quat4f[] angulos, float[] alphas){
-   Nave transformer= new Nave("IronHide\\RB-IronHide.obj",5000,
+    
+    //Se crea la nave con su movimiento
+    Nave transformer= new Nave("IronHide\\RB-IronHide.obj",5000,
                         new Point3f[]{
-                            new Point3f(-5f,5f,0f),new Point3f(-7f,5f,2f),
-                            new Point3f(-3f,5f,2f),new Point3f(0f,5f,0f)
+                            new Point3f(10f,10f,-10f), new Point3f(10f,15f,-5f),
+                            new Point3f(10f,20f,0f), new Point3f(10f,15f,5f),
+                            new Point3f(10f,10f,10f), new Point3f(-10f,10f,10f),
+                            new Point3f(-10f,10f,-10f), new Point3f(10f,10f,-10f)
                         },
-                        new Quat4f[]{
-                            new Quat4f(0.0f,1.0f,0.0f,(float)Math.toRadians(0)),
-                            new Quat4f(1.0f,0.0f,0.0f,(float)Math.toRadians(315)),
-                            new Quat4f(0.0f,1.0f,0.0f,(float)Math.toRadians(0)),
-                            new Quat4f(1.0f,0.0f,0.0f,(float)Math.toRadians(45)),
+                        new AxisAngle4f[] {             // angulos
+                            new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(0)),
+                            new AxisAngle4f(1.0f, 0.0f, 0.0f, (float) Math.toRadians(315)),
+                            new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(0)),
+                            new AxisAngle4f(1.0f, 0.0f, 0.0f, (float) Math.toRadians(45)),
+                            new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(270)),
+                            new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(180)),
+                            new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(90)),
+                            new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(360))
                         },
                         new float[]{
-                            0.0f,0.33f,0.67f,1.0f
+                            0f, 0.14f, 0.28f, 0.42f, 0.56f, 0.7f, 0.84f, 1f
                         });
-   
+    
+   //Añadimos la nave al locale
    transformer.addCamara(camaranave);
    local.addBranchGraph(transformer);
    
-    // Como raíz se usa un BrachGroup
+    // Como raíz se usa el branchgroup sol
     Astro sol=new Estrella("imgs/sol.jpg",4.0f,0.0f,2.0f,4.0f);
     
     Astro mercurio= new Planeta("imgs/mercurio.jpg",1.2f,6.0f,1.7f,2.3f);
@@ -163,25 +157,19 @@ public class Escena {
     sol.add(pluton);
     
     luna.addCamara(camaraluna);
-
     
     //Agregamos el picking
     Picking picar=new Picking(canvas2);
     picar.setSchedulingBounds(new BoundingSphere(new Point3d(0,0,0),300.0f));
     picar.setStatus(sol);
     BranchGroup bgpicking=new BranchGroup();
-    
     bgpicking.addChild(picar);
     sol.addChild(bgpicking);
-    //local.addBranchGraph(prueba);
     
-    
-    
+    //Añadimos al locale los branchgraph, luz ambiental y fondo
     local.addBranchGraph(sol);
     local.addBranchGraph(aLight);
     local.addBranchGraph(background);
-    
-    
     
     // Se muestra la ventana
     visualizationWindow.setVisible(true);
@@ -213,7 +201,7 @@ public class Escena {
       transformgr.addChild(viewplat);
       vistagroup.addChild(transformgr);
 
-    // Se construye y devuelve el Universo con los parametros definidos
-    return vistagroup;
+      // Se construye y devuelve el Universo con los parametros definidos
+      return vistagroup;
   }
 }

@@ -6,12 +6,11 @@
 package Model;
 
 import javax.media.j3d.BranchGroup;
-import javax.media.j3d.Shape3D;
 import javax.media.j3d.Texture;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public abstract class Astro extends BranchGroup{
     Texture textura;
@@ -29,6 +28,7 @@ public abstract class Astro extends BranchGroup{
         movimiento=true;
         
     }
+    
     public abstract void onoffMovimiento();
     public abstract void add(Astro astro);
     public abstract void addCamara(Camara cam);

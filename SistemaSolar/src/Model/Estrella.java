@@ -11,11 +11,9 @@ import com.sun.j3d.utils.image.TextureLoader;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
-import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Light;
 import javax.media.j3d.Material;
 import javax.media.j3d.PointLight;
-import javax.media.j3d.PolygonAttributes;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Texture;
 import javax.media.j3d.TextureAttributes;
@@ -24,11 +22,10 @@ import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
-import javax.vecmath.Vector3f;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Estrella extends Astro{
     
@@ -38,13 +35,7 @@ public class Estrella extends Astro{
     public Estrella(String textura,float radi,float distanciaPadr,float tiempoRotPropi,float tiempoRotPadr){
         super(radi,distanciaPadr,tiempoRotPropi,tiempoRotPadr);
         
-        // Vamos a hacer el grafo de escena, una esfera
-        // Se necesita una geometría y un aspecto
         Appearance appearance = new Appearance();
-        //appearance.setPolygonAttributes(new PolygonAttributes (PolygonAttributes.POLYGON_FILL, PolygonAttributes.CULL_BACK, 0.0f)); 
-
-        
-        ///////////////////////////////
         
         Texture aTexture = new TextureLoader (textura, null).getTexture();
         appearance.setTexture (aTexture);
@@ -65,8 +56,8 @@ public class Estrella extends Astro{
         appearance);
         sphere.setUserData(this);
         
-        //////////////////////////////////
-                /////////////////////////////////////////////////////////////////////////////
+        
+        ////////////////////////////////////////////////////////////////////////////
         //ROTACION SOBRE SI MISMO
         ////////////////////////////////////////////////////////////////////////////
         TransformGroup nodorotacion = new TransformGroup();
@@ -99,14 +90,11 @@ public class Estrella extends Astro{
         luzPuntual.setInfluencingBounds(worldBounds);
         luzPuntual.setEnable(true);
         
-        
         nodorotacion.addChild(sphere);
         nodorotacion.addChild(luzPuntual);
         this.addChild(nodorotacion);
-        
-        
-    
     }
+    
     @Override
     public void add(Astro astro){
         this.addChild(astro);
@@ -115,6 +103,7 @@ public class Estrella extends Astro{
     @Override
     public void onoffMovimiento() {
     }
+    
     @Override
     public void addCamara(Camara cam){
         

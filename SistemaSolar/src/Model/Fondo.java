@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
 
 /**
  *
- * @author Javier
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Fondo extends BranchGroup{
     Fondo () {
@@ -42,6 +42,7 @@ public class Fondo extends BranchGroup{
     
     // Se crea la rama para la geometría del fondo, 
     BranchGroup bgGeometry = new BranchGroup ();
+    
     // Se le añade la esfera
     bgGeometry.addChild (sphere);
     // Y se establece como geometría del objeto background

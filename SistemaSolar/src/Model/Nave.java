@@ -10,14 +10,10 @@ import com.sun.j3d.loaders.ParsingErrorException;
 import com.sun.j3d.loaders.Scene;
 import com.sun.j3d.loaders.objectfile.ObjectFile;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.RotPosPathInterpolator;
-import javax.media.j3d.Texture;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.AxisAngle4f;
@@ -28,7 +24,7 @@ import javax.vecmath.Vector3f;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Nave extends BranchGroup{
     private Point3f[] recorrido;
@@ -39,7 +35,7 @@ public class Nave extends BranchGroup{
     private TransformGroup transform;
     TransformGroup translacion;
     
-    public Nave(String textur, long duracion, Point3f[] recorrido, Quat4f[] angulos, float[] alphas){
+    public Nave(String textur, long duracion, Point3f[] recorrido, AxisAngle4f[] angulos, float[] alphas){
         this.setPickable(false);
         this.velocidad = velocidad;
         this.recorrido = new Point3f[recorrido.length];
@@ -68,7 +64,7 @@ public class Nave extends BranchGroup{
         transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         Transform3D t3d= new Transform3D();
         Alpha valor = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0,duracion, 0, 0, 0, 0, 0);
-        interpolator= new RotPosPathInterpolator(valor,transform,t3d,alphas,angulos,recorrido);
+        interpolator= new RotPosPathInterpolator(valor,transform,t3d,alphas,this.angulos,recorrido);
         interpolator.setSchedulingBounds(new BoundingSphere(new Point3d(0.0,0.0,0.0),200));
         interpolator.setEnable(true);
         transform.addChild(interpolator);

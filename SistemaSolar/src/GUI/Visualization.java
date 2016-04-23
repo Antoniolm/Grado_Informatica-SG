@@ -11,7 +11,7 @@ import javax.media.j3d.Canvas3D;
 
 /**
  *
- * @author fvelasco
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Visualization extends javax.swing.JFrame {
 

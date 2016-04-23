@@ -15,11 +15,7 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.Node;
 import javax.media.j3d.PickInfo;
-import javax.media.j3d.SceneGraphPath;
-import javax.media.j3d.Shape3D;
-import javax.media.j3d.WakeupCondition;
 import javax.media.j3d.WakeupOnAWTEvent;
-import javax.media.j3d.WakeupOr;
 
 /**
  *
@@ -49,7 +45,6 @@ public class Picking extends Behavior{
 
     @Override
     public void processStimulus(Enumeration cond) {
-        System.out.println("esta entrando2");
         WakeupOnAWTEvent c = (WakeupOnAWTEvent) cond.nextElement();
         AWTEvent[] e = c.getAWTEvent();
         MouseEvent mouse = (MouseEvent) e[0];

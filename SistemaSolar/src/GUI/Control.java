@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author fvelasco
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Control extends JFrame {
  
@@ -131,7 +131,7 @@ public class Control extends JFrame {
   }//GEN-LAST:event_jb_exitActionPerformed
 
     private void camperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camperActionPerformed
-        // TODO add your handling code here:
+        // Desactivamos el canvas de la vista activa y la asignamos a la vista perpectiva
         if(!camaras.get(0).isActive()){
             if(camaras.get(1).isActive()){
                 camaras.get(1).removeCanvas();
@@ -146,7 +146,7 @@ public class Control extends JFrame {
     }//GEN-LAST:event_camperActionPerformed
 
     private void camlunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camlunaActionPerformed
-        // TODO add your handling code here:
+        // Desactivamos el canvas de la vista activa y la asignamos a la vista luna
         if(!camaras.get(1).isActive()){
             if(camaras.get(0).isActive()){
                 camaras.get(0).removeCanvas();
@@ -160,8 +160,8 @@ public class Control extends JFrame {
     }//GEN-LAST:event_camlunaActionPerformed
 
     private void camnaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camnaveActionPerformed
-        // TODO add your handling code here:
-         if(!camaras.get(2).isActive()){
+        // Desactivamos el canvas de la vista activa y la asignamos a la vista nave
+        if(!camaras.get(2).isActive()){
             if(camaras.get(1).isActive()){
                 camaras.get(1).removeCanvas();
             }

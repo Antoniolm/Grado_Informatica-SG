@@ -15,16 +15,16 @@ import javax.media.j3d.View;
 import javax.media.j3d.ViewPlatform;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
-import javax.vecmath.Vector3f;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Camara extends BranchGroup{
     private View vista;
     private Canvas3D canvas;
     private boolean activada;
+    
     public Camara(Canvas3D canva,float distance,float planodelantero,float planotrasero,float screenScl,boolean planta,float angulo,Point3d posicion,Point3d direccion,Vector3d vup){    
       canvas=canva;
       activada=true;
@@ -44,6 +44,7 @@ public class Camara extends BranchGroup{
            vista.setScreenScalePolicy(View.SCALE_EXPLICIT);
            vista.setScreenScale(screenScl);
        }
+      
       vista.setFrontClipDistance(planodelantero);
       vista.setBackClipDistance(planotrasero);
       vista.addCanvas3D(canvas);
@@ -59,14 +60,17 @@ public class Camara extends BranchGroup{
       transformgr.addChild(viewplat);
       addChild(transformgr);    
     }
+    
     public void removeCanvas(){
         vista.removeCanvas3D(canvas);
         activada=false;
     }
+    
     public void addCanvas(){
         vista.addCanvas3D(this.canvas);
         activada=true;
     }
+    
     public boolean isActive(){
         return activada;
     }
