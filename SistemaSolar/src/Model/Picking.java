@@ -56,9 +56,7 @@ public class Picking extends Behavior{
             Node p=pi.getNode();
             Primitive padre=(Primitive)p.getParent();
             Astro objeto= (Astro)padre.getUserData();
-            
-            //SceneGraphPath sgp= pi.getSceneGraphPath();
-            //Astro a=(Astro) sgp.getNode(sgp.nodeCount());
+          
             objeto.onoffMovimiento();
         }
         wakeupOn(condition);
