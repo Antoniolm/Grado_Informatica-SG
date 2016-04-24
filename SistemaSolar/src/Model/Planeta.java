@@ -109,8 +109,8 @@ public class Planeta extends Astro {
         this.addChild(rotacionestrella);
         
     }
-    public void add(Anillo anillo){
-
+    public void addAnillo(Anillo anillo){
+        nodorotacionSatelite.addChild(anillo);
     }
 
     @Override

@@ -82,10 +82,10 @@ public class Escena {
     //Se crea la nave con su movimiento
     Nave transformer= new Nave("IronHide\\RB-IronHide.obj",5000,
                         new Point3f[]{
-                            new Point3f(10f,10f,-10f), new Point3f(10f,15f,-5f),
-                            new Point3f(10f,20f,0f), new Point3f(10f,15f,5f),
-                            new Point3f(10f,10f,10f), new Point3f(-10f,10f,10f),
-                            new Point3f(-10f,10f,-10f), new Point3f(10f,10f,-10f)
+                            new Point3f(5f, 5f, -10f), new Point3f(5f, 10f, 0f),
+                            new Point3f(5f, 15f, 10f), new Point3f(5f, 10f, 10f),
+                            new Point3f(5f, 5f, 10f), new Point3f(-5f, 5f, 10f),
+                            new Point3f(-5f, 5f, -10f), new Point3f(5f, 5f, -10f)
                         },
                         new AxisAngle4f[] {             // angulos
                             new AxisAngle4f(0.0f, 1.0f, 0.0f, (float) Math.toRadians(0)),
@@ -126,7 +126,9 @@ public class Escena {
         Astro calisto=new Satelite("imgs/calisto.jpg",0.3f,4.9f,2.0f,8.0f);
        
     Astro saturno= new Planeta("imgs/saturno.jpg",2.7f,35.0f,0.3f,3.3f);
-    
+        Anillo anillo1=new Anillo("imgs/ring1.jpg",3.2f,3.7f);
+        Anillo anillo2=new Anillo("imgs/ring2.jpg",3.8f,4.3f);
+        Anillo anillo3=new Anillo("imgs/ring3.jpg",4.4f,4.9f);
     Astro urano= new Planeta("imgs/urano.jpg",2.25f,42.0f,0.5f,3.4f);
         Astro miranda=new Satelite("imgs/miranda.jpg",0.1f,3.0f,2.0f,3.4f);
         Astro ariel=new Satelite("imgs/ariel.jpg",0.2f,3.70f,2.0f,4.5f);
@@ -142,18 +144,25 @@ public class Escena {
     sol.add(marte);
         marte.add(fobos);
         marte.add(deimos);
+        
     sol.add(jupiter);
         jupiter.add(io);
         jupiter.add(europa);
         jupiter.add(calisto);
+        
     sol.add(saturno);
+        saturno.addAnillo(anillo1);
+        saturno.addAnillo(anillo2);
+        saturno.addAnillo(anillo3);
         
     sol.add(urano);
         urano.add(titania);
         urano.add(ariel);
         urano.add(miranda);
+        
     sol.add(neptuno);
         neptuno.add(triton);
+        
     sol.add(pluton);
     
     luna.addCamara(camaraluna);

@@ -21,7 +21,7 @@ public class Anillo extends BranchGroup{
     private double radioInterior;
     private double radioExterior;
     private double tiemposRotPropio;
-    public Anillo(String textura,double radioInt,double radioExt,double tiempoRotPro){
+    public Anillo(String textura,double radioInt,double radioExt/*,double tiempoRotPro*/){
          Appearance appearance = new Appearance();
         Texture aTexture = new TextureLoader (textura, null).getTexture();
         appearance.setTexture (aTexture);
@@ -37,8 +37,9 @@ public class Anillo extends BranchGroup{
         
         
         radioExterior=radioExt;
-            radioInterior=radioInt;
-        Disco disc=new Disco((float)radioExt,(float)radioInt,40,appearance);
-          
+        radioInterior=radioInt;
+        Torus anill=new Torus((float)radioExt,(float)radioInt,40,2,appearance);
+        this.setPickable(false);
+        this.addChild(anill);
     }
 }

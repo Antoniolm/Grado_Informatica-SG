@@ -19,7 +19,7 @@ import javax.media.j3d.WakeupOnAWTEvent;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Picking extends Behavior{
     
@@ -32,6 +32,7 @@ public class Picking extends Behavior{
         condition = new WakeupOnAWTEvent (MouseEvent.MOUSE_CLICKED) ;
     }
     public void setStatus( BranchGroup bg) {
+        //Realizamos la configuracion de nuestra pickcanvas
         pickCanvas = new PickCanvas(canvas, bg);
         pickCanvas.setTolerance((float) 2.0f ) ;
         pickCanvas.setMode(PickInfo.PICK_GEOMETRY);
@@ -39,7 +40,8 @@ public class Picking extends Behavior{
 }
     @Override
     public void initialize() {
-           setEnable(true);
+        //Activamos nuestro behavior
+        setEnable(true);
         wakeupOn(condition);
     }
 
@@ -54,10 +56,12 @@ public class Picking extends Behavior{
         if(pi!=null){
             
             Node p=pi.getNode();
-            Primitive padre=(Primitive)p.getParent();
-            Astro objeto= (Astro)padre.getUserData();
-          
+  
+            Primitive padre = (Primitive) p.getParent();
+            Astro objeto = (Astro) padre.getUserData();
             objeto.onoffMovimiento();
+          
+           
         }
         wakeupOn(condition);
     }    

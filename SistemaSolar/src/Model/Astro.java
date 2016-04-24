@@ -31,5 +31,6 @@ public abstract class Astro extends BranchGroup{
     
     public abstract void onoffMovimiento();
     public abstract void add(Astro astro);
+    public abstract void addAnillo(Anillo anillo);
     public abstract void addCamara(Camara cam);
 }

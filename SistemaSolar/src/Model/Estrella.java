@@ -99,7 +99,10 @@ public class Estrella extends Astro{
     public void add(Astro astro){
         this.addChild(astro);
     }
-
+    @Override
+    public void addAnillo(Anillo anillo) {
+        
+    }
     @Override
     public void onoffMovimiento() {
     }

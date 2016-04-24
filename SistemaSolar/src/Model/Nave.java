@@ -48,18 +48,20 @@ public class Nave extends BranchGroup{
             this.angulos[i].set(angulos[i]);
             this.alphas[i] = alphas[i];
         }
-        
+        //Transformacion realizada para posicionar nuestra nave en la escena
         translacion = new TransformGroup();
         Vector3f vector=new Vector3f(0.0f,5.0f,0.0f);
         Transform3D transformtranslation = new Transform3D();
         transformtranslation.setTranslation(vector);
         translacion.setTransform(transformtranslation); 
         
+        //Transformación realizada para orientar correctamente la figura de la nave
         TransformGroup rotacion = new TransformGroup();
         Transform3D trotacion = new Transform3D();
         trotacion.rotZ(Math.toRadians(90));
         rotacion.setTransform(trotacion);
         
+        //Creamos el interpolator que realizara el recorrido de la nave
         transform = new TransformGroup();
         transform.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
         Transform3D t3d= new Transform3D();
@@ -70,6 +72,7 @@ public class Nave extends BranchGroup{
         transform.addChild(interpolator);
                 
         ////TEXTURA
+        //Cargamos la nave
         Scene escena=null;
         ObjectFile planetExpress =new ObjectFile(ObjectFile.RESIZE | ObjectFile.STRIPIFY | ObjectFile.TRIANGULATE,(float) ( Math.PI/4 ) ) ;
         try {
@@ -81,10 +84,13 @@ public class Nave extends BranchGroup{
 
         BranchGroup objeto= new BranchGroup();
         objeto.addChild(escena.getSceneGroup());
+        
+       //Realizamos los enlaces entre el objeto y entre las diferentes transformaciones a realizar
         rotacion.addChild(objeto);
         translacion.addChild(rotacion);
         transform.addChild(translacion);
         
+        //Colgamos del banchgroup nuestra nave
         this.addChild(transform);
         
     }
