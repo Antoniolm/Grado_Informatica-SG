@@ -5,22 +5,14 @@
  */
 package Model;
 
-import com.sun.j3d.utils.geometry.GeometryInfo;
-import com.sun.j3d.utils.geometry.NormalGenerator;
-import com.sun.j3d.utils.geometry.Stripifier;
-import static java.lang.Math.sqrt;
 import java.util.ArrayList;
-import java.util.List;
 import javax.media.j3d.Appearance;
-import javax.media.j3d.BranchGroup;
 import javax.media.j3d.GeometryArray;
 import javax.media.j3d.IndexedGeometryArray;
-import javax.media.j3d.IndexedLineArray;
 import javax.media.j3d.IndexedTriangleArray;
 import javax.media.j3d.Shape3D;
 import javax.media.j3d.Transform3D;
 import javax.vecmath.Point3d;
-import javax.vecmath.Point3f;
 import javax.vecmath.TexCoord2f;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
@@ -140,8 +132,7 @@ public class Torus extends Shape3D{
         //Creamos la transformación
         Transform3D rotacionz = new Transform3D();
         Transform3D rotaciony = new Transform3D();
-        
-        
+
         //Aplicamos la transformacion en los puntos
         for (int i = 0; i < resolucion; i++){
             rotaciony.rotY(alf1*i);
@@ -176,14 +167,7 @@ public class Torus extends Shape3D{
         salida=new TexCoord2f[coords.size()];
         coords.toArray(salida);
         return salida;
-    }
-    //////////////////////////////////////////////////////
-    //
-    //
-    //
-    //
-    ///////////////////////////////////////////////////////
-    
+    } 
     
     private int[] calcularIndicesTexCoords(int res1, int res2) {
         int[] indicesTexCoords = new int[res1*res2*6];

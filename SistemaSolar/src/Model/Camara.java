@@ -90,8 +90,7 @@ public class Camara extends BranchGroup{
             transformgr.addChild(myMouseTranslate);
             transformgr.addChild(myMouseZoom);
         }
-        
-      
+
       transformgr.addChild(viewplat);
       addChild(transformgr);    
     }

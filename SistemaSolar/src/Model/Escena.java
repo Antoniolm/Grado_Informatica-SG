@@ -68,7 +68,6 @@ public class Escena {
     Control nuevocontrol=new Control(camaras);
     camarapers.addCanvas();
     
-    
     local.addBranchGraph(camaraplanta);
     local.addBranchGraph(camarapers);
     
@@ -185,32 +184,4 @@ public class Escena {
     visualizationWindow2.setVisible(true);
     nuevocontrol.setVisible(true);
     }
-     
-  private BranchGroup createViews (Canvas3D canvas,float distance) {
-      BranchGroup vistagroup=new BranchGroup();
-    
-      ViewPlatform viewplat=new ViewPlatform();
-      viewplat.setActivationRadius(40.0f);
-      
-      PhysicalBody pbody=new PhysicalBody();
-      PhysicalEnvironment penvi=new PhysicalEnvironment();
-      
-      
-      View vista=new View();
-      vista.setFrontClipDistance(0.02);
-      vista.setBackClipDistance(40);
-      vista.addCanvas3D(canvas);
-      vista.setPhysicalBody(pbody);
-      vista.setPhysicalEnvironment(penvi);
-      vista.attachViewPlatform(viewplat);
-
-      Transform3D transform = new Transform3D();
-      transform.setTranslation(new Vector3f(0.0f, 0.0f, distance));
-      TransformGroup transformgr = new TransformGroup(transform);
-      transformgr.addChild(viewplat);
-      vistagroup.addChild(transformgr);
-
-      // Se construye y devuelve el Universo con los parametros definidos
-      return vistagroup;
-  }
 }

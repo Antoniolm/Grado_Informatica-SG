@@ -22,11 +22,10 @@ import javax.media.j3d.WakeupOnAWTEvent;
  * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Picking extends Behavior{
-    
     private WakeupOnAWTEvent condition;
-    //private WakeupCondition condition ;
     private PickCanvas pickCanvas ;
     private Canvas3D canvas ;
+    
     public Picking (Canvas3D aCanvas ) {
         canvas = aCanvas ;
         condition = new WakeupOnAWTEvent (MouseEvent.MOUSE_CLICKED) ;
@@ -54,14 +53,10 @@ public class Picking extends Behavior{
         PickInfo pi=pickCanvas.pickClosest();
         
         if(pi!=null){
-            
             Node p=pi.getNode();
-  
             Primitive padre = (Primitive) p.getParent();
             Astro objeto = (Astro) padre.getUserData();
-            objeto.onoffMovimiento();
-          
-           
+            objeto.onoffMovimiento();  
         }
         wakeupOn(condition);
     }    

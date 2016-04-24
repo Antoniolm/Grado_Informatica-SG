@@ -109,6 +109,7 @@ public class Planeta extends Astro {
         this.addChild(rotacionestrella);
         
     }
+    @Override
     public void addAnillo(Anillo anillo){
         nodorotacionSatelite.addChild(anillo);
     }
@@ -122,7 +123,9 @@ public class Planeta extends Astro {
     public void onoffMovimiento() {
        movimiento=!movimiento;
        rotatorestrella.setEnable(movimiento);
+       rotator.setEnable(movimiento);
     }
+    
     @Override
     public void addCamara(Camara cam){
         nodorotacionSatelite.addChild(cam);

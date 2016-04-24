@@ -23,7 +23,6 @@ import javax.vecmath.Point3d;
  */
 public class Fondo extends BranchGroup{
     Fondo () {
-    
     // Se crea el objeto para el fondo y 
     //     se le asigna un área de influencia
     Background background = new Background ();

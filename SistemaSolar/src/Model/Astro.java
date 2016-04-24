@@ -26,7 +26,6 @@ public abstract class Astro extends BranchGroup{
         tiempoRotPropio=tiempoRotPropi;
         tiempoRotPadre=tiempoRotPadr;
         movimiento=true;
-        
     }
     
     public abstract void onoffMovimiento();

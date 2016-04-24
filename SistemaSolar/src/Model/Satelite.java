@@ -28,13 +28,12 @@ import javax.vecmath.Vector3f;
 public class Satelite extends Astro{
     private TransformGroup nodorotacionSatelite;
     private TransformGroup translacion;
+    RotationInterpolator rotator;
+    RotationInterpolator rotatorpadre;
     
     public Satelite(String textura, float radi,float distanciaPadr,float tiempoRotPropi,float tiempoRotPadr){
         super(radi,distanciaPadr,tiempoRotPropi,tiempoRotPadr);
          Appearance appearance = new Appearance();
-        //appearance.setPolygonAttributes(new PolygonAttributes (PolygonAttributes.POLYGON_FILL, PolygonAttributes.CULL_BACK, 0.0f)); 
-
-        //Sphere sphere = new Sphere((float) super.radio, appearance);
         
         Texture aTexture = new TextureLoader (textura, null).getTexture();
         appearance.setTexture (aTexture);
@@ -53,7 +52,7 @@ public class Satelite extends Astro{
         Primitive.GENERATE_TEXTURE_COORDS |
         Primitive.ENABLE_APPEARANCE_MODIFY, 64, 
         appearance);
-        //sphere.setUserData(this);
+        sphere.setUserData(this);
         sphere.setPickable(true);
 
         /////////////////////////////////////////////////////////////////////////////
@@ -67,7 +66,7 @@ public class Satelite extends Astro{
         // Se crea un interpolador, un valor numérico que se ira modificando en tiempo de ejecución
         Alpha valuepadre = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0, (long) (4500*tiempoRotPadre), 0, 0, 0, 0, 0);
         // Se crea el interpolador de rotación, las figuras iran rotando
-        RotationInterpolator rotatorpadre = new RotationInterpolator(valuepadre, rotacionpadre, yAxipadre,
+        rotatorpadre = new RotationInterpolator(valuepadre, rotacionpadre, yAxipadre,
                 0.0f, (float) Math.PI * 2);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
         // Se le pone el entorno de activación y se activa
         rotatorpadre.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 300.0));
@@ -86,15 +85,14 @@ public class Satelite extends Astro{
         Alpha value = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0,
                 4000, 0, 0, 0, 0, 0);
         // Se crea el interpolador de rotación, las figuras iran rotando
-        RotationInterpolator rotator = new RotationInterpolator(value, nodorotacionSatelite, yAxis,
+        rotator = new RotationInterpolator(value, nodorotacionSatelite, yAxis,
                 0.0f, (float) Math.PI * tiempoRotPropio);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
         // Se le pone el entorno de activación y se activa
         rotator.setSchedulingBounds(new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 300.0));
         rotator.setEnable(true);
         nodorotacionSatelite.addChild(rotator);
         
-        
-        
+
         /////////////////////////////////////////////////////////////////////////////
         //TRANSLACION
         ////////////////////////////////////////////////////////////////////////////
@@ -114,17 +112,20 @@ public class Satelite extends Astro{
     }
 
     @Override
-    public void add(Astro planet) {
-        
+    public void add(Astro planet) {   
     }
+    
     @Override
-    public void addAnillo(Anillo anillo) {
-        
+    public void addAnillo(Anillo anillo) { 
     }
+    
     @Override
     public void onoffMovimiento() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        movimiento=!movimiento;
+        rotatorpadre.setEnable(movimiento);
+        rotator.setEnable(movimiento);
     }
+    
     @Override
     public void addCamara(Camara cam){
         translacion.addChild(cam);
