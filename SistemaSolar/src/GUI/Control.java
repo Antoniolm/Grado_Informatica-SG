@@ -26,7 +26,7 @@ public class Control extends JFrame {
     camaras=camara;
     // Atributos de la ventana
     setTitle ("Control Window");
-    setLocation (820, 700);
+    setLocation (820, 520);
     
     // Se construye y se abre la ventana de visualizacion
     

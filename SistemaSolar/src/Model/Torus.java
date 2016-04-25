@@ -33,17 +33,17 @@ public class Torus extends Shape3D{
              
        //Realizamos el caculo de los puntos
        Point3d[] vertices=calcularVertices(radioExterior, radioInterior, res, res2);
-        indices=calcularIndicesVertices(resolucion, resolucion2);
-        TexCoord2f[] texCoords= cal_coordText();
+        indices=calcularIndVert();
+        TexCoord2f[] texCoords= calcularText();
         
        //creamos el objeto IndexedTriangleArray
         IndexedGeometryArray geometria= new IndexedTriangleArray(texCoords.length, GeometryArray.COORDINATES | GeometryArray.NORMALS |  GeometryArray.TEXTURE_COORDINATE_2, indices.length);       
         geometria.setCoordinates (0 , vertices ) ;
         geometria. setCoordinateIndices(0,indices) ;
-        geometria.setNormals(0, calnormal_v());
+        geometria.setNormals(0, calcularnormal_v());
         geometria.setNormalIndices(0, indices);
         geometria.setTextureCoordinates(0, 0, texCoords);
-        geometria.setTextureCoordinateIndices(0, 0, calcularIndicesTexCoords(resolucion, resolucion2));
+        geometria.setTextureCoordinateIndices(0, 0, calcularIndText());
         this.setGeometry(geometria);
         this.setAppearance(app);
     }    
@@ -84,34 +84,34 @@ public class Torus extends Shape3D{
     }
     
     
-    private int[] calcularIndicesVertices(int res, int res2) {
-        int[] indices = new int[res*res2*6];
+    private int[] calcularIndVert() {
+        int[] indices = new int[resolucion*resolucion2*6];
         int k=0;
         int cont=0;
         int puntoActual,puntoNextRes,puntoActualSiguiente,puntoNextResSig;
-        for(int i=0; i<res; i++) {
-            for(int j=0; j<res2; j++) {
+        for(int i=0; i<resolucion; i++) {
+            for(int j=0; j<resolucion2; j++) {
                 puntoActual=k;
-                puntoNextRes=res2+k; //el punto de la siguiente resolucion de vertices
+                puntoNextRes=resolucion2+k; //el punto de la siguiente resolucion de vertices
                 puntoActualSiguiente=k+1;
                 puntoNextResSig=puntoNextRes+1;
                 
-                if(i==res-1) { //if para el final del primer bucle
+                if(i==resolucion-1) { //if para el final del primer bucle
                     puntoNextRes=j;
                     puntoNextResSig = j+1;
                 }
-                if(j==res2-1) { // if para el final del segundo bucle
-                    puntoActualSiguiente -= res2;
-                    puntoNextResSig -= res2;
+                if(j==resolucion2-1) { // if para el final del segundo bucle
+                    puntoActualSiguiente -= resolucion2;
+                    puntoNextResSig -= resolucion2;
                 }
                 
-                indices[cont]=puntoActual%(res*res2);
-                indices[cont+1]=(puntoNextResSig)%(res*res2);
-                indices[cont+2]=(puntoActualSiguiente)%(res*res2);
+                indices[cont]=puntoActual%(resolucion*resolucion2);
+                indices[cont+1]=(puntoNextResSig)%(resolucion*resolucion2);
+                indices[cont+2]=(puntoActualSiguiente)%(resolucion*resolucion2);
 
-                indices[cont+3]=puntoActual%(res*res2);
-                indices[cont+4]=(puntoNextRes)%(res*res2);
-                indices[cont+5]=(puntoNextResSig)%(res*res2);
+                indices[cont+3]=puntoActual%(resolucion*resolucion2);
+                indices[cont+4]=(puntoNextRes)%(resolucion*resolucion2);
+                indices[cont+5]=(puntoNextResSig)%(resolucion*resolucion2);
                 cont+=6;
                 k++;
             }
@@ -120,7 +120,7 @@ public class Torus extends Shape3D{
         
         return indices;
     }
-    public Vector3f[] calnormal_v(){
+    public Vector3f[] calcularnormal_v(){
 	ArrayList<Vector3f> mispuntos=new ArrayList<Vector3f>();;
         Vector3f[] salida;
         //Creamos el primer vertice el cual indica el radio exterior
@@ -151,7 +151,7 @@ public class Torus extends Shape3D{
         mispuntos.toArray(salida);
         return salida;
     }
-    public TexCoord2f[] cal_coordText(){
+    public TexCoord2f[] calcularText(){
         ArrayList<TexCoord2f> coords=new ArrayList<TexCoord2f>();
         TexCoord2f[] salida;
         float num_filas=1.0f/(resolucion+1.0f);
@@ -169,15 +169,15 @@ public class Torus extends Shape3D{
         return salida;
     } 
     
-    private int[] calcularIndicesTexCoords(int res1, int res2) {
-        int[] indicesTexCoords = new int[res1*res2*6];
+    private int[] calcularIndText() {
+        int[] indicesTexCoords = new int[resolucion*resolucion2*6];
         int cnt = 0, puntoActual, puntoNextRes, puntoActualSiguiente, puntoNextResSig;
-        for(int i=0; i<res1; i++) {
-            for(int j=0; j<res2; j++) {
-                puntoActual = i*(res2+1)+j; //Supuesto puesto actual
-                puntoNextRes = puntoActual+(res2+1); //Punto de la siguiente franja
+        for(int i=0; i<resolucion; i++) {
+            for(int j=0; j<resolucion2; j++) {
+                puntoActual = i*(resolucion2+1)+j; //Supuesto puesto actual
+                puntoNextRes = puntoActual+(resolucion2+1); //Punto de la siguiente franja
                 puntoActualSiguiente = puntoActual+1; //Punto siguiente al actual
-                puntoNextResSig = puntoActualSiguiente+(res2+1); // punto siguiente de la otra franja
+                puntoNextResSig = puntoActualSiguiente+(resolucion2+1); // punto siguiente de la otra franja
                 
                 //Primer triangulo de textura
                 indicesTexCoords[cnt] = puntoActual;

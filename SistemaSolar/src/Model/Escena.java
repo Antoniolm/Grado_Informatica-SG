@@ -41,8 +41,8 @@ public class Escena {
     canvas2.setSize(800, 600);
     
     // Se construyen las ventanas de visualización
-     Visualization visualizationWindow = new Visualization (canvas,800,600,0,0);
-     Visualization visualizationWindow2 = new Visualization (canvas2,800,600,800,0);
+     Visualization visualizationWindow = new Visualization (canvas,650,580,0,0);
+     Visualization visualizationWindow2 = new Visualization (canvas2,650,580,750,0);
      
     // Se crea el universo
     VirtualUniverse universe = new VirtualUniverse();
@@ -58,6 +58,12 @@ public class Escena {
     Camara camaranave=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45.0f,new Point3d (0,0.5,-0.25), new Point3d (0,0,1), new Vector3d(0,1,0),false);
     camaranave.removeCanvas();
     
+    //Compilamos todas las camaras
+    camaraplanta.compile();
+    camarapers.compile();
+    camaraluna.compile();
+    camaranave.compile();
+    
     //Array de camaras variables
     ArrayList<Camara> camaras=new ArrayList<Camara>();
     camaras.add(camarapers);
@@ -71,15 +77,16 @@ public class Escena {
     local.addBranchGraph(camaraplanta);
     local.addBranchGraph(camarapers);
     
-    //Se crea la luz ambiental
+    //Se crea la luz ambiental y la compilamos
     Luz aLight= new Luz();
+    aLight.compile();
     
-    // Se crea y se añade el fondo
+    // Se crea y se añade el fondo y la compilamos
     background = new Fondo();
-    
+    background.compile();
     
     //Se crea la nave con su movimiento
-    Nave transformer= new Nave("IronHide\\RB-IronHide.obj",5000,
+    Nave transformer= new Nave("IronHide/RB-IronHide.obj",5000,
                         new Point3f[]{
                             new Point3f(5f, 5f, -10f), new Point3f(5f, 10f, 0f),
                             new Point3f(5f, 15f, 10f), new Point3f(5f, 10f, 10f),
@@ -173,6 +180,10 @@ public class Escena {
     BranchGroup bgpicking=new BranchGroup();
     bgpicking.addChild(picar);
     sol.addChild(bgpicking);
+    
+    //Compilamos el branchgroup del sol del cual
+    //ramifica todo el sistema solar
+    sol.compile();
     
     //Añadimos al locale los branchgraph, luz ambiental y fondo
     local.addBranchGraph(sol);

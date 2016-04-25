@@ -55,7 +55,7 @@ public class Estrella extends Astro{
         Primitive.ENABLE_APPEARANCE_MODIFY, 64, 
         appearance);
         sphere.setUserData(this);
-        
+        this.setPickable(true);
         ////////////////////////////////////////////////////////////////////////////
         //ROTACION SOBRE SI MISMO
         ////////////////////////////////////////////////////////////////////////////
@@ -104,6 +104,8 @@ public class Estrella extends Astro{
     }
     @Override
     public void onoffMovimiento() {
+       movimiento=!movimiento;
+       rotator.setEnable(movimiento);
     }
     
     @Override
