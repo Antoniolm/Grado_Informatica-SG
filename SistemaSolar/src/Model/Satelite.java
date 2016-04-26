@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import com.sun.j3d.utils.geometry.Primitive;
@@ -112,11 +107,13 @@ public class Satelite extends Astro{
     }
 
     @Override
-    public void add(Astro planet) {   
+    public void add(Astro planet) {  
+        //Vacio con posibilidad de añadir un hipotetico astro
     }
     
     @Override
     public void addAnillo(Anillo anillo) { 
+        //Vacio con posibilidad de añadir un hipotetico anillo
     }
     
     @Override
