@@ -23,10 +23,10 @@ import javax.vecmath.Point3f;
  * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Estrella extends Astro{
-    
-
     Light luzPuntual;
     RotationInterpolator rotator;
+    Alpha valor;
+    
     public Estrella(String textura,float radi,float distanciaPadr,float tiempoRotPropi,float tiempoRotPadr){
         super(radi,distanciaPadr,tiempoRotPropi,tiempoRotPadr);
         
@@ -60,7 +60,7 @@ public class Estrella extends Astro{
         // Se crea la matriz de rotación
         Transform3D yAxis = new Transform3D();
         // Se crea un interpolador, un valor numérico que se ira modificando en tiempo de ejecución
-        Alpha valor = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0, (long) (4500*tiempoRotPropio), 0, 0, 0, 0, 0);
+        valor = new Alpha(-1, Alpha.INCREASING_ENABLE, 0, 0, (long) (4500*tiempoRotPropio), 0, 0, 0, 0, 0);
         // Se crea el interpolador de rotación, las figuras iran rotando
         rotator = new RotationInterpolator(valor, nodorotacion, yAxis,
                 0.0f, (float) Math.PI * 2);  //Math.PI*2.0f es el valor que controla la velocidad de las vueltas
@@ -100,7 +100,11 @@ public class Estrella extends Astro{
     @Override
     public void onoffMovimiento() {
        movimiento=!movimiento;
-       rotator.setEnable(movimiento);
+       
+       if(movimiento)
+           valor.pause();
+       else
+           valor.resume();
     }
     
     @Override
