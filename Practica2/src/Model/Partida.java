@@ -18,10 +18,10 @@ import javax.vecmath.Vector3d;
  *
  * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
-public class Escena {
+public class Partida {
     private Fondo background;
     
-    public Escena(){
+    public Partida(){
      // Se obtiene la configuración gráfica del sistema y se crean los Canvas3D que va a mostrar la imagen
     Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
     canvas.setSize(800, 600);

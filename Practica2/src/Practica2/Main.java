@@ -5,7 +5,7 @@
  */
 package Practica2;
 
-import Model.Escena;
+import Model.Partida;
 
 /**
  *
@@ -18,7 +18,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Escena sistema_solar= new Escena();
+        Partida partida= new Partida();
     }
     
 }
