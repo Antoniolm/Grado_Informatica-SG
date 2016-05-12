@@ -10,7 +10,7 @@ package Model;
  * @author LENOVO
  */
 public class Jugador {
-    private int puntuacion;
+    
     
    public Jugador(){
    

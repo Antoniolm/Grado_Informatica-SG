@@ -11,22 +11,22 @@ import javax.media.j3d.BranchGroup;
  *
  * @author LENOVO
  */
-public class Tablero extends BranchGroup{
+public class bloque extends BranchGroup {
     
-    public Tablero(){
+    private int id;
+    public bloque(){
+    
         
-        ////Campo horizontal
-        ////Translación
-        
-        
-        
-        
-        //// Campo vertical
-        /////ROTACION Z
-       ///// Translacion
-        
-        
-        
-        
+            
+    }
+    public int getId(){
+        return id;
+    }
+    
+    public void activarFallo(){
+    
+    }
+    public void activarAcierto(){
+    
     }
 }
