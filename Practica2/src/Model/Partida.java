@@ -8,6 +8,8 @@ import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.Locale;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
 import javax.media.j3d.VirtualUniverse;
 import javax.vecmath.AxisAngle4f;
 import javax.vecmath.Point3d;
@@ -100,6 +102,19 @@ public class Partida {
    local.addBranchGraph(transformer);
    
     
+   Tablero tabla=new Tablero();
+   local.addBranchGraph(tabla);
+   
+        TransformGroup rotacion3 = new TransformGroup();
+        Transform3D rotacionx = new Transform3D();
+        rotacionx.rotY(Math.PI);
+        rotacion3.setTransform(rotacionx);
+   
+    Tablero tabla2=new Tablero();
+    BranchGroup bg=new BranchGroup();
+    bg.addChild(rotacion3);
+    rotacion3.addChild(tabla2);
+    local.addBranchGraph(bg);
     //Agregamos el picking
     Picking picar=new Picking(canvas2);
     picar.setSchedulingBounds(new BoundingSphere(new Point3d(0,0,0),300.0f));
