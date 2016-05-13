@@ -80,40 +80,27 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="camper">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Camara perspectiva"/>
+            <Property name="text" type="java.lang.String" value="Camara de naves"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="camperActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="25" y="26" width="-1" height="-1"/>
+              <AbsoluteConstraints x="25" y="26" width="170" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JButton" name="camluna">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Camara luna"/>
+            <Property name="text" type="java.lang.String" value="Camara de ataque"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="camlunaActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="25" y="69" width="147" height="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="javax.swing.JButton" name="camnave">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Camara nave"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="camnaveActionPerformed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="25" y="112" width="147" height="-1"/>
+              <AbsoluteConstraints x="25" y="69" width="170" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

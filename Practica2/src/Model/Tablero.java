@@ -8,6 +8,7 @@ package Model;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.vecmath.Color3f;
 import javax.vecmath.Vector3f;
 
 /**
@@ -16,13 +17,13 @@ import javax.vecmath.Vector3f;
  */
 public class Tablero extends BranchGroup{
     
-    public Tablero(){
-         Tabla vertical=new Tabla();
-         Tabla horizontal=new Tabla();
+    public Tablero(Color3f color,Color3f color2){
+         Tabla vertical=new Tabla(color);
+         Tabla horizontal=new Tabla(color2);
          
          
          TransformGroup translacionverti=new TransformGroup();
-         Vector3f vector=new Vector3f(0.0f,14.0f,0.0f);
+         Vector3f vector=new Vector3f(0.0f,14.0f,1.0f);
          Transform3D trans=new Transform3D();
          trans.setTranslation(vector);
          translacionverti.setTransform(trans);
@@ -34,7 +35,7 @@ public class Tablero extends BranchGroup{
          
          
          TransformGroup translacion=new TransformGroup();
-         vector=new Vector3f(0.0f,0.0f,15.0f);
+         vector=new Vector3f(0.0f,0.0f,13.0f);
          trans=new Transform3D();
          trans.setTranslation(vector);
          translacion.setTransform(trans);

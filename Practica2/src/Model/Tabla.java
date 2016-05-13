@@ -22,44 +22,37 @@ import javax.vecmath.Vector3f;
  */
 public class Tabla extends BranchGroup{
     
-    public Tabla(){
+    private ArrayList<ArrayList<bloque>> matrizbloques;
+    
+    public Tabla(Color3f colorp){
         
         ////Campo horizontal
         ////Translación
         Appearance ap=new Appearance();
         ap.setPolygonAttributes(new PolygonAttributes(PolygonAttributes.POLYGON_FILL, PolygonAttributes.CULL_BACK, 0.0f));
-        Color3f color2=new Color3f(Color.red);
-        ColoringAttributes color=new ColoringAttributes(color2 ,ColoringAttributes.SHADE_FLAT);
+        ColoringAttributes color=new ColoringAttributes(colorp ,ColoringAttributes.SHADE_FLAT);
         ap.setColoringAttributes(color);
-        Box box = new Box(11.0f, 2.0f, 11.0f,
-            Primitive.GENERATE_NORMALS | 
-            Primitive.GENERATE_TEXTURE_COORDS |
-            Primitive.ENABLE_APPEARANCE_MODIFY, ap);
+        Box box = new Box(11.0f, 1.0f, 11.0f, Primitive.ENABLE_APPEARANCE_MODIFY, ap);
         
-        bloque aux;
-        ArrayList<ArrayList< bloque>> matrizbloques=new ArrayList<ArrayList<bloque>>();
-        ArrayList<bloque> auxarray;
-        Vector3f vector=new Vector3f(-9f,2.0f,-9f);
+        matrizbloques=new ArrayList<ArrayList<bloque>>();
+        ArrayList<bloque> auxArray;
+        Vector3f vector=new Vector3f(-9f,1.0f,-9f);
         for(int i=0;i<10;i++){
-            //vector=new Vector3f(-9f,2.0f,-9f);
             vector.x=-9f;
-            auxarray=new ArrayList<bloque>();
+            auxArray=new ArrayList<bloque>();
             for(int j=0;j<10;j++){
-                aux=new bloque((Vector3f) vector.clone());
-                this.addChild(aux);
-                auxarray.add(new bloque((Vector3f) vector.clone()));
+                auxArray.add(new bloque(vector));
+                this.addChild(auxArray.get(j));
                 vector.x+=2f;
            }
-            matrizbloques.add(auxarray);
+            matrizbloques.add(auxArray);
            vector.z+=2;
         }
         this.addChild(box);
         
-        
-        //// Campo vertical
-        /////ROTACION Z
-       ///// Translacion
-        
+        //Pruebas incorporadas
+        matrizbloques.get(0).get(0).activarFallo();
+        matrizbloques.get(5).get(5).activarAcierto();     
         
         
         
