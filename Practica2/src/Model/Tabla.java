@@ -49,12 +49,17 @@ public class Tabla extends BranchGroup{
            vector.z+=2;
         }
         this.addChild(box);
-        
-        //Pruebas incorporadas
-        matrizbloques.get(0).get(0).activarFallo();
-        matrizbloques.get(5).get(5).activarAcierto();     
-        
-        
-        
+          
+    }
+    public void añadirNaves(ArrayList<String> naves){
+        for(int i =0;i<naves.size();i++){
+            for(int j=0;j<naves.get(i).length();j++){
+                if(naves.get(i).charAt(j)!='0'){
+                    matrizbloques.get(i).get(j).activarAcierto();
+                }
+            
+            }
+        }
+    
     }
 }

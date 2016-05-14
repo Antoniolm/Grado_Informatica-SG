@@ -3,6 +3,7 @@ package Model;
 import GUI.Control;
 import GUI.Visualization;
 import com.sun.j3d.utils.universe.SimpleUniverse;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
@@ -24,7 +25,7 @@ import javax.vecmath.Vector3d;
 public class Partida {
     private Fondo background;
     
-    public Partida(){
+    public Partida() throws IOException{
      // Se obtiene la configuración gráfica del sistema y se crean los Canvas3D que va a mostrar la imagen
     Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
     canvas.setSize(800, 600);
@@ -79,7 +80,7 @@ public class Partida {
     
    Color3f color=new Color3f(0.0f, 0.9f, 1.0f);
     Color3f color3=new  Color3f(1.0f,0.4f,0.4f);
-   Tablero tabla=new Tablero(color,color);
+   Tablero tabla=new Tablero(color,color,"plantillas/fichero.txt");
    local.addBranchGraph(tabla);
    
         TransformGroup rotacion3 = new TransformGroup();
@@ -87,7 +88,7 @@ public class Partida {
         rotacionx.rotY(Math.PI);
         rotacion3.setTransform(rotacionx);
    
-    Tablero tabla2=new Tablero(color3,color3);
+    Tablero tabla2=new Tablero(color3,color3,"plantillas/fichero.txt");
     BranchGroup bg=new BranchGroup();
     bg.addChild(rotacion3);
     rotacion3.addChild(tabla2);
