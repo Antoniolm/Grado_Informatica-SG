@@ -50,8 +50,8 @@ public class Picking extends Behavior{
         if(pi!=null){
             Node p=pi.getNode();
             Primitive padre = (Primitive) p.getParent();
-            //Astro objeto = (Astro) padre.getUserData();
-            //objeto.onoffMovimiento();  
+            bloque objeto = (bloque) padre.getUserData();
+            objeto.activarFallo();
         }
         wakeupOn(condition);
     }    

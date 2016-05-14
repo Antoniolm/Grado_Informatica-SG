@@ -28,7 +28,7 @@ public class bloque extends BranchGroup {
     private Box box;
     private ColoringAttributes color;
     private Appearance ap;
-    public bloque(Vector3f vector){
+    public bloque(Vector3f vector,boolean pickeable){
         
         ap=new Appearance();
         ap.setCapability(Appearance.ALLOW_COLORING_ATTRIBUTES_WRITE);
@@ -38,7 +38,13 @@ public class bloque extends BranchGroup {
         
         box = new Box(0.7f, 0.3f, 0.7f,
             Primitive.ENABLE_APPEARANCE_MODIFY, ap);
-        
+        if(pickeable){
+            box.setUserData(this);
+            box.setPickable(true);
+        }
+        else{
+            box.setPickable(false);
+        }
         TransformGroup translacion = new TransformGroup();
         Transform3D transformtranslation = new Transform3D();
         transformtranslation.setTranslation(vector);

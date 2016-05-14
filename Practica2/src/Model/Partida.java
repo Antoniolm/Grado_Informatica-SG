@@ -77,21 +77,32 @@ public class Partida {
     
    //Añadimos la nave al locale
    
-    
+    //Color de ese tablero
    Color3f color=new Color3f(0.0f, 0.9f, 1.0f);
-    Color3f color3=new  Color3f(1.0f,0.4f,0.4f);
    Tablero tabla=new Tablero(color,color,"plantillas/fichero.txt");
-   local.addBranchGraph(tabla);
    
-        TransformGroup rotacion3 = new TransformGroup();
-        Transform3D rotacionx = new Transform3D();
-        rotacionx.rotY(Math.PI);
-        rotacion3.setTransform(rotacionx);
+   //Creamos la segunda parte del tablero
+    TransformGroup rotacion3 = new TransformGroup();
+    Transform3D rotacionx = new Transform3D();
+    rotacionx.rotY(Math.PI);
+    rotacion3.setTransform(rotacionx);
    
+    //Color de ese tablero
+    Color3f color3=new  Color3f(1.0f,0.4f,0.4f);
     Tablero tabla2=new Tablero(color3,color3,"plantillas/fichero.txt");
     BranchGroup bg=new BranchGroup();
-    bg.addChild(rotacion3);
+    
     rotacion3.addChild(tabla2);
+    bg.addChild(rotacion3);
+    bg.addChild(tabla);
+    
+    //Agregamos el picking
+    Picking picar=new Picking(canvas2);
+    picar.setSchedulingBounds(new BoundingSphere(new Point3d(0,0,0),300.0f));
+    picar.setStatus(bg);
+    bg.addChild(picar);
+    
+    
     local.addBranchGraph(bg);
     
     //Añadimos al locale los branchgraph, luz ambiental y fondo

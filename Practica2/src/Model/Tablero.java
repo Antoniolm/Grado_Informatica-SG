@@ -10,10 +10,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Color3f;
+import javax.vecmath.Point3d;
 import javax.vecmath.Vector3f;
 
 /**
@@ -23,8 +25,8 @@ import javax.vecmath.Vector3f;
 public class Tablero extends BranchGroup{
         ArrayList<String> matrizNaves;
     public Tablero(Color3f color,Color3f color2,String fichero) throws IOException{
-         Tabla vertical=new Tabla(color);
-         Tabla horizontal=new Tabla(color2);
+         Tabla vertical=new Tabla(color,true);
+         Tabla horizontal=new Tabla(color2,false);
          
          //Cargamos las naves y las introducimos en el tablero
          cargarNaves(fichero);
@@ -49,7 +51,8 @@ public class Tablero extends BranchGroup{
          translacion.setTransform(trans);
          
          rotacion.addChild(vertical);
-         translacionverti.addChild(rotacion);
+         translacionverti.addChild(rotacion);     
+         
          translacion.addChild(horizontal);
          this.addChild(translacion);
          this.addChild(translacionverti);
