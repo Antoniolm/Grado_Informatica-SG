@@ -17,6 +17,7 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Point3f;
 import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
 
 /**
  *
@@ -42,10 +43,13 @@ public class Partida {
     
     //Se crean las camaras, (planta, perspectiva, luna y nave)
     Camara camaraplanta=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,true,0,new Point3d(0.0,140.0,0.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,0,-1),false);
-
-    Camara camataque=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45,new Point3d(0.0,14.0,33.0), new Point3d(0.0,14.0,0.0), new Vector3d(0,1,0),true);
+    //NUEVO
+    Camara camataque=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45,new Point3d(0.0,14.0,33.0), new Point3d(0.0,13.25,0.0), new Vector3d(0,1,0),true);
+    //FIN NUEVO
     camataque.removeCanvas();
-    Camara camaranaves=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100,new Point3d (0,10,25), new Point3d (0,0,15), new Vector3d (0,1,0),false);
+    //NUEVO
+    Camara camaranaves=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100,new Point3d (0,10,25), new Point3d (0,0,15), new Vector3d (0,1,0),true);
+    //FIN NUEVO
     camaranaves.removeCanvas();
     
     //Compilamos todas las camaras
@@ -61,7 +65,9 @@ public class Partida {
     
     //Ventana de control
     Control nuevocontrol=new Control(camaras);
-    camataque.addCanvas();
+    //NUEVO
+    camaranaves.addCanvas();
+    //FIN NUEVO
     
     local.addBranchGraph(camaraplanta);
     local.addBranchGraph(camataque);
@@ -75,8 +81,44 @@ public class Partida {
     background = new Fondo();
     background.compile();
     
-   //Añadimos la nave al locale
+   //Añadimos las naves al locale
+   //NUEVO
+   Nave nave1 = new Nave("naves/E-TIE-I/E-TIE-I.obj", 1);
+   Transform3D trasn1 = new Transform3D();
+   trasn1.setTranslation(new Vector3f(5, 3, 4.3f));
+   TransformGroup posn1 = new TransformGroup(trasn1);
+   posn1.addChild(nave1);
+   BranchGroup n1 = new BranchGroup();
+   n1.addChild(posn1);
+   local.addBranchGraph(n1);
    
+   Nave nave2 = new Nave("naves/naveEspacial/naveEspacial.obj", 2);
+   Transform3D trasn2 = new Transform3D();
+   trasn2.setTranslation(new Vector3f(-5, 3, 5));
+   TransformGroup posn2 = new TransformGroup(trasn2);
+   posn2.addChild(nave2);
+   BranchGroup n2 = new BranchGroup();
+   n2.addChild(posn2);
+   local.addBranchGraph(n2);
+   
+   Nave nave3 = new Nave("naves/FA-22_Raptor/FA-22_Raptor.obj", 3);
+   Transform3D trasn3 = new Transform3D();
+   trasn3.setTranslation(new Vector3f(5, 3, 14));
+   TransformGroup posn3 = new TransformGroup(trasn3);
+   posn3.addChild(nave3);
+   BranchGroup n3 = new BranchGroup();
+   n3.addChild(posn3);
+   local.addBranchGraph(n3);
+   
+   Nave nave4 = new Nave("naves/IronHide/RB-IronHide.obj", 4);
+   Transform3D trasn4 = new Transform3D();
+   trasn4.setTranslation(new Vector3f(-4f, 4f, 15f));
+   TransformGroup posn4 = new TransformGroup(trasn4);
+   posn4.addChild(nave4);
+   BranchGroup n4 = new BranchGroup();
+   n4.addChild(posn4);
+   local.addBranchGraph(n4);
+   //FIN NUEVO
     //Color de ese tablero
    Color3f color=new Color3f(0.0f, 0.9f, 1.0f);
    Tablero tabla=new Tablero(color,color,"plantillas/fichero.txt");

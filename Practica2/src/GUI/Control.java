@@ -52,8 +52,8 @@ public class Control extends JFrame {
 
         jb_exit = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        camper = new javax.swing.JButton();
-        camluna = new javax.swing.JButton();
+        camaranaves = new javax.swing.JButton();
+        camataque = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,21 +68,21 @@ public class Control extends JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Camaras"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        camper.setText("Camara de naves");
-        camper.addActionListener(new java.awt.event.ActionListener() {
+        camaranaves.setText("Camara de naves");
+        camaranaves.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                camperActionPerformed(evt);
+                camaranavesActionPerformed(evt);
             }
         });
-        jPanel2.add(camper, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 26, 170, -1));
+        jPanel2.add(camaranaves, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 26, 170, -1));
 
-        camluna.setText("Camara de ataque");
-        camluna.addActionListener(new java.awt.event.ActionListener() {
+        camataque.setText("Camara de ataque");
+        camataque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                camlunaActionPerformed(evt);
+                camataqueActionPerformed(evt);
             }
         });
-        jPanel2.add(camluna, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 69, 170, -1));
+        jPanel2.add(camataque, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 69, 170, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,21 +115,9 @@ public class Control extends JFrame {
   private void jb_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_exitActionPerformed
     exit(0);
   }//GEN-LAST:event_jb_exitActionPerformed
-
-    private void camperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camperActionPerformed
+//NUEVO
+    private void camaranavesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camaranavesActionPerformed
         // Desactivamos el canvas de la vista activa y la asignamos a la vista perpectiva
-        if(!camaras.get(0).isActive()){
-            if(camaras.get(1).isActive()){
-                camaras.get(1).removeCanvas();
-            }
-            camaras.get(0).addCanvas();
-        
-        }
-            
-    }//GEN-LAST:event_camperActionPerformed
-
-    private void camlunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camlunaActionPerformed
-        // Desactivamos el canvas de la vista activa y la asignamos a la vista luna
         if(!camaras.get(1).isActive()){
             if(camaras.get(0).isActive()){
                 camaras.get(0).removeCanvas();
@@ -137,12 +125,24 @@ public class Control extends JFrame {
             camaras.get(1).addCanvas();
         
         }
-    }//GEN-LAST:event_camlunaActionPerformed
+            
+    }//GEN-LAST:event_camaranavesActionPerformed
 
+    private void camataqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camataqueActionPerformed
+        // Desactivamos el canvas de la vista activa y la asignamos a la vista luna
+        if(!camaras.get(0).isActive()){
+            if(camaras.get(1).isActive()){
+                camaras.get(1).removeCanvas();
+            }
+            camaras.get(0).addCanvas();
+        
+        }
+    }//GEN-LAST:event_camataqueActionPerformed
+//FIN NUEVO
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton camluna;
-    private javax.swing.JButton camper;
+    private javax.swing.JButton camaranaves;
+    private javax.swing.JButton camataque;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jb_exit;
     // End of variables declaration//GEN-END:variables

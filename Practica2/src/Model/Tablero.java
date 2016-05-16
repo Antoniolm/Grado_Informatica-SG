@@ -33,7 +33,9 @@ public class Tablero extends BranchGroup{
          horizontal.añadirNaves(matrizNaves);
          
          TransformGroup translacionverti=new TransformGroup();
-         Vector3f vector=new Vector3f(0.0f,14.0f,1.0f);
+         //NUEVO
+         Vector3f vector=new Vector3f(0.0f,13.0f,1.0f);
+         //FIN NUEVO
          Transform3D trans=new Transform3D();
          trans.setTranslation(vector);
          translacionverti.setTransform(trans);
