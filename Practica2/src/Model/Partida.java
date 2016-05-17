@@ -12,12 +12,9 @@ import javax.media.j3d.Locale;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.media.j3d.VirtualUniverse;
-import javax.vecmath.AxisAngle4f;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
-import javax.vecmath.Point3f;
 import javax.vecmath.Vector3d;
-import javax.vecmath.Vector3f;
 
 /**
  *
@@ -29,27 +26,28 @@ public class Partida {
     boolean turnoAzul;
     Control nuevocontrol;
     Picking picar;
+    
     public Partida() throws IOException{
 
-    Canvas3D canvas2 = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
-    canvas2.setSize(1000, 800);
+    Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
+    canvas.setSize(1000, 800);
     
     // Se construyen las ventanas de visualización
-     Visualization visualizationWindow2 = new Visualization (canvas2,1000,800,750,0);
+     Visualization visualizationWindow2 = new Visualization (canvas,1000,800,750,0);
      
     // Se crea el universo
     VirtualUniverse universe = new VirtualUniverse();
     Locale local=new Locale(universe);
     
     //Camaras jugador Azul
-    Camara ataqueAzul=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45,new Point3d(0.0,14.0,33.0), new Point3d(0.0,13.25,0.0), new Vector3d(0,1,0));
+    Camara ataqueAzul=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,45,new Point3d(0.0,14.0,33.0), new Point3d(0.0,13.25,0.0), new Vector3d(0,1,0));
     ataqueAzul.removeCanvas();
-    Camara generalAzul=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100,new Point3d (0,10,25), new Point3d (0,0,15), new Vector3d (0,1,0));
+    Camara generalAzul=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,100,new Point3d (0,10,25), new Point3d (0,0,15), new Vector3d (0,1,0));
     generalAzul.removeCanvas();
     
-    Camara ataqueRojo=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45,new Point3d(0.0,14.0,-33.0), new Point3d(0.0,13.25,0.0), new Vector3d(0,1,0));
+    Camara ataqueRojo=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,45,new Point3d(0.0,14.0,-33.0), new Point3d(0.0,13.25,0.0), new Vector3d(0,1,0));
     ataqueRojo.removeCanvas();
-    Camara generalRojo=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100,new Point3d (0,10,-25), new Point3d (0,0,-15), new Vector3d (0,1,0));
+    Camara generalRojo=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,100,new Point3d (0,10,-25), new Point3d (0,0,-15), new Vector3d (0,1,0));
     generalRojo.removeCanvas();
     
     
@@ -67,7 +65,7 @@ public class Partida {
     camaras.add(ataqueRojo);
     
     
-     picar=new Picking(canvas2,this);
+    picar=new Picking(canvas,this);
     //Ventana de control
     nuevocontrol=new Control(camaras,picar);
     generalAzul.addCanvas();
@@ -144,7 +142,7 @@ public class Partida {
     bg.addChild(tablaAzul);
     
     //Agregamos el picking
-    picar=new Picking(canvas2,this);
+    picar=new Picking(canvas,this);
     picar.setSchedulingBounds(new BoundingSphere(new Point3d(0,0,0),300.0f));
     picar.setStatus(bg);
     bg.addChild(picar);

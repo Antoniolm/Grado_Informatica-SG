@@ -5,16 +5,13 @@
  */
 package Model;
 
-import com.sun.j3d.utils.geometry.Primitive;
 import com.sun.j3d.utils.pickfast.PickCanvas;
 import java.awt.AWTEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import javax.media.j3d.Behavior;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
-import javax.media.j3d.Node;
 import javax.media.j3d.PickInfo;
 import javax.media.j3d.WakeupOnAWTEvent;
 

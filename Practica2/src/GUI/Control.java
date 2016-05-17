@@ -1,10 +1,10 @@
 package GUI;
+
 import Model.Camara;
 import Model.Picking;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import javax.media.j3d.Transform3D;
 import javax.swing.JFrame;
 
 /**
@@ -12,7 +12,7 @@ import javax.swing.JFrame;
  * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
  */
 public class Control extends JFrame {
- 
+    
   /**
    * Creates new form Control
    */
@@ -20,6 +20,7 @@ public class Control extends JFrame {
     ArrayList<Camara> camaras;
     int camaraActual;
     Picking pick;
+    
   public Control(ArrayList<Camara> camara,Picking picar) {
     initComponents();
     // Atributos de referencia
@@ -28,6 +29,7 @@ public class Control extends JFrame {
     turno=true;
     camaraActual=0;
     pick=picar;
+    
     // Atributos de la ventana
     setTitle ("Control Window");
     setLocation (820, 520);
@@ -44,6 +46,7 @@ public class Control extends JFrame {
     
     repaint();
   }
+
   /// El método encargado del cierre de la aplicación es único
   public void exit (int status) {
     System.exit (status);
@@ -82,7 +85,7 @@ public class Control extends JFrame {
                 camataqueActionPerformed(evt);
             }
         });
-        jPanel2.add(camataque, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 180, 50));
+        jPanel2.add(camataque, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 160, 50));
 
         pasarturno.setText("Pasar turno");
         pasarturno.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +93,7 @@ public class Control extends JFrame {
                 pasarturnoActionPerformed(evt);
             }
         });
-        jPanel2.add(pasarturno, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 120, 50));
+        jPanel2.add(pasarturno, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 120, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,20 +102,18 @@ public class Control extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jb_exit)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jb_exit))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jb_exit)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.getAccessibleContext().setAccessibleName("Vistas");
@@ -124,14 +125,32 @@ public class Control extends JFrame {
     exit(0);
   }//GEN-LAST:event_jb_exitActionPerformed
 
+    public void activarAtaque(){
+        camataque.setEnabled(true);
+    }
+    
+    public void activarCambioTurno(){
+        pasarturno.setEnabled(true);
+    }
+  
+    public void desactivarAtaque(){
+        camataque.setEnabled(false);
+    }
+    
+    public void desactivarCambioTurno(){
+        pasarturno.setEnabled(false);
+    }
+  
     private void camataqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camataqueActionPerformed
         // Desactivamos el canvas de la vista activa y la asignamos a la vista lunas
              System.out.println("trueb2");
                 camaras.get(camaraActual).removeCanvas();
                 camaraActual++;
                 camaras.get(camaraActual).addCanvas();
-                camataque.setEnabled(false);
-                pasarturno.setEnabled(true);
+                desactivarAtaque();
+                activarCambioTurno();
+                pick.setCamAtaque(true);
+                desactivarCambioTurno();
 
     }//GEN-LAST:event_camataqueActionPerformed
 
@@ -147,8 +166,9 @@ public class Control extends JFrame {
       System.out.println("CamarasActual "+camaraActual);
       camaras.get(camaraActual).addCanvas();
       turno=!turno;
-      pasarturno.setEnabled(false);
-      camataque.setEnabled(true);
+      desactivarCambioTurno();
+      activarAtaque();
+      pick.setCamAtaque(false);
       pick.setCont(0);
       System.out.println("Cambiooos:"+pick.getCont());
     }//GEN-LAST:event_pasarturnoActionPerformed

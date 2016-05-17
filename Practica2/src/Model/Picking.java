@@ -22,12 +22,16 @@ public class Picking extends Behavior{
     private Canvas3D canvas ;
     private Partida partida;
     static int cont;
+    static boolean camAtaque;
+    
     public Picking (Canvas3D aCanvas,Partida part) {
         partida=part;
         canvas = aCanvas ;
         condition = new WakeupOnAWTEvent (MouseEvent.MOUSE_CLICKED) ;
         cont=0;
+        camAtaque=false;
     }
+    
     public void setStatus( BranchGroup bg) {
         //Realizamos la configuracion de nuestra pickcanvas
         pickCanvas = new PickCanvas(canvas, bg);
@@ -37,6 +41,9 @@ public class Picking extends Behavior{
 }
     public void setCont(int valor){
         cont=valor;
+    }
+    public void setCamAtaque(boolean valor){
+        camAtaque=valor;
     }
     public int getCont(){
         return cont;
@@ -60,16 +67,17 @@ public class Picking extends Behavior{
             Node p=pi.getNode();
             Primitive padre = (Primitive) p.getParent();
             bloque objeto = (bloque) padre.getUserData();
-            if(!objeto.getActivado()&& cont==0){ 
+            if(!objeto.getActivado() && cont==0 && camAtaque){ 
                 objeto.activarFallo();
                 int x=objeto.getX();
                 int y=objeto.getY();
                 partida.cambiarTurno(x,y);
                 cont++;
+                partida.nuevocontrol.activarCambioTurno();
             }
-            
             //Partida.actualizarmapa(x,y);
         }
+        
         wakeupOn(condition);
     }    
 

@@ -1,10 +1,5 @@
 package Model;
 
-import com.sun.j3d.utils.behaviors.mouse.MouseBehavior;
-import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
-import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
-import com.sun.j3d.utils.behaviors.mouse.MouseWheelZoom;
-import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.PhysicalBody;
@@ -26,7 +21,7 @@ public class Camara extends BranchGroup{
     private boolean activada;
     private TransformGroup tg;
     
-    public Camara(Canvas3D canva,float distance,float planodelantero,float planotrasero,float screenScl,boolean planta,float angulo,Point3d posicion,Point3d direccion,Vector3d vup){    
+    public Camara(Canvas3D canva,float distance,float planodelantero,float planotrasero,float screenScl,float angulo,Point3d posicion,Point3d direccion,Vector3d vup){    
       canvas=canva;
       activada=true;
       ViewPlatform viewplat=new ViewPlatform();
@@ -36,15 +31,9 @@ public class Camara extends BranchGroup{
       PhysicalEnvironment penvi=new PhysicalEnvironment();
       
       vista=new View();
-      
-      if(!planta) {
-           vista.setProjectionPolicy(View.PERSPECTIVE_PROJECTION);
-           vista.setFieldOfView(Math.toRadians(angulo));
-       } else {
-           vista.setProjectionPolicy(View.PARALLEL_PROJECTION);
-           vista.setScreenScalePolicy(View.SCALE_EXPLICIT);
-           vista.setScreenScale(screenScl);
-       }
+     
+      vista.setProjectionPolicy(View.PERSPECTIVE_PROJECTION);
+      vista.setFieldOfView(Math.toRadians(angulo));
       
       vista.setFrontClipDistance(planodelantero);
       vista.setBackClipDistance(planotrasero);

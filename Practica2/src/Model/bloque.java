@@ -8,10 +8,8 @@ package Model;
 import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.Primitive;
 import javax.media.j3d.Appearance;
-import static javax.media.j3d.Appearance.ALLOW_COLORING_ATTRIBUTES_WRITE;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.ColoringAttributes;
-import static javax.media.j3d.ColoringAttributes.ALLOW_COLOR_WRITE;
 import javax.media.j3d.PolygonAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
@@ -29,6 +27,7 @@ public class bloque extends BranchGroup {
     private ColoringAttributes color;
     private Appearance ap;
     private boolean activado;
+    
     public bloque(Vector3f vector,boolean pickeable,int x,int y){
         posx=x;
         posy=y;
