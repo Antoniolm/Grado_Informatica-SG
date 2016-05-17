@@ -24,11 +24,14 @@ import javax.vecmath.Vector3f;
  */
 public class bloque extends BranchGroup {
     
-    private int id;
+    private int id,posx,posy;
     private Box box;
     private ColoringAttributes color;
     private Appearance ap;
-    public bloque(Vector3f vector,boolean pickeable){
+    private boolean activado;
+    public bloque(Vector3f vector,boolean pickeable,int x,int y){
+        posx=x;
+        posy=y;
         
         ap=new Appearance();
         ap.setCapability(Appearance.ALLOW_COLORING_ATTRIBUTES_WRITE);
@@ -66,10 +69,21 @@ public class bloque extends BranchGroup {
         Color3f nuevocolor=new Color3f(0.6f,0.0f,0.0f);
         //ColoringAttributes
         ap.setColoringAttributes(new ColoringAttributes(nuevocolor,ColoringAttributes.SHADE_FLAT));
+        activado=true;
     }
     public void activarAcierto(){
         Color3f nuevocolor=new Color3f(0.2f,0.6f,0.2f);
         //ColoringAttributes
         ap.setColoringAttributes(new ColoringAttributes(nuevocolor,ColoringAttributes.SHADE_FLAT));
+        activado=true;
+    }
+    public int getX(){
+        return posx;
+    }
+    public int getY(){
+        return posy;
+    }
+    public boolean getActivado(){
+        return activado;
     }
 }

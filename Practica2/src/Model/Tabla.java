@@ -41,7 +41,7 @@ public class Tabla extends BranchGroup{
             vector.x=-9f;
             auxArray=new ArrayList<bloque>();
             for(int j=0;j<10;j++){
-                auxArray.add(new bloque(vector,pickeable));
+                auxArray.add(new bloque(vector,pickeable,j,i));
                 this.addChild(auxArray.get(j));
                 vector.x+=2f;
            }
@@ -61,5 +61,12 @@ public class Tabla extends BranchGroup{
             }
         }
     
+    }
+    
+    public void setAcierto(int x,int y){
+        matrizbloques.get(y).get(x).activarAcierto();
+    }
+    public void setFallo(int x,int y){
+        matrizbloques.get(y).get(x).activarFallo();
     }
 }

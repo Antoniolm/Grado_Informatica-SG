@@ -24,18 +24,18 @@ import javax.vecmath.Vector3f;
  */
 public class Tablero extends BranchGroup{
         ArrayList<String> matrizNaves;
+        Tabla vertical,horizontal;
+        
     public Tablero(Color3f color,Color3f color2,String fichero) throws IOException{
-         Tabla vertical=new Tabla(color,true);
-         Tabla horizontal=new Tabla(color2,false);
+         vertical=new Tabla(color,true);
+         horizontal=new Tabla(color2,false);
          
          //Cargamos las naves y las introducimos en el tablero
          cargarNaves(fichero);
          horizontal.añadirNaves(matrizNaves);
          
          TransformGroup translacionverti=new TransformGroup();
-         //NUEVO
          Vector3f vector=new Vector3f(0.0f,13.0f,1.0f);
-         //FIN NUEVO
          Transform3D trans=new Transform3D();
          trans.setTranslation(vector);
          translacionverti.setTransform(trans);
@@ -71,5 +71,19 @@ public class Tablero extends BranchGroup{
       b.close();
     
     }
-    
+    public boolean posicionAtaque(int x,int y){
+        boolean salida=false;
+        if(matrizNaves.get(y).charAt(x)!='0'){
+            salida=true;
+            horizontal.setFallo(x, y);
+            System.out.println("Acierto -> x:"+x+" y:"+y);
+            //posicion en la matrizNaves se pondria a 0
+            //en otro metodo comprobamos si no esta acero aun para saber el ganador
+        }
+        else{
+            horizontal.setAcierto(x, y);
+            System.out.println("Fallo -> x:"+x+" y:"+y);
+        }
+        return salida;
+    }
 }

@@ -1,8 +1,10 @@
 package GUI;
 import Model.Camara;
+import Model.Picking;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import javax.media.j3d.Transform3D;
 import javax.swing.JFrame;
 
 /**
@@ -14,11 +16,18 @@ public class Control extends JFrame {
   /**
    * Creates new form Control
    */
+    boolean turno;
     ArrayList<Camara> camaras;
-  public Control(ArrayList<Camara> camara) {
+    int camaraActual;
+    Picking pick;
+  public Control(ArrayList<Camara> camara,Picking picar) {
     initComponents();
     // Atributos de referencia
     camaras=camara;
+    pasarturno.setEnabled(false);
+    turno=true;
+    camaraActual=0;
+    pick=picar;
     // Atributos de la ventana
     setTitle ("Control Window");
     setLocation (820, 520);
@@ -35,7 +44,6 @@ public class Control extends JFrame {
     
     repaint();
   }
-
   /// El método encargado del cierre de la aplicación es único
   public void exit (int status) {
     System.exit (status);
@@ -52,8 +60,8 @@ public class Control extends JFrame {
 
         jb_exit = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        camaranaves = new javax.swing.JButton();
         camataque = new javax.swing.JButton();
+        pasarturno = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,21 +76,21 @@ public class Control extends JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Camaras"));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        camaranaves.setText("Camara de naves");
-        camaranaves.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                camaranavesActionPerformed(evt);
-            }
-        });
-        jPanel2.add(camaranaves, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 26, 170, -1));
-
-        camataque.setText("Camara de ataque");
+        camataque.setText("Camara de Ataque");
         camataque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 camataqueActionPerformed(evt);
             }
         });
-        jPanel2.add(camataque, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 69, 170, -1));
+        jPanel2.add(camataque, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 180, 50));
+
+        pasarturno.setText("Pasar turno");
+        pasarturno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pasarturnoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(pasarturno, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 120, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,7 +99,7 @@ public class Control extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jb_exit)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -115,35 +123,41 @@ public class Control extends JFrame {
   private void jb_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_exitActionPerformed
     exit(0);
   }//GEN-LAST:event_jb_exitActionPerformed
-//NUEVO
-    private void camaranavesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camaranavesActionPerformed
-        // Desactivamos el canvas de la vista activa y la asignamos a la vista perpectiva
-        if(!camaras.get(1).isActive()){
-            if(camaras.get(0).isActive()){
-                camaras.get(0).removeCanvas();
-            }
-            camaras.get(1).addCanvas();
-        
-        }
-            
-    }//GEN-LAST:event_camaranavesActionPerformed
 
     private void camataqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camataqueActionPerformed
-        // Desactivamos el canvas de la vista activa y la asignamos a la vista luna
-        if(!camaras.get(0).isActive()){
-            if(camaras.get(1).isActive()){
-                camaras.get(1).removeCanvas();
-            }
-            camaras.get(0).addCanvas();
-        
-        }
+        // Desactivamos el canvas de la vista activa y la asignamos a la vista lunas
+             System.out.println("trueb2");
+                camaras.get(camaraActual).removeCanvas();
+                camaraActual++;
+                camaras.get(camaraActual).addCanvas();
+                camataque.setEnabled(false);
+                pasarturno.setEnabled(true);
+
     }//GEN-LAST:event_camataqueActionPerformed
+
+    private void pasarturnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasarturnoActionPerformed
+
+      camaras.get(camaraActual).removeCanvas();
+      if(turno){
+          camaraActual=2;
+      }
+      else{
+          camaraActual=0;
+      }
+      System.out.println("CamarasActual "+camaraActual);
+      camaras.get(camaraActual).addCanvas();
+      turno=!turno;
+      pasarturno.setEnabled(false);
+      camataque.setEnabled(true);
+      pick.setCont(0);
+      System.out.println("Cambiooos:"+pick.getCont());
+    }//GEN-LAST:event_pasarturnoActionPerformed
 //FIN NUEVO
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton camaranaves;
     private javax.swing.JButton camataque;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jb_exit;
+    private javax.swing.JButton pasarturno;
     // End of variables declaration//GEN-END:variables
 }

@@ -25,53 +25,58 @@ import javax.vecmath.Vector3f;
  */
 public class Partida {
     private Fondo background;
-    
+    Tablero tablaAzul,tablaRoja;
+    boolean turnoAzul;
+    Control nuevocontrol;
+    Picking picar;
     public Partida() throws IOException{
-     // Se obtiene la configuración gráfica del sistema y se crean los Canvas3D que va a mostrar la imagen
-    Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
-    canvas.setSize(800, 600);
+
     Canvas3D canvas2 = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
     canvas2.setSize(1000, 800);
     
     // Se construyen las ventanas de visualización
-     Visualization visualizationWindow = new Visualization (canvas,650,580,0,0);
      Visualization visualizationWindow2 = new Visualization (canvas2,1000,800,750,0);
      
     // Se crea el universo
     VirtualUniverse universe = new VirtualUniverse();
     Locale local=new Locale(universe);
     
-    //Se crean las camaras, (planta, perspectiva, luna y nave)
-    Camara camaraplanta=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,true,0,new Point3d(0.0,140.0,0.0), new Point3d(0.0,0.0,0.0), new Vector3d(0,0,-1),false);
-    //NUEVO
-    Camara camataque=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45,new Point3d(0.0,14.0,33.0), new Point3d(0.0,13.25,0.0), new Vector3d(0,1,0),true);
-    //FIN NUEVO
-    camataque.removeCanvas();
-    //NUEVO
-    Camara camaranaves=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100,new Point3d (0,10,25), new Point3d (0,0,15), new Vector3d (0,1,0),true);
-    //FIN NUEVO
-    camaranaves.removeCanvas();
+    //Camaras jugador Azul
+    Camara ataqueAzul=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45,new Point3d(0.0,14.0,33.0), new Point3d(0.0,13.25,0.0), new Vector3d(0,1,0));
+    ataqueAzul.removeCanvas();
+    Camara generalAzul=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100,new Point3d (0,10,25), new Point3d (0,0,15), new Vector3d (0,1,0));
+    generalAzul.removeCanvas();
+    
+    Camara ataqueRojo=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,45,new Point3d(0.0,14.0,-33.0), new Point3d(0.0,13.25,0.0), new Vector3d(0,1,0));
+    ataqueRojo.removeCanvas();
+    Camara generalRojo=new Camara(canvas2, 60.0f, 0.02f, 40.0f,0.01f,false,100,new Point3d (0,10,-25), new Point3d (0,0,-15), new Vector3d (0,1,0));
+    generalRojo.removeCanvas();
+    
     
     //Compilamos todas las camaras
-    camaraplanta.compile();
-    camataque.compile();
-    camaranaves.compile();
+    ataqueAzul.compile();
+    generalAzul.compile();
+    ataqueRojo.compile();
+    generalRojo.compile();
     
     //Array de camaras variables
     ArrayList<Camara> camaras=new ArrayList<Camara>();
-    camaras.add(camataque);
-    camaras.add(camaranaves);
+    camaras.add(generalAzul);
+    camaras.add(ataqueAzul);
+    camaras.add(generalRojo);
+    camaras.add(ataqueRojo);
     
     
+     picar=new Picking(canvas2,this);
     //Ventana de control
-    Control nuevocontrol=new Control(camaras);
-    //NUEVO
-    camaranaves.addCanvas();
-    //FIN NUEVO
+    nuevocontrol=new Control(camaras,picar);
+    generalAzul.addCanvas();
     
-    local.addBranchGraph(camaraplanta);
-    local.addBranchGraph(camataque);
-    local.addBranchGraph(camaranaves);
+    local.addBranchGraph(ataqueAzul);
+    local.addBranchGraph(generalAzul);
+    local.addBranchGraph(ataqueRojo);
+    local.addBranchGraph(generalRojo);
+
     
     //Se crea la luz ambiental y la compilamos
     Luz aLight= new Luz();
@@ -83,7 +88,7 @@ public class Partida {
     
    //Añadimos las naves al locale
    //NUEVO
-   Nave nave1 = new Nave("naves/E-TIE-I/E-TIE-I.obj", 1);
+   /*Nave nave1 = new Nave("naves/E-TIE-I/E-TIE-I.obj", 1);
    Transform3D trasn1 = new Transform3D();
    trasn1.setTranslation(new Vector3f(5, 3, 4.3f));
    TransformGroup posn1 = new TransformGroup(trasn1);
@@ -117,11 +122,11 @@ public class Partida {
    posn4.addChild(nave4);
    BranchGroup n4 = new BranchGroup();
    n4.addChild(posn4);
-   local.addBranchGraph(n4);
+   local.addBranchGraph(n4);*/
    //FIN NUEVO
     //Color de ese tablero
    Color3f color=new Color3f(0.0f, 0.9f, 1.0f);
-   Tablero tabla=new Tablero(color,color,"plantillas/fichero.txt");
+   tablaAzul=new Tablero(color,color,"plantillas/fichero.txt");
    
    //Creamos la segunda parte del tablero
     TransformGroup rotacion3 = new TransformGroup();
@@ -131,15 +136,15 @@ public class Partida {
    
     //Color de ese tablero
     Color3f color3=new  Color3f(1.0f,0.4f,0.4f);
-    Tablero tabla2=new Tablero(color3,color3,"plantillas/fichero.txt");
+    tablaRoja=new Tablero(color3,color3,"plantillas/fichero.txt");
     BranchGroup bg=new BranchGroup();
     
-    rotacion3.addChild(tabla2);
+    rotacion3.addChild(tablaRoja);
     bg.addChild(rotacion3);
-    bg.addChild(tabla);
+    bg.addChild(tablaAzul);
     
     //Agregamos el picking
-    Picking picar=new Picking(canvas2);
+    picar=new Picking(canvas2,this);
     picar.setSchedulingBounds(new BoundingSphere(new Point3d(0,0,0),300.0f));
     picar.setStatus(bg);
     bg.addChild(picar);
@@ -152,8 +157,20 @@ public class Partida {
     local.addBranchGraph(background);
     
     // Se muestra la ventana
-    visualizationWindow.setVisible(true);
     visualizationWindow2.setVisible(true);
     nuevocontrol.setVisible(true);
     }
+    public void cambiarTurno(int x,int y){//Hacemos el cambio de camaras tmb
+        if(turnoAzul){
+            tablaRoja.posicionAtaque(x,y);
+            turnoAzul=false;
+        }
+        else{
+            tablaAzul.posicionAtaque(x,y);
+            turnoAzul=true;
+        }
+    }
+    //public boolean getTurno(){
+    //    
+    //}
 }
