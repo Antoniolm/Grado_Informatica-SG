@@ -18,7 +18,7 @@ import javax.vecmath.Vector3d;
 
 /**
  *
- * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
+ * @author ANTONIO DAVID LÓPEZ MACHADO, JAVIER MARTINEZ MONTILLA, MANUEL ALBERTO LAFUENTE ARANDA
  */
 public class Partida {
     private Fondo background;
@@ -31,6 +31,7 @@ public class Partida {
 
     Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
     canvas.setSize(1000, 800);
+    turnoAzul=true;
     
     // Se construyen las ventanas de visualización
      Visualization visualizationWindow2 = new Visualization (canvas,1000,800,750,0);
@@ -158,16 +159,20 @@ public class Partida {
     visualizationWindow2.setVisible(true);
     nuevocontrol.setVisible(true);
     }
-    public void cambiarTurno(int x,int y){//Hacemos el cambio de camaras tmb
+    public boolean cambiarTurno(int x,int y){//Hacemos el cambio de camaras tmb
+        boolean salida=false;
         if(turnoAzul){
-            tablaRoja.posicionAtaque(x,y);
+            salida=tablaRoja.posicionAtaque(x,y);
+           
             turnoAzul=false;
         }
         else{
-            tablaAzul.posicionAtaque(x,y);
+            salida=tablaAzul.posicionAtaque(x,y);
             turnoAzul=true;
         }
+        return salida;
     }
+    
     //public boolean getTurno(){
     //    
     //}

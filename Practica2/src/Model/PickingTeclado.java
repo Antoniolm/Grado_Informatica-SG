@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import com.sun.j3d.utils.pickfast.PickCanvas;
@@ -17,7 +12,7 @@ import javax.media.j3d.WakeupOnAWTEvent;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO, JAVIER MARTINEZ MONTILLA, MANUEL ALBERTO LAFUENTE ARANDA
  */
 public class PickingTeclado extends Behavior{
     private WakeupOnAWTEvent condition;

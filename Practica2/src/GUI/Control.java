@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
+ * @author ANTONIO DAVID LÓPEZ MACHADO, JAVIER MARTINEZ MONTILLA, MANUEL ALBERTO LAFUENTE ARANDA
  */
 public class Control extends JFrame {
     

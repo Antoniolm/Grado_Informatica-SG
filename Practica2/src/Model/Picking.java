@@ -14,7 +14,7 @@ import javax.media.j3d.WakeupOnAWTEvent;
 
 /**
  *
- * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
+ * @author ANTONIO DAVID LÓPEZ MACHADO, JAVIER MARTINEZ MONTILLA, MANUEL ALBERTO LAFUENTE ARANDA
  */
 public class Picking extends Behavior{
     private WakeupOnAWTEvent condition;
@@ -66,12 +66,14 @@ public class Picking extends Behavior{
         if(pi!=null){
             Node p=pi.getNode();
             Primitive padre = (Primitive) p.getParent();
-            bloque objeto = (bloque) padre.getUserData();
+            Bloque objeto = (Bloque) padre.getUserData();
             if(!objeto.getActivado() && cont==0 && camAtaque){ 
-                objeto.activarFallo();
+                //objeto.activarFallo();
                 int x=objeto.getX();
                 int y=objeto.getY();
-                partida.cambiarTurno(x,y);
+                boolean estado=partida.cambiarTurno(x,y);
+                if(estado) objeto.activarAcierto();
+                else objeto.activarFallo();
                 cont++;
                 partida.nuevocontrol.activarCambioTurno();
             }

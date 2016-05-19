@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import java.io.BufferedReader;
@@ -18,7 +13,7 @@ import javax.vecmath.Vector3f;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO, JAVIER MARTINEZ MONTILLA, MANUEL ALBERTO LAFUENTE ARANDA
  */
 public class Tablero extends BranchGroup{
         ArrayList<String> matrizNaves;
@@ -69,12 +64,15 @@ public class Tablero extends BranchGroup{
       b.close();
     
     }
-    public boolean posicionAtaque(int x,int y){
+    public boolean posicionAtaque(int x,int y){///////////////////////////////////////////////////////////////////
         boolean salida=false;
         if(matrizNaves.get(y).charAt(x)!='0'){
             salida=true;
             horizontal.setFallo(x, y);
-            System.out.println("Acierto -> x:"+x+" y:"+y);
+            //System.out.println("Acierto -> x:"+x+" y:"+y);
+            matrizNaves.get(y);
+            
+            //matrizNaves.set(y,"0");
             //posicion en la matrizNaves se pondria a 0
             //en otro metodo comprobamos si no esta acero aun para saber el ganador
         }

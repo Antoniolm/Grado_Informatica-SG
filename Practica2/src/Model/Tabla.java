@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import com.sun.j3d.utils.geometry.Box;
@@ -17,11 +12,11 @@ import javax.vecmath.Vector3f;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO, JAVIER MARTINEZ MONTILLA, MANUEL ALBERTO LAFUENTE ARANDA
  */
 public class Tabla extends BranchGroup{
     
-    private ArrayList<ArrayList<bloque>> matrizbloques;
+    private ArrayList<ArrayList<Bloque>> matrizbloques;
     
     public Tabla(Color3f colorp,boolean pickeable){
         
@@ -33,14 +28,14 @@ public class Tabla extends BranchGroup{
         ap.setColoringAttributes(color);
         Box box = new Box(11.0f, 1.0f, 11.0f, Primitive.ENABLE_APPEARANCE_MODIFY, ap);
         box.setPickable(false);
-        matrizbloques=new ArrayList<ArrayList<bloque>>();
-        ArrayList<bloque> auxArray;
+        matrizbloques=new ArrayList<ArrayList<Bloque>>();
+        ArrayList<Bloque> auxArray;
         Vector3f vector=new Vector3f(-9f,1.0f,-9f);
         for(int i=0;i<10;i++){
             vector.x=-9f;
-            auxArray=new ArrayList<bloque>();
+            auxArray=new ArrayList<Bloque>();
             for(int j=0;j<10;j++){
-                auxArray.add(new bloque(vector,pickeable,j,i));
+                auxArray.add(new Bloque(vector,pickeable,j,i));
                 this.addChild(auxArray.get(j));
                 vector.x+=2f;
            }

@@ -13,7 +13,7 @@ import javax.vecmath.Vector3d;
 
 /**
  *
- * @author ANTONIO DAVID LÓPEZ MACHADO Y JAVIER MARTINEZ MONTILLA
+ * @author ANTONIO DAVID LÓPEZ MACHADO, JAVIER MARTINEZ MONTILLA, MANUEL ALBERTO LAFUENTE ARANDA
  */
 public class Camara extends BranchGroup{
     private View vista;
