@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
 
 import com.sun.j3d.utils.geometry.Box;
@@ -18,9 +13,9 @@ import javax.vecmath.Vector3f;
 
 /**
  *
- * @author LENOVO
+ * @author ANTONIO DAVID LÓPEZ MACHADO, JAVIER MARTINEZ MONTILLA, MANUEL ALBERTO LAFUENTE ARANDA
  */
-public class bloque extends BranchGroup {
+public class Bloque extends BranchGroup {
     
     private int id,posx,posy;
     private Box box;
@@ -28,7 +23,7 @@ public class bloque extends BranchGroup {
     private Appearance ap;
     private boolean activado;
     
-    public bloque(Vector3f vector,boolean pickeable,int x,int y){
+    public Bloque(Vector3f vector,boolean pickeable,int x,int y){
         posx=x;
         posy=y;
         
@@ -70,6 +65,7 @@ public class bloque extends BranchGroup {
         ap.setColoringAttributes(new ColoringAttributes(nuevocolor,ColoringAttributes.SHADE_FLAT));
         activado=true;
     }
+    
     public void activarAcierto(){
         Color3f nuevocolor=new Color3f(0.2f,0.6f,0.2f);
         //ColoringAttributes
