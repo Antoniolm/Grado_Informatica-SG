@@ -64,22 +64,40 @@ public class Tablero extends BranchGroup{
       b.close();
     
     }
-    public boolean posicionAtaque(int x,int y){///////////////////////////////////////////////////////////////////
+    public boolean posicionAtaque(int x,int y){
         boolean salida=false;
         if(matrizNaves.get(y).charAt(x)!='0'){
             salida=true;
             horizontal.setFallo(x, y);
             //System.out.println("Acierto -> x:"+x+" y:"+y);
-            matrizNaves.get(y);
+            String s=matrizNaves.get(y).substring(0,x)+'0'+matrizNaves.get(y).substring(x+1);
+            matrizNaves.set(y,s);
             
-            //matrizNaves.set(y,"0");
-            //posicion en la matrizNaves se pondria a 0
-            //en otro metodo comprobamos si no esta acero aun para saber el ganador
+            /*IMPRIMIR MATRIZNAVES*/
+            /*for(String i:matrizNaves){
+                System.out.println(i);
+            }*/
+            //en otro metodo comprobamos si no esta a cero aun para saber el ganador
+            //comprobarGanador();
         }
         else{
             horizontal.setAcierto(x, y);
             System.out.println("Fallo -> x:"+x+" y:"+y);
         }
         return salida;
+    }
+
+    public boolean comprobarGanador() {
+        int cont=0;
+        for(String i:matrizNaves){
+            for(int j=0;j<i.length();j++){
+                if(j=='0')
+                    cont++;
+            }
+        }
+        if(cont == 0)
+            return true;
+        else 
+            return false;
     }
 }
