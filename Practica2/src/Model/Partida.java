@@ -24,6 +24,7 @@ public class Partida {
     private Fondo background;
     Tablero tablaAzul,tablaRoja;
     boolean turnoAzul;
+    String hayganador;
     Control nuevocontrol;
     Picking picar;
     
@@ -32,7 +33,7 @@ public class Partida {
     Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
     canvas.setSize(1000, 800);
     turnoAzul=true;
-    
+    hayganador="";
     // Se construyen las ventanas de visualización
      Visualization visualizationWindow2 = new Visualization (canvas,1000,800,750,0);
      
@@ -125,7 +126,7 @@ public class Partida {
    //FIN NUEVO
     //Color de ese tablero
    Color3f color=new Color3f(0.0f, 0.9f, 1.0f);
-   tablaAzul=new Tablero(color,color,"plantillas/fichero.txt");
+   tablaAzul=new Tablero(color,color,"plantillas/fichero2.txt");
    
    //Creamos la segunda parte del tablero
     TransformGroup rotacion3 = new TransformGroup();
@@ -135,7 +136,7 @@ public class Partida {
    
     //Color de ese tablero
     Color3f color3=new  Color3f(1.0f,0.4f,0.4f);
-    tablaRoja=new Tablero(color3,color3,"plantillas/fichero.txt");
+    tablaRoja=new Tablero(color3,color3,"plantillas/fichero2.txt");
     BranchGroup bg=new BranchGroup();
     
     rotacion3.addChild(tablaRoja);
@@ -163,14 +164,21 @@ public class Partida {
         boolean salida=false;
         if(turnoAzul){
             salida=tablaRoja.posicionAtaque(x,y);
-           
+            if(tablaRoja.comprobarGanador())
+                hayganador="Jugador Azul";
             turnoAzul=false;
         }
         else{
             salida=tablaAzul.posicionAtaque(x,y);
+            if(tablaAzul.comprobarGanador()){
+                hayganador="Jugador Rojo";
+            }
             turnoAzul=true;
         }
         return salida;
+    }
+    public String getGanador(){
+        return hayganador;
     }
     
     //public boolean getTurno(){

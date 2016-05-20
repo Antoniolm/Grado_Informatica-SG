@@ -63,4 +63,7 @@ public class Tabla extends BranchGroup{
     public void setFallo(int x,int y){
         matrizbloques.get(y).get(x).activarFallo();
     }
+    public void setAgua(int x,int y){
+        matrizbloques.get(y).get(x).activarAgua();
+    }
 }

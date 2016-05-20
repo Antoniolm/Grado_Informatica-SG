@@ -18,6 +18,8 @@ import javax.vecmath.Vector3f;
 public class Tablero extends BranchGroup{
         ArrayList<String> matrizNaves;
         Tabla vertical,horizontal;
+        int contadornaves;
+        boolean perdedor;
         
     public Tablero(Color3f color,Color3f color2,String fichero) throws IOException{
          vertical=new Tabla(color,true);
@@ -25,6 +27,8 @@ public class Tablero extends BranchGroup{
          
          //Cargamos las naves y las introducimos en el tablero
          cargarNaves(fichero);
+         contadornaves=2;
+         perdedor=false;
          horizontal.añadirNaves(matrizNaves);
          
          TransformGroup translacionverti=new TransformGroup();
@@ -70,8 +74,9 @@ public class Tablero extends BranchGroup{
             salida=true;
             horizontal.setFallo(x, y);
             //System.out.println("Acierto -> x:"+x+" y:"+y);
-            String s=matrizNaves.get(y).substring(0,x)+'0'+matrizNaves.get(y).substring(x+1);
-            matrizNaves.set(y,s);
+            //String s=matrizNaves.get(y).substring(0,x)+'0'+matrizNaves.get(y).substring(x+1);
+            contadornaves--;
+            //matrizNaves.set(y,s);
             
             /*IMPRIMIR MATRIZNAVES*/
             /*for(String i:matrizNaves){
@@ -81,23 +86,22 @@ public class Tablero extends BranchGroup{
             //comprobarGanador();
         }
         else{
-            horizontal.setAcierto(x, y);
+            horizontal.setAgua(x, y);
             System.out.println("Fallo -> x:"+x+" y:"+y);
         }
         return salida;
     }
 
     public boolean comprobarGanador() {
-        int cont=0;
-        for(String i:matrizNaves){
+        //int cont=0;
+        /*for(String i:matrizNaves){
             for(int j=0;j<i.length();j++){
                 if(j=='0')
                     cont++;
             }
-        }
-        if(cont == 0)
-            return true;
-        else 
-            return false;
+        }*/
+        if(contadornaves == 0)
+            perdedor=true;
+        return perdedor;
     }
 }

@@ -32,7 +32,7 @@ public class Control extends JFrame {
     
     // Atributos de la ventana
     setTitle ("Control Window");
-    setLocation (820, 520);
+    setLocation (500, 520);
     
     // Se construye y se abre la ventana de visualizacion
     
@@ -65,6 +65,8 @@ public class Control extends JFrame {
         jPanel2 = new javax.swing.JPanel();
         camataque = new javax.swing.JButton();
         pasarturno = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        areaMensajes = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,6 +97,11 @@ public class Control extends JFrame {
         });
         jPanel2.add(pasarturno, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 120, 50));
 
+        areaMensajes.setColumns(15);
+        areaMensajes.setRows(5);
+        areaMensajes.setBorder(javax.swing.BorderFactory.createTitledBorder("Mensajes"));
+        jScrollPane1.setViewportView(areaMensajes);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,9 +109,14 @@ public class Control extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jb_exit))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jb_exit)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(48, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,8 +124,10 @@ public class Control extends JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jb_exit)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel2.getAccessibleContext().setAccessibleName("Vistas");
@@ -139,6 +153,10 @@ public class Control extends JFrame {
     
     public void desactivarCambioTurno(){
         pasarturno.setEnabled(false);
+    }
+    
+    public void setAreaMensajes(String s){
+        areaMensajes.setText(s);
     }
   
     private void camataqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camataqueActionPerformed
@@ -175,8 +193,10 @@ public class Control extends JFrame {
 //FIN NUEVO
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea areaMensajes;
     private javax.swing.JButton camataque;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jb_exit;
     private javax.swing.JButton pasarturno;
     // End of variables declaration//GEN-END:variables
