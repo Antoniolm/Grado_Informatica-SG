@@ -72,6 +72,14 @@ public class Bloque extends BranchGroup {
         ap.setColoringAttributes(new ColoringAttributes(nuevocolor,ColoringAttributes.SHADE_FLAT));
         activado=true;
     }
+    
+    public void activarAgua(){
+        Color3f nuevocolor=new Color3f(0.1f,0.1f,0.1f);
+        //ColoringAttributes
+        ap.setColoringAttributes(new ColoringAttributes(nuevocolor,ColoringAttributes.SHADE_FLAT));
+        activado=true;
+    }
+    
     public int getX(){
         return posx;
     }
