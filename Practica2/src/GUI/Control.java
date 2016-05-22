@@ -158,6 +158,9 @@ public class Control extends JFrame {
     public void setAreaMensajes(String s){
         areaMensajes.setText(s);
     }
+    public boolean getTurno(){
+        return turno;
+    }
   
     private void camataqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camataqueActionPerformed
         // Desactivamos el canvas de la vista activa y la asignamos a la vista lunas

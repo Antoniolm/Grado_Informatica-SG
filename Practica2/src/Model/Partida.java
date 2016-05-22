@@ -23,7 +23,6 @@ import javax.vecmath.Vector3d;
 public class Partida {
     private Fondo background;
     Tablero tablaAzul,tablaRoja;
-    boolean turnoAzul;
     String hayganador;
     Control nuevocontrol;
     Picking picar;
@@ -32,7 +31,6 @@ public class Partida {
 
     Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
     canvas.setSize(1000, 800);
-    turnoAzul=true;
     hayganador="";
     // Se construyen las ventanas de visualización
      Visualization visualizationWindow2 = new Visualization (canvas,1000,800,750,0);
@@ -162,18 +160,17 @@ public class Partida {
     }
     public boolean cambiarTurno(int x,int y){//Hacemos el cambio de camaras tmb
         boolean salida=false;
+        boolean turnoAzul=nuevocontrol.getTurno();
         if(turnoAzul){
             salida=tablaRoja.posicionAtaque(x,y);
             if(tablaRoja.comprobarGanador())
                 hayganador="Jugador Azul";
-            turnoAzul=false;
         }
         else{
             salida=tablaAzul.posicionAtaque(x,y);
             if(tablaAzul.comprobarGanador()){
                 hayganador="Jugador Rojo";
             }
-            turnoAzul=true;
         }
         return salida;
     }
