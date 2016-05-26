@@ -27,7 +27,10 @@ public class Tabla extends BranchGroup{
         ColoringAttributes color=new ColoringAttributes(colorp ,ColoringAttributes.SHADE_FLAT);
         ap.setColoringAttributes(color);
         Box box = new Box(11.0f, 1.0f, 11.0f, Primitive.ENABLE_APPEARANCE_MODIFY, ap);
-        box.setPickable(false);
+        
+        box.setPickable(true);
+        box.setUserData(this);
+        
         matrizbloques=new ArrayList<ArrayList<Bloque>>();
         ArrayList<Bloque> auxArray;
         Vector3f vector=new Vector3f(-9f,1.0f,-9f);

@@ -27,6 +27,7 @@ public class Tablero extends BranchGroup{
          
          //Cargamos las naves y las introducimos en el tablero
          cargarNaves(fichero);
+         //CAMBIAR
          contadornaves=2;
          perdedor=false;
          horizontal.añadirNaves(matrizNaves);
@@ -66,6 +67,7 @@ public class Tablero extends BranchGroup{
           matrizNaves.add(new String(cadena));
       }
       b.close();
+      posicionarNaves();
     
     }
     public boolean posicionAtaque(int x,int y){
@@ -103,5 +105,92 @@ public class Tablero extends BranchGroup{
         if(contadornaves == 0)
             perdedor=true;
         return perdedor;
+    }
+    
+    public void posicionarNaves(){
+        Nave nave1,nave2,nave3,nave4;
+        boolean horizontal=false;
+        float desviax=0,desviay=0;
+        
+        for(int y=0;y<matrizNaves.size();y++){
+            for(int x=0;x<matrizNaves.get(y).length();x++){
+                
+                if(matrizNaves.get(y).charAt(x)!='0')
+                    switch(matrizNaves.get(y).charAt(x)){
+                        case '1':
+                           nave1 = new Nave("naves\\E-TIE-I\\E-TIE-I.obj", 1,false,new Vector3f(-9f+(x*2), 1.5f, 4.0f+(y*2)));
+                           nave1.compile();
+                           this.addChild(nave1);
+                        break;
+                        case '2':
+                           if( y==0 || ( y-1>0 && matrizNaves.get(y-1).charAt(x)!='2')){
+                                if(x+1<matrizNaves.get(y).length() && matrizNaves.get(y).charAt(x+1)=='2'){
+                                    horizontal=true;
+                                    desviax=1.0f;
+                                    desviay=0.1f;
+                                }
+                                else{
+                                    desviay=0.9f;
+                                }
+                                nave2 = new Nave("naves\\naveEspacial\\naveEspacial.obj", 2,horizontal,new Vector3f(-9f+desviax+(x*2), 1.5f, 4.0f+desviay+(y*2)));
+                                nave2.compile();
+                                this.addChild(nave2);
+                                if(horizontal){
+                                     horizontal=false;
+                                     x++;
+                                }
+                                desviax=0;desviay=0;
+                                
+                           } 
+                        break;
+                            
+                        case '3':
+                            if( y==0 || ( y-1>0 && matrizNaves.get(y-1).charAt(x)!='3')){
+                                if(x+1<matrizNaves.get(y).length() && matrizNaves.get(y).charAt(x+1)=='3'){
+                                    horizontal=true;
+                                    desviax=2.0f;
+                                    desviay=0.1f;
+                                }
+                                else{
+                                    desviay=1.9f;
+                                }
+                                nave3 = new Nave("naves\\FA-22_Raptor\\FA-22_Raptor.obj", 3,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
+                                nave3.compile();
+                                this.addChild(nave3);
+                                if(horizontal){
+                                     horizontal=false;
+                                     x+=2;
+                                }
+                                desviax=0;desviay=0;
+                                
+                           } 
+                        break;
+                        case '4':
+                            if( y==0 || ( y-1>0 && matrizNaves.get(y-1).charAt(x)!='4')){
+                                if(x+1<matrizNaves.get(y).length() && matrizNaves.get(y).charAt(x+1)=='4'){
+                                    horizontal=true;
+                                    desviax=3.0f;
+                                    desviay=0.1f;
+                                }
+                                else{
+                                    desviay=2.9f;
+                                }
+                                nave4 = new Nave("naves\\naveEspacial\\naveEspacial.obj", 4,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
+                                nave4.compile();
+                                this.addChild(nave4);
+                                if(horizontal){
+                                     horizontal=false;
+                                     x+=3;
+                                }
+                                desviax=0;desviay=0;
+                                
+                           }  
+                        break;
+                    
+                    }
+            
+            }
+        }
+    
     }
 }

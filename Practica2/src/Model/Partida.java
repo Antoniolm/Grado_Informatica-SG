@@ -15,6 +15,7 @@ import javax.media.j3d.VirtualUniverse;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
+import javax.vecmath.Vector3f;
 
 /**
  *
@@ -86,16 +87,16 @@ public class Partida {
     
    //Añadimos las naves al locale
    //NUEVO
-   /*Nave nave1 = new Nave("naves/E-TIE-I/E-TIE-I.obj", 1);
+   /*Nave nave1 = new Nave("naves/E-TIE-I/E-TIE-I.obj", 1,false,new Vector3f(5, 3, 4.3f));
    Transform3D trasn1 = new Transform3D();
    trasn1.setTranslation(new Vector3f(5, 3, 4.3f));
    TransformGroup posn1 = new TransformGroup(trasn1);
    posn1.addChild(nave1);
    BranchGroup n1 = new BranchGroup();
    n1.addChild(posn1);
-   local.addBranchGraph(n1);
+   local.addBranchGraph(n1);*/
    
-   Nave nave2 = new Nave("naves/naveEspacial/naveEspacial.obj", 2);
+   /*Nave nave2 = new Nave("naves/naveEspacial/naveEspacial.obj", 2,false,new Vector3f(5, 3, 4.3f));
    Transform3D trasn2 = new Transform3D();
    trasn2.setTranslation(new Vector3f(-5, 3, 5));
    TransformGroup posn2 = new TransformGroup(trasn2);
@@ -103,8 +104,8 @@ public class Partida {
    BranchGroup n2 = new BranchGroup();
    n2.addChild(posn2);
    local.addBranchGraph(n2);
-   
-   Nave nave3 = new Nave("naves/FA-22_Raptor/FA-22_Raptor.obj", 3);
+   /*
+   Nave nave3 = new Nave("naves/FA-22_Raptor/FA-22_Raptor.obj", 3,false,new Vector3f(5, 3, 4.3f));
    Transform3D trasn3 = new Transform3D();
    trasn3.setTranslation(new Vector3f(5, 3, 14));
    TransformGroup posn3 = new TransformGroup(trasn3);
@@ -113,7 +114,7 @@ public class Partida {
    n3.addChild(posn3);
    local.addBranchGraph(n3);
    
-   Nave nave4 = new Nave("naves/IronHide/RB-IronHide.obj", 4);
+   Nave nave4 = new Nave("naves/IronHide/RB-IronHide.obj", 4,false,new Vector3f(5, 3, 4.3f));
    Transform3D trasn4 = new Transform3D();
    trasn4.setTranslation(new Vector3f(-4f, 4f, 15f));
    TransformGroup posn4 = new TransformGroup(trasn4);
@@ -134,7 +135,7 @@ public class Partida {
    
     //Color de ese tablero
     Color3f color3=new  Color3f(1.0f,0.4f,0.4f);
-    tablaRoja=new Tablero(color3,color3,"plantillas/fichero2.txt");
+    tablaRoja=new Tablero(color3,color3,"plantillas/fichero3.txt");
     BranchGroup bg=new BranchGroup();
     
     rotacion3.addChild(tablaRoja);
