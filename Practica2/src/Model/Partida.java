@@ -183,6 +183,7 @@ public class Partida {
         String resultado;
         boolean turnoAzul=nuevocontrol.getTurno();
         boolean hundido = true;
+        boolean ctrlizq=true,ctrldch=true,ctrlup=true,ctrldown=true;
         if(turnoAzul){
             char naveActual= tablaRoja.getPosValor(x, y);
             tablaRoja.setPosValor(x, y, '5');
@@ -191,17 +192,34 @@ public class Partida {
             while(hundido && i!=0){
                 for(int j=1; j<=rango; j++, i--){
                     //Comprobación lado izquierdo
-                    if((x-j)>=0 && tablaRoja.getPosValor(x-j, y)==naveActual)
-                        hundido = false;
+                    if(ctrlizq && (x-j)>=0 ){
+                        if(tablaRoja.getPosValor(x-j, y)==naveActual)
+                            hundido = false;
+                        else 
+                           if(tablaRoja.getPosValor(x-j, y)=='0')
+                            ctrlizq=false;    
+                    }    
                     //Comprobación lado derecho
-                    if((x+j)<tablaRoja.getsizex() && tablaRoja.getPosValor(x+j, y)==naveActual)
-                        hundido = false;
+                    if(ctrldch && (x+j)<tablaRoja.getsizex()){
+                        if( tablaRoja.getPosValor(x+j, y)==naveActual)
+                            hundido = false;
+                        else if(tablaRoja.getPosValor(x+j, y)=='0')
+                            ctrldch=false;
+                    }
                     //Comprobación lado superior
-                    if((y-j)>=0 && tablaRoja.getPosValor(x, y-j)==naveActual)
-                        hundido = false;
+                    if(ctrlup && (y-j)>=0 ){
+                        if(tablaRoja.getPosValor(x, y-j)==naveActual)
+                            hundido = false;
+                        else if(tablaRoja.getPosValor(x, y-j)=='0')
+                            ctrlup=false;
+                    }
                     //Comprobación lado inferior
-                    if((y+j)<tablaRoja.getsizey() && tablaRoja.getPosValor(x, y+j)==naveActual)
-                        hundido = false;
+                    if(ctrldown && (y+j)<tablaRoja.getsizey()){
+                        if(tablaRoja.getPosValor(x, y+j)==naveActual)
+                            hundido = false;
+                        if(tablaRoja.getPosValor(x, y+j)=='0')
+                            ctrldown=false;
+                    }
                 }                
             }
         }
