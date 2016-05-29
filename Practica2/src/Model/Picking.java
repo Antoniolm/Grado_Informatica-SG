@@ -77,16 +77,34 @@ public class Picking extends Behavior{
                         int x=objeto.getX();
                         int y=objeto.getY();
                         boolean estado=partida.cambiarTurno(x,y);
+                        //NUEVO2
+                        String resultAtaque = "vacío";
+                        //FIN NUEVO2
                         if(estado){ 
                             objeto.activarAcierto();
                             if(!partida.getGanador().isEmpty()){
                                 partida.nuevocontrol.setAreaMensajes("Ganador "+ partida.getGanador());
                                 terminada=true;
-                              }
+                            }
+                            //NUEVO2
+                            else{
+                                resultAtaque = partida.getResultadoAtaque(x, y);
+                                if(resultAtaque!="vacío")
+                                    switch(resultAtaque){
+                                        case "tocado":
+                                            partida.nuevocontrol.setAreaMensajes("¡Tocado!");
+                                            break;
+                                        case "hundido":
+                                            partida.nuevocontrol.setAreaMensajes("¡¡Hundido!!");
+                                            break;
+                                    }
+                            }
+                            //FIN NUEVO2
                             cont=0;
                             partida.nuevocontrol.desactivarCambioTurno();
                         }else{ 
                             objeto.activarFallo();
+                            partida.nuevocontrol.setAreaMensajes("¡Has fallado!");
                             cont++;
                             partida.nuevocontrol.activarCambioTurno();
                         }

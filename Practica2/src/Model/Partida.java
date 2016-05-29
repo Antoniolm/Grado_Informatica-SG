@@ -178,6 +178,61 @@ public class Partida {
     public String getGanador(){
         return hayganador;
     }
+    //NUEVO2
+    public String getResultadoAtaque(int x, int y){
+        String resultado;
+        boolean turnoAzul=nuevocontrol.getTurno();
+        boolean hundido = true;
+        if(turnoAzul){
+            char naveActual= tablaRoja.getPosValor(x, y);
+            tablaRoja.setPosValor(x, y, '5');
+            int rango = Integer.parseInt(naveActual+"") -1;
+            int i = rango;
+            while(hundido && i!=0){
+                for(int j=1; j<=rango; j++, i--){
+                    //Comprobación lado izquierdo
+                    if((x-j)>=0 && tablaRoja.getPosValor(x-j, y)==naveActual)
+                        hundido = false;
+                    //Comprobación lado derecho
+                    if((x+j)<tablaRoja.getsizex() && tablaRoja.getPosValor(x+j, y)==naveActual)
+                        hundido = false;
+                    //Comprobación lado superior
+                    if((y-j)>=0 && tablaRoja.getPosValor(x, y-j)==naveActual)
+                        hundido = false;
+                    //Comprobación lado inferior
+                    if((y+j)<tablaRoja.getsizey() && tablaRoja.getPosValor(x, y+j)==naveActual)
+                        hundido = false;
+                }                
+            }
+        }
+        else{
+            char naveActual= tablaAzul.getPosValor(x, y);
+            tablaAzul.setPosValor(x, y, '5');
+            int rango = Integer.parseInt(naveActual+"") -1;
+            int i = rango;
+            while(hundido && i!=0){
+                for(int j=1; j<=rango; j++, i--){
+                    //Comprobación lado izquierdo
+                    if((x-j)>=0 && tablaAzul.getPosValor(x-j, y)==naveActual)
+                        hundido = false;
+                    //Comprobación lado derecho
+                    if((x+j)<tablaAzul.getsizex() &&  tablaAzul.getPosValor(x+j, y)==naveActual)
+                        hundido = false;
+                    //Comprobación lado superior
+                    if((y-j)>=0 && tablaAzul.getPosValor(x, y-j)==naveActual)
+                        hundido = false;
+                    //Comprobación lado inferior
+                    if((y+j)<tablaAzul.getsizey() &&  tablaAzul.getPosValor(x, y+j)==naveActual)
+                        hundido = false;
+                }                
+            }
+        }
+        if(hundido)
+            return "hundido";
+        else
+            return "tocado";
+    }
+    //FIN NUEVO2
     
     //public boolean getTurno(){
     //    

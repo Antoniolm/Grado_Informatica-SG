@@ -28,7 +28,7 @@ public class Tablero extends BranchGroup{
          //Cargamos las naves y las introducimos en el tablero
          cargarNaves(fichero);
          //CAMBIAR
-         contadornaves=2;
+         contadornaves=20;
          perdedor=false;
          horizontal.añadirNaves(matrizNaves);
          
@@ -77,6 +77,7 @@ public class Tablero extends BranchGroup{
             horizontal.setFallo(x, y);
             //System.out.println("Acierto -> x:"+x+" y:"+y);
             //String s=matrizNaves.get(y).substring(0,x)+'0'+matrizNaves.get(y).substring(x+1);
+            //setPosValor(x, y, '5');
             contadornaves--;
             //matrizNaves.set(y,s);
             
@@ -118,7 +119,7 @@ public class Tablero extends BranchGroup{
                 if(matrizNaves.get(y).charAt(x)!='0')
                     switch(matrizNaves.get(y).charAt(x)){
                         case '1':
-                           nave1 = new Nave("naves\\E-TIE-I\\E-TIE-I.obj", 1,false,new Vector3f(-9f+(x*2), 1.5f, 4.0f+(y*2)));
+                           nave1 = new Nave("naves/E-TIE-I/E-TIE-I.obj", 1,false,new Vector3f(-9f+(x*2), 1.5f, 4.0f+(y*2)));
                            nave1.compile();
                            this.addChild(nave1);
                         break;
@@ -132,7 +133,7 @@ public class Tablero extends BranchGroup{
                                 else{
                                     desviay=0.9f;
                                 }
-                                nave2 = new Nave("naves\\naveEspacial\\naveEspacial.obj", 2,horizontal,new Vector3f(-9f+desviax+(x*2), 1.5f, 4.0f+desviay+(y*2)));
+                                nave2 = new Nave("naves/naveEspacial/naveEspacial.obj", 2,horizontal,new Vector3f(-9f+desviax+(x*2), 1.5f, 4.0f+desviay+(y*2)));
                                 nave2.compile();
                                 this.addChild(nave2);
                                 if(horizontal){
@@ -154,7 +155,7 @@ public class Tablero extends BranchGroup{
                                 else{
                                     desviay=1.9f;
                                 }
-                                nave3 = new Nave("naves\\FA-22_Raptor\\FA-22_Raptor.obj", 3,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
+                                nave3 = new Nave("naves/FA-22_Raptor/FA-22_Raptor.obj", 3,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
                                 nave3.compile();
                                 this.addChild(nave3);
                                 if(horizontal){
@@ -175,7 +176,7 @@ public class Tablero extends BranchGroup{
                                 else{
                                     desviay=2.9f;
                                 }
-                                nave4 = new Nave("naves\\naveEspacial\\naveEspacial.obj", 4,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
+                                nave4 = new Nave("naves/naveEspacial/naveEspacial.obj", 4,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
                                 nave4.compile();
                                 this.addChild(nave4);
                                 if(horizontal){
@@ -193,4 +194,24 @@ public class Tablero extends BranchGroup{
         }
     
     }
+    
+    //NUEVO2
+    public char getPosValor(int x, int y){
+        return  matrizNaves.get(y).charAt(x);
+    }
+    
+    public void setPosValor(int x, int y, char valor){
+        String s = matrizNaves.get(y).substring(0,x)+valor+matrizNaves.get(y).substring(x+1);
+        matrizNaves.set(y,s);
+        for(String i:matrizNaves){
+            System.out.println(i);
+        }
+    }
+    public int getsizey(){
+        return matrizNaves.size();
+    }
+    public int getsizex(){
+        return matrizNaves.get(0).length();
+    }
+    //FIN NUEVO2
 }
