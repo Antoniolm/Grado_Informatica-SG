@@ -214,4 +214,50 @@ public class Tablero extends BranchGroup{
         return matrizNaves.get(0).length();
     }
     //FIN NUEVO2
+    public boolean comprobarEstadoNave(int x,int y){
+        boolean hundido = true;
+        boolean ctrlizq=true,ctrldch=true,ctrlup=true,ctrldown=true;
+        char naveActual= getPosValor(x, y);
+        setPosValor(x, y, '5');
+        int rango = Integer.parseInt(naveActual+"") -1;
+        int i = rango;
+        while (hundido && i != 0) {
+            for (int j = 1; j <= rango; j++, i--) {
+                //Comprobación lado izquierdo
+                if (ctrlizq && (x - j) >= 0) {
+                    if (getPosValor(x - j, y) == naveActual) {
+                        hundido = false;
+                    } else if (getPosValor(x - j, y) == '0') {
+                        ctrlizq = false;
+                    }
+                }
+                //Comprobación lado derecho
+                if (ctrldch && (x + j) < getsizex()) {
+                    if (getPosValor(x + j, y) == naveActual) {
+                        hundido = false;
+                    } else if (getPosValor(x + j, y) == '0') {
+                        ctrldch = false;
+                    }
+                }
+                //Comprobación lado superior
+                if (ctrlup && (y - j) >= 0) {
+                    if (getPosValor(x, y - j) == naveActual) {
+                        hundido = false;
+                    } else if (getPosValor(x, y - j) == '0') {
+                        ctrlup = false;
+                    }
+                }
+                //Comprobación lado inferior
+                if (ctrldown && (y + j) < getsizey()) {
+                    if (getPosValor(x, y + j) == naveActual) {
+                        hundido = false;
+                    }
+                    if (getPosValor(x, y + j) == '0') {
+                        ctrldown = false;
+                    }
+                }
+            }
+        }        
+        return hundido;
+    }
 }
