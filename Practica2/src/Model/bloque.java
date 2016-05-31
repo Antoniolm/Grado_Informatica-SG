@@ -17,7 +17,7 @@ import javax.vecmath.Vector3f;
  */
 public class Bloque extends BranchGroup {
     
-    private int id,posx,posy;
+    private int posx,posy;
     private Box box;
     private ColoringAttributes color;
     private Appearance ap;
@@ -50,10 +50,6 @@ public class Bloque extends BranchGroup {
         
        translacion.addChild(box);
        this.addChild(translacion);
-    }
-    public int getId(){
-        return id;
-        
     }
     public Box getBox(){
         return box;

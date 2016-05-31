@@ -27,12 +27,17 @@ public class Partida {
     String hayganador;
     Control nuevocontrol;
     Picking picar;
-    
+    boolean terminada;
+    static int cont;
+    static boolean camAtaque;
     public Partida() throws IOException{
 
     Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
     canvas.setSize(1000, 800);
     hayganador="";
+    terminada=false;
+    camAtaque=false;
+    cont=0;
     // Se construyen las ventanas de visualización
      Visualization visualizationWindow2 = new Visualization (canvas,1000,800,750,0);
      
@@ -45,18 +50,21 @@ public class Partida {
     ataqueAzul.removeCanvas();
     Camara generalAzul=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,100,new Point3d (0,10,25), new Point3d (0,0,15), new Vector3d (0,1,0));
     generalAzul.removeCanvas();
-    
+    //Camaras jugador Rojo
     Camara ataqueRojo=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,45,new Point3d(0.0,14.0,-33.0), new Point3d(0.0,13.25,0.0), new Vector3d(0,1,0));
     ataqueRojo.removeCanvas();
     Camara generalRojo=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,100,new Point3d (0,10,-25), new Point3d (0,0,-15), new Vector3d (0,1,0));
     generalRojo.removeCanvas();
-    
+    //Camara ganador
+    Camara camaraGanador=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,45,new Point3d(0.0,35.0,33.0), new Point3d(0.0,34.25,0.0), new Vector3d(0,1,0));
+    camaraGanador.removeCanvas();
     
     //Compilamos todas las camaras
     ataqueAzul.compile();
     generalAzul.compile();
     ataqueRojo.compile();
     generalRojo.compile();
+    camaraGanador.compile();
     
     //Array de camaras variables
     ArrayList<Camara> camaras=new ArrayList<Camara>();
@@ -64,17 +72,19 @@ public class Partida {
     camaras.add(ataqueAzul);
     camaras.add(generalRojo);
     camaras.add(ataqueRojo);
+    camaras.add(camaraGanador);
     
     
     picar=new Picking(canvas,this);
     //Ventana de control
-    nuevocontrol=new Control(camaras,picar);
+    nuevocontrol=new Control(camaras,this);
     generalAzul.addCanvas();
     
     local.addBranchGraph(ataqueAzul);
     local.addBranchGraph(generalAzul);
     local.addBranchGraph(ataqueRojo);
     local.addBranchGraph(generalRojo);
+    local.addBranchGraph(camaraGanador);
 
     
     //Se crea la luz ambiental y la compilamos
@@ -84,45 +94,13 @@ public class Partida {
     // Se crea y se añade el fondo y la compilamos
     background = new Fondo();
     background.compile();
+   
+    //Creamos el cartel para el ganador
+    Cartel ganador=new Cartel("imgs/ganador.png");
+    ganador.compile();
     
-   //Añadimos las naves al locale
-   //NUEVO
-   /*Nave nave1 = new Nave("naves/E-TIE-I/E-TIE-I.obj", 1,false,new Vector3f(5, 3, 4.3f));
-   Transform3D trasn1 = new Transform3D();
-   trasn1.setTranslation(new Vector3f(5, 3, 4.3f));
-   TransformGroup posn1 = new TransformGroup(trasn1);
-   posn1.addChild(nave1);
-   BranchGroup n1 = new BranchGroup();
-   n1.addChild(posn1);
-   local.addBranchGraph(n1);*/
-   
-   /*Nave nave2 = new Nave("naves/naveEspacial/naveEspacial.obj", 2,false,new Vector3f(5, 3, 4.3f));
-   Transform3D trasn2 = new Transform3D();
-   trasn2.setTranslation(new Vector3f(-5, 3, 5));
-   TransformGroup posn2 = new TransformGroup(trasn2);
-   posn2.addChild(nave2);
-   BranchGroup n2 = new BranchGroup();
-   n2.addChild(posn2);
-   local.addBranchGraph(n2);
-   /*
-   Nave nave3 = new Nave("naves/FA-22_Raptor/FA-22_Raptor.obj", 3,false,new Vector3f(5, 3, 4.3f));
-   Transform3D trasn3 = new Transform3D();
-   trasn3.setTranslation(new Vector3f(5, 3, 14));
-   TransformGroup posn3 = new TransformGroup(trasn3);
-   posn3.addChild(nave3);
-   BranchGroup n3 = new BranchGroup();
-   n3.addChild(posn3);
-   local.addBranchGraph(n3);
-   
-   Nave nave4 = new Nave("naves/IronHide/RB-IronHide.obj", 4,false,new Vector3f(5, 3, 4.3f));
-   Transform3D trasn4 = new Transform3D();
-   trasn4.setTranslation(new Vector3f(-4f, 4f, 15f));
-   TransformGroup posn4 = new TransformGroup(trasn4);
-   posn4.addChild(nave4);
-   BranchGroup n4 = new BranchGroup();
-   n4.addChild(posn4);
-   local.addBranchGraph(n4);*/
-   //FIN NUEVO
+    local.addBranchGraph(ganador);
+    
     //Color de ese tablero
    Color3f color=new Color3f(0.0f, 0.9f, 1.0f);
    tablaAzul=new Tablero(color,color,"plantillas/fichero2.txt");
@@ -159,7 +137,9 @@ public class Partida {
     visualizationWindow2.setVisible(true);
     nuevocontrol.setVisible(true);
     }
-    public boolean cambiarTurno(int x,int y){//Hacemos el cambio de camaras tmb
+    
+    
+    public boolean realizarAtaque(int x,int y){//Hacemos el cambio de camaras tmb
         boolean salida=false;
         boolean turnoAzul=nuevocontrol.getTurno();
         if(turnoAzul){
@@ -175,10 +155,13 @@ public class Partida {
         }
         return salida;
     }
+    
+    
     public String getGanador(){
         return hayganador;
     }
-    //NUEVO2
+    
+    
     public String getResultadoAtaque(int x, int y){
         String resultado;
         boolean turnoAzul=nuevocontrol.getTurno();
@@ -195,9 +178,62 @@ public class Partida {
         else
             return "tocado";
     }
-    //FIN NUEVO2
     
-    //public boolean getTurno(){
-    //    
-    //}
+    
+     public void setCont(int valor){
+        cont=valor;
+    }
+     
+     
+    public void setCamAtaque(boolean valor){
+        camAtaque=valor;
+    }
+    
+    
+    public int getCont(){
+        return cont;
+    }
+    
+    
+    public void procesarAccion(Bloque blqactual){
+        if (!blqactual.getActivado() && cont == 0 && camAtaque && !terminada) {
+            //objeto.activarFallo();
+            int x = blqactual.getX();
+            int y = blqactual.getY();
+            boolean estado = realizarAtaque(x, y);
+            //NUEVO2
+            String resultAtaque = "vacío";
+            //FIN NUEVO2
+            if (estado) {
+                blqactual.activarAcierto();
+                if (!getGanador().isEmpty()) {
+                    nuevocontrol.setAreaMensajes("Ganador " + getGanador());
+                    nuevocontrol.selectCamGanador();
+                    terminada = true;
+                    
+                } //NUEVO2
+                else {
+                    resultAtaque = getResultadoAtaque(x, y);
+                    if (resultAtaque != "vacío") {
+                        switch (resultAtaque) {
+                            case "tocado":
+                                nuevocontrol.setAreaMensajes("¡Tocado!");
+                                break;
+                            case "hundido":
+                                nuevocontrol.setAreaMensajes("¡¡Hundido!!");
+                                break;
+                        }
+                    }
+                }
+                //FIN NUEVO2
+                cont = 0;
+                nuevocontrol.desactivarCambioTurno();
+            } else {
+                blqactual.activarFallo();
+                nuevocontrol.setAreaMensajes("¡Has fallado!");
+                cont++;
+                nuevocontrol.activarCambioTurno();
+            }
+        }
+    }
 }

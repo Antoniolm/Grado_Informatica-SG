@@ -28,7 +28,7 @@ public class Tablero extends BranchGroup{
          //Cargamos las naves y las introducimos en el tablero
          cargarNaves(fichero);
          //CAMBIAR
-         contadornaves=20;
+         contadornaves=2;
          perdedor=false;
          horizontal.añadirNaves(matrizNaves);
          

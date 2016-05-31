@@ -21,17 +21,11 @@ public class Picking extends Behavior{
     private PickCanvas pickCanvas ;
     private Canvas3D canvas ;
     private Partida partida;
-    static int cont;
-    static boolean camAtaque;
-    public boolean terminada;
     
     public Picking (Canvas3D aCanvas,Partida part) {
         partida=part;
         canvas = aCanvas ;
         condition = new WakeupOnAWTEvent (MouseEvent.MOUSE_CLICKED) ;
-        cont=0;
-        camAtaque=false;
-        terminada=false;
     }
     
     public void setStatus( BranchGroup bg) {
@@ -42,15 +36,6 @@ public class Picking extends Behavior{
         pickCanvas.setMode(PickInfo.PICK_GEOMETRY);
         pickCanvas.setFlags(PickInfo.NODE | PickInfo.CLOSEST_GEOM_INFO);
 }
-    public void setCont(int valor){
-        cont=valor;
-    }
-    public void setCamAtaque(boolean valor){
-        camAtaque=valor;
-    }
-    public int getCont(){
-        return cont;
-    }
     @Override
     public void initialize() {
         //Activamos nuestro behavior
@@ -65,52 +50,14 @@ public class Picking extends Behavior{
         MouseEvent mouse = (MouseEvent) e[0];
         pickCanvas.setShapeLocation(mouse);
         PickInfo pi=pickCanvas.pickClosest();
-        System.out.println("Contador:"+cont);
         if(pi!=null){
             Node p=pi.getNode();
             Primitive padre = (Primitive) p.getParent();
             //System.out.println("Cont"+padre.getUserData().getClass());
             if(padre.getUserData().getClass().toString().contains("Bloque")){
                     Bloque objeto = (Bloque) padre.getUserData();
-                    if(!objeto.getActivado() && cont==0 && camAtaque && !terminada){ 
-                        //objeto.activarFallo();
-                        int x=objeto.getX();
-                        int y=objeto.getY();
-                        boolean estado=partida.cambiarTurno(x,y);
-                        //NUEVO2
-                        String resultAtaque = "vacío";
-                        //FIN NUEVO2
-                        if(estado){ 
-                            objeto.activarAcierto();
-                            if(!partida.getGanador().isEmpty()){
-                                partida.nuevocontrol.setAreaMensajes("Ganador "+ partida.getGanador());
-                                terminada=true;
-                            }
-                            //NUEVO2
-                            else{
-                                resultAtaque = partida.getResultadoAtaque(x, y);
-                                if(resultAtaque!="vacío")
-                                    switch(resultAtaque){
-                                        case "tocado":
-                                            partida.nuevocontrol.setAreaMensajes("¡Tocado!");
-                                            break;
-                                        case "hundido":
-                                            partida.nuevocontrol.setAreaMensajes("¡¡Hundido!!");
-                                            break;
-                                    }
-                            }
-                            //FIN NUEVO2
-                            cont=0;
-                            partida.nuevocontrol.desactivarCambioTurno();
-                        }else{ 
-                            objeto.activarFallo();
-                            partida.nuevocontrol.setAreaMensajes("¡Has fallado!");
-                            cont++;
-                            partida.nuevocontrol.activarCambioTurno();
-                        }
-                    }
+                    partida.procesarAccion(objeto);
             }
-            //Partida.actualizarmapa(x,y);
         }
         
         wakeupOn(condition);

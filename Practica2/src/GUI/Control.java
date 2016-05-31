@@ -1,6 +1,7 @@
 package GUI;
 
 import Model.Camara;
+import Model.Partida;
 import Model.Picking;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -19,16 +20,16 @@ public class Control extends JFrame {
     boolean turno;
     ArrayList<Camara> camaras;
     int camaraActual;
-    Picking pick;
+    Partida partida;
     
-  public Control(ArrayList<Camara> camara,Picking picar) {
+  public Control(ArrayList<Camara> camara,Partida part) {
     initComponents();
     // Atributos de referencia
     camaras=camara;
     pasarturno.setEnabled(false);
     turno=true;
     camaraActual=0;
-    pick=picar;
+    partida=part;
     
     // Atributos de la ventana
     setTitle ("Control Window");
@@ -161,7 +162,15 @@ public class Control extends JFrame {
     public boolean getTurno(){
         return turno;
     }
-  
+    public void selectCamGanador(){
+        System.out.println("Entrooo");
+        camaras.get(camaraActual).removeCanvas();
+        camaraActual=4;
+        System.out.println("camaraActual"+camaraActual);
+        camaras.get(camaraActual).addCanvas();
+        System.out.println("salgo");
+    }
+    
     private void camataqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camataqueActionPerformed
         // Desactivamos el canvas de la vista activa y la asignamos a la vista lunas
              System.out.println("trueb2");
@@ -170,7 +179,7 @@ public class Control extends JFrame {
                 camaras.get(camaraActual).addCanvas();
                 desactivarAtaque();
                 activarCambioTurno();
-                pick.setCamAtaque(true);
+                partida.setCamAtaque(true);
                 desactivarCambioTurno();
 
     }//GEN-LAST:event_camataqueActionPerformed
@@ -189,9 +198,9 @@ public class Control extends JFrame {
       turno=!turno;
       desactivarCambioTurno();
       activarAtaque();
-      pick.setCamAtaque(false);
-      pick.setCont(0);
-      System.out.println("Cambiooos:"+pick.getCont());
+      partida.setCamAtaque(false);
+      partida.setCont(0);
+      System.out.println("Cambiooos:"+partida.getCont());
     }//GEN-LAST:event_pasarturnoActionPerformed
 //FIN NUEVO
 
