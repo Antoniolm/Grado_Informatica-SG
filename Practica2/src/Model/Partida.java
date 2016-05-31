@@ -27,6 +27,7 @@ public class Partida {
     String hayganador;
     Control nuevocontrol;
     Picking picar;
+    TransformGroup transAlGanar;
     boolean terminada;
     static int cont;
     static boolean camAtaque;
@@ -55,16 +56,25 @@ public class Partida {
     ataqueRojo.removeCanvas();
     Camara generalRojo=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,100,new Point3d (0,10,-25), new Point3d (0,0,-15), new Vector3d (0,1,0));
     generalRojo.removeCanvas();
-    //Camara ganador
-    Camara camaraGanador=new Camara(canvas, 60.0f, 0.02f, 40.0f,0.01f,45,new Point3d(0.0,35.0,33.0), new Point3d(0.0,34.25,0.0), new Vector3d(0,1,0));
-    camaraGanador.removeCanvas();
+   
+    //TransformGroup que utilizaremos para cambiar de posicion las dos camaras de ataque
+    //asi cuando un jugador gane la partida solo hace falta añadirle la translación a este
+    //transformGroup y se vera el cartel de ganador
+    transAlGanar=new TransformGroup();
+    transAlGanar.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+    //añadimos las dos camaras afectadas
+    transAlGanar.addChild(ataqueAzul);
+    transAlGanar.addChild(ataqueRojo);
+    //creamos un bg para poder añadir esas dos camaras que tendran
+    //ese cambio de posicion al terminar la partida
+    BranchGroup camarasFlex=new BranchGroup();
+    camarasFlex.addChild(transAlGanar);
     
     //Compilamos todas las camaras
     ataqueAzul.compile();
     generalAzul.compile();
     ataqueRojo.compile();
     generalRojo.compile();
-    camaraGanador.compile();
     
     //Array de camaras variables
     ArrayList<Camara> camaras=new ArrayList<Camara>();
@@ -72,7 +82,6 @@ public class Partida {
     camaras.add(ataqueAzul);
     camaras.add(generalRojo);
     camaras.add(ataqueRojo);
-    camaras.add(camaraGanador);
     
     
     picar=new Picking(canvas,this);
@@ -80,12 +89,11 @@ public class Partida {
     nuevocontrol=new Control(camaras,this);
     generalAzul.addCanvas();
     
-    local.addBranchGraph(ataqueAzul);
+    //local.addBranchGraph(ataqueAzul);
     local.addBranchGraph(generalAzul);
-    local.addBranchGraph(ataqueRojo);
+    //local.addBranchGraph(ataqueRojo);
     local.addBranchGraph(generalRojo);
-    local.addBranchGraph(camaraGanador);
-
+    local.addBranchGraph(camarasFlex);
     
     //Se crea la luz ambiental y la compilamos
     Luz aLight= new Luz();
@@ -98,8 +106,7 @@ public class Partida {
     //Creamos el cartel para el ganador
     Cartel ganador=new Cartel("imgs/ganador.png");
     ganador.compile();
-    
-    local.addBranchGraph(ganador);
+
     
     //Color de ese tablero
    Color3f color=new Color3f(0.0f, 0.9f, 1.0f);
@@ -129,10 +136,10 @@ public class Partida {
     
     local.addBranchGraph(bg);
     
-    //Añadimos al locale los branchgraph, luz ambiental y fondo
+    //Añadimos al locale los branchgraph, luz ambiental fondo y cartel
     local.addBranchGraph(aLight);
     local.addBranchGraph(background);
-    
+    local.addBranchGraph(ganador);
     // Se muestra la ventana
     visualizationWindow2.setVisible(true);
     nuevocontrol.setVisible(true);
@@ -201,17 +208,21 @@ public class Partida {
             int x = blqactual.getX();
             int y = blqactual.getY();
             boolean estado = realizarAtaque(x, y);
-            //NUEVO2
+            
             String resultAtaque = "vacío";
-            //FIN NUEVO2
+         
             if (estado) {
                 blqactual.activarAcierto();
                 if (!getGanador().isEmpty()) {
                     nuevocontrol.setAreaMensajes("Ganador " + getGanador());
-                    nuevocontrol.selectCamGanador();
+                    //Subimos la camara a la posición donde esta nuestro cartel
+                    //de ganador
+                    Transform3D translacion=new Transform3D();
+                    translacion.setTranslation(new Vector3f(0.0f,23.0f,0.0f));
+                    transAlGanar.setTransform(translacion);
                     terminada = true;
                     
-                } //NUEVO2
+                } 
                 else {
                     resultAtaque = getResultadoAtaque(x, y);
                     if (resultAtaque != "vacío") {
@@ -225,7 +236,7 @@ public class Partida {
                         }
                     }
                 }
-                //FIN NUEVO2
+                
                 cont = 0;
                 nuevocontrol.desactivarCambioTurno();
             } else {

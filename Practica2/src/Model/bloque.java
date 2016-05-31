@@ -51,10 +51,6 @@ public class Bloque extends BranchGroup {
        translacion.addChild(box);
        this.addChild(translacion);
     }
-    public Box getBox(){
-        return box;
-    
-    }
     public void activarFallo(){
         Color3f nuevocolor=new Color3f(0.6f,0.0f,0.0f);
         //ColoringAttributes

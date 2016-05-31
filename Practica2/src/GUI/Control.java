@@ -162,17 +162,8 @@ public class Control extends JFrame {
     public boolean getTurno(){
         return turno;
     }
-    public void selectCamGanador(){
-        System.out.println("Entrooo");
-        camaras.get(camaraActual).removeCanvas();
-        camaraActual=4;
-        System.out.println("camaraActual"+camaraActual);
-        camaras.get(camaraActual).addCanvas();
-        System.out.println("salgo");
-    }
-    
     private void camataqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_camataqueActionPerformed
-        // Desactivamos el canvas de la vista activa y la asignamos a la vista lunas
+        // Desactivamos el canvas de la vista activa y la asignamos a la vista ataque
              System.out.println("trueb2");
                 camaras.get(camaraActual).removeCanvas();
                 camaraActual++;
