@@ -5,6 +5,7 @@ import GUI.Visualization;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
@@ -31,6 +32,9 @@ public class Partida {
     boolean terminada;
     static int cont;
     static boolean camAtaque;
+    
+    
+    
     public Partida() throws IOException{
 
     Canvas3D canvas = new Canvas3D (SimpleUniverse.getPreferredConfiguration());
@@ -71,9 +75,8 @@ public class Partida {
     camarasFlex.addChild(transAlGanar);
     
     //Compilamos todas las camaras
-    ataqueAzul.compile();
+    camarasFlex.compile();
     generalAzul.compile();
-    ataqueRojo.compile();
     generalRojo.compile();
     
     //Array de camaras variables
@@ -83,17 +86,9 @@ public class Partida {
     camaras.add(generalRojo);
     camaras.add(ataqueRojo);
     
-    
-    picar=new Picking(canvas,this);
     //Ventana de control
     nuevocontrol=new Control(camaras,this);
     generalAzul.addCanvas();
-    
-    //local.addBranchGraph(ataqueAzul);
-    local.addBranchGraph(generalAzul);
-    //local.addBranchGraph(ataqueRojo);
-    local.addBranchGraph(generalRojo);
-    local.addBranchGraph(camarasFlex);
     
     //Se crea la luz ambiental y la compilamos
     Luz aLight= new Luz();
@@ -104,15 +99,15 @@ public class Partida {
     background.compile();
    
     //Creamos el cartel para el ganador
-    Cartel ganador=new Cartel("imgs/ganador.png");
-    ganador.compile();
+    Cartel cartel=new Cartel("imgs/ganador.png");
+    cartel.compile();
 
-    
     //Color de ese tablero
    Color3f color=new Color3f(0.0f, 0.9f, 1.0f);
-   tablaAzul=new Tablero(color,color,"plantillas/fichero2.txt");
+   tablaAzul=new Tablero(color,color,selecPlantAleatoria());
    
    //Creamos la segunda parte del tablero
+   //El cual se vera afectada por una rotacion en el eje Y
     TransformGroup rotacion3 = new TransformGroup();
     Transform3D rotacionx = new Transform3D();
     rotacionx.rotY(Math.PI);
@@ -120,12 +115,14 @@ public class Partida {
    
     //Color de ese tablero
     Color3f color3=new  Color3f(1.0f,0.4f,0.4f);
-    tablaRoja=new Tablero(color3,color3,"plantillas/fichero3.txt");
+    tablaRoja=new Tablero(color3,color3,selecPlantAleatoria());
     BranchGroup bg=new BranchGroup();
     
     rotacion3.addChild(tablaRoja);
     bg.addChild(rotacion3);
     bg.addChild(tablaAzul);
+    
+
     
     //Agregamos el picking
     picar=new Picking(canvas,this);
@@ -133,20 +130,31 @@ public class Partida {
     picar.setStatus(bg);
     bg.addChild(picar);
     
+    //Compilamos los tableros
+    bg.compile();
     
+    //Añadimos nuestros tableros al locale
     local.addBranchGraph(bg);
-    
     //Añadimos al locale los branchgraph, luz ambiental fondo y cartel
     local.addBranchGraph(aLight);
     local.addBranchGraph(background);
-    local.addBranchGraph(ganador);
+    local.addBranchGraph(cartel);
+    //Añadimos nuestras camaras al locale
+    local.addBranchGraph(camarasFlex);
+    local.addBranchGraph(generalAzul);
+    local.addBranchGraph(generalRojo);
+
     // Se muestra la ventana
     visualizationWindow2.setVisible(true);
     nuevocontrol.setVisible(true);
     }
     
-    
-    public boolean realizarAtaque(int x,int y){//Hacemos el cambio de camaras tmb
+    /**
+    *  Realiza la accion de ataque, envia la posicion x,y del bloque que se ha atacado
+    *  al tablero enemigo(según el turno actual) y nos devuelve si ha acertado o no
+    *  tambíen nos realiza la comprobación de si hay ya un ganador o no.
+    */
+    public boolean realizarAtaque(int x,int y){
         boolean salida=false;
         boolean turnoAzul=nuevocontrol.getTurno();
         if(turnoAzul){
@@ -168,12 +176,13 @@ public class Partida {
         return hayganador;
     }
     
-    
+    /**
+    *  Comprueba si se ha realizado un hundimiento/tocado de un nave 
+    *  según el turno se realiza en un tablero o en otro.
+    */
     public String getResultadoAtaque(int x, int y){
-        String resultado;
         boolean turnoAzul=nuevocontrol.getTurno();
         boolean hundido = true;
-        boolean ctrlizq=true,ctrldch=true,ctrlup=true,ctrldown=true;
         if(turnoAzul){
             hundido=tablaRoja.comprobarEstadoNave(x, y);
         }
@@ -186,39 +195,38 @@ public class Partida {
             return "tocado";
     }
     
-    
      public void setCont(int valor){
         cont=valor;
     }
-     
-     
+      
     public void setCamAtaque(boolean valor){
         camAtaque=valor;
     }
     
-    
     public int getCont(){
         return cont;
     }
-    
-    
-    public void procesarAccion(Bloque blqactual){
-        if (!blqactual.getActivado() && cont == 0 && camAtaque && !terminada) {
+     /**
+     *  Método que se encarga de gestionar el ataque de un jugador(si falla o acierta),
+     *  cuando se ha tocado/hundido un nave y cuando un jugador ha ganado.
+     */
+    public void procesarAccion(Bloque blqActual){
+        if (!blqActual.getActivado() && cont == 0 && camAtaque && !terminada) {
             //objeto.activarFallo();
-            int x = blqactual.getX();
-            int y = blqactual.getY();
+            int x = blqActual.getX();
+            int y = blqActual.getY();
             boolean estado = realizarAtaque(x, y);
             
             String resultAtaque = "vacío";
          
             if (estado) {
-                blqactual.activarAcierto();
+                blqActual.activarAcierto();
                 if (!getGanador().isEmpty()) {
                     nuevocontrol.setAreaMensajes("Ganador " + getGanador());
                     //Subimos la camara a la posición donde esta nuestro cartel
                     //de ganador
                     Transform3D translacion=new Transform3D();
-                    translacion.setTranslation(new Vector3f(0.0f,23.0f,0.0f));
+                    translacion.setTranslation(new Vector3f(0.0f,26.0f,0.0f));
                     transAlGanar.setTransform(translacion);
                     terminada = true;
                     
@@ -240,11 +248,34 @@ public class Partida {
                 cont = 0;
                 nuevocontrol.desactivarCambioTurno();
             } else {
-                blqactual.activarFallo();
+                blqActual.activarFallo();
                 nuevocontrol.setAreaMensajes("¡Has fallado!");
                 cont++;
                 nuevocontrol.activarCambioTurno();
             }
         }
+    }
+    
+    
+     /**
+     *  Seleccionamos de forma aleatoria la plantilla de naves que cargara cada jugador
+     */
+    public String selecPlantAleatoria(){
+        String salida="";
+        Random rand = new Random();
+        int randomNum = rand.nextInt((2 - 0) + 1);
+        switch(randomNum){
+            case 0:
+                 salida="plantillas/fichero0.txt";
+                 break;
+            case 1:
+                 salida="plantillas/fichero1.txt";
+                 break;
+            case 2:
+                 salida="plantillas/fichero2.txt";
+                 break;
+        
+        }
+        return salida;   
     }
 }

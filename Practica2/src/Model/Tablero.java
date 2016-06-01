@@ -27,8 +27,7 @@ public class Tablero extends BranchGroup{
          
          //Cargamos las naves y las introducimos en el tablero
          cargarNaves(fichero);
-         //CAMBIAR
-         contadornaves=2;
+         contadornaves=20;
          perdedor=false;
          horizontal.añadirNaves(matrizNaves);
          
@@ -58,6 +57,11 @@ public class Tablero extends BranchGroup{
          this.addChild(translacionverti);
          
     }
+    
+    /**
+    *  Cargamos las naves a traves de un fichero que contiene la posicion de cada nave
+    */
+
     private void cargarNaves(String fichero) throws FileNotFoundException, IOException{
       String cadena;
       matrizNaves=new ArrayList<String>();
@@ -70,44 +74,41 @@ public class Tablero extends BranchGroup{
       posicionarNaves();
     
     }
+
+    /**
+    *  Comprueba si la posición x,y donde se ha realizado el ataque es un acierto o 
+    *  un fallo y devuelve un boolean segun el resultado del ataque(acierto/fallo)
+    *  en caso de acierto disminuimos en 1 el contador de naves del jugador
+    */
+
     public boolean posicionAtaque(int x,int y){
         boolean salida=false;
         if(matrizNaves.get(y).charAt(x)!='0'){
             salida=true;
             horizontal.setFallo(x, y);
-            //System.out.println("Acierto -> x:"+x+" y:"+y);
-            //String s=matrizNaves.get(y).substring(0,x)+'0'+matrizNaves.get(y).substring(x+1);
-            //setPosValor(x, y, '5');
             contadornaves--;
-            //matrizNaves.set(y,s);
-            
-            /*IMPRIMIR MATRIZNAVES*/
-            /*for(String i:matrizNaves){
-                System.out.println(i);
-            }*/
-            //en otro metodo comprobamos si no esta a cero aun para saber el ganador
-            //comprobarGanador();
         }
         else{
             horizontal.setAgua(x, y);
-            System.out.println("Fallo -> x:"+x+" y:"+y);
         }
         return salida;
     }
-
+    
+    /**
+    *  Comprueba si el contador de naves del jugador ha llegado a 0, si ese es el 
+    *  caso el jugador habra perdido la partida
+    */
     public boolean comprobarGanador() {
-        //int cont=0;
-        /*for(String i:matrizNaves){
-            for(int j=0;j<i.length();j++){
-                if(j=='0')
-                    cont++;
-            }
-        }*/
         if(contadornaves == 0)
             perdedor=true;
         return perdedor;
     }
     
+    /**
+    * Cargamos las naves en las posiciones indicadas por la matriz de naves,  
+    *   Vamos recorriendo la matriz de naves y vamos detectando que nave es y su orientación
+    *   para carga la nave en la posición adecuada.
+    */
     public void posicionarNaves(){
         Nave nave1,nave2,nave3,nave4;
         boolean horizontal=false;
@@ -119,7 +120,8 @@ public class Tablero extends BranchGroup{
                 if(matrizNaves.get(y).charAt(x)!='0')
                     switch(matrizNaves.get(y).charAt(x)){
                         case '1':
-                           nave1 = new Nave("naves/E-TIE-I/E-TIE-I.obj", 1,false,new Vector3f(-9f+(x*2), 1.5f, 4.0f+(y*2)));
+                           nave1 = new Nave("naves\\E-TIE-I\\E-TIE-I.obj", 1,false,new Vector3f(-9f+(x*2), 1.5f, 4.0f+(y*2)));
+                           //nave1 = new Nave("naves/E-TIE-I/E-TIE-I.obj", 1,false,new Vector3f(-9f+(x*2), 1.5f, 4.0f+(y*2)));
                            nave1.compile();
                            this.addChild(nave1);
                         break;
@@ -133,7 +135,8 @@ public class Tablero extends BranchGroup{
                                 else{
                                     desviay=0.9f;
                                 }
-                                nave2 = new Nave("naves/naveEspacial/naveEspacial.obj", 2,horizontal,new Vector3f(-9f+desviax+(x*2), 1.5f, 4.0f+desviay+(y*2)));
+                                nave2 = new Nave("naves\\naveEspacial\\naveEspacial.obj", 2,horizontal,new Vector3f(-9f+desviax+(x*2), 1.5f, 4.0f+desviay+(y*2)));
+                                //nave2 = new Nave("naves/naveEspacial/naveEspacial.obj", 2,horizontal,new Vector3f(-9f+desviax+(x*2), 1.5f, 4.0f+desviay+(y*2)));
                                 nave2.compile();
                                 this.addChild(nave2);
                                 if(horizontal){
@@ -155,7 +158,8 @@ public class Tablero extends BranchGroup{
                                 else{
                                     desviay=1.9f;
                                 }
-                                nave3 = new Nave("naves/FA-22_Raptor/FA-22_Raptor.obj", 3,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
+                                nave3 = new Nave("naves\\FA-22_Raptor\\FA-22_Raptor.obj", 3,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
+                                //nave3 = new Nave("naves/FA-22_Raptor/FA-22_Raptor.obj", 3,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
                                 nave3.compile();
                                 this.addChild(nave3);
                                 if(horizontal){
@@ -176,7 +180,8 @@ public class Tablero extends BranchGroup{
                                 else{
                                     desviay=2.9f;
                                 }
-                                nave4 = new Nave("naves/naveEspacial/naveEspacial.obj", 4,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
+                                nave4 = new Nave("naves\\naveEspacial\\naveEspacial.obj", 4,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
+                                //nave4 = new Nave("naves/naveEspacial/naveEspacial.obj", 4,horizontal,new Vector3f(-9f+desviax+(x*2), 2.0f, 4.0f+desviay+(y*2)));
                                 nave4.compile();
                                 this.addChild(nave4);
                                 if(horizontal){
@@ -195,7 +200,7 @@ public class Tablero extends BranchGroup{
     
     }
     
-    //NUEVO2
+
     public char getPosValor(int x, int y){
         return  matrizNaves.get(y).charAt(x);
     }
@@ -207,13 +212,13 @@ public class Tablero extends BranchGroup{
             System.out.println(i);
         }
     }
-    public int getsizey(){
-        return matrizNaves.size();
-    }
-    public int getsizex(){
-        return matrizNaves.get(0).length();
-    }
-    //FIN NUEVO2
+    /**
+    * Comprobaciones para saber si un barco ha sido tocado o hundido 
+    * Realizamos comprobaciones en las 4 direccioen posibles desde una posicion x,y
+    * pasada por parametro. En el mappa detectaremos que se ha realizado un ataque 
+    * con exito cambiando su valor por un 5
+    */
+
     public boolean comprobarEstadoNave(int x,int y){
         boolean hundido = true;
         boolean ctrlizq=true,ctrldch=true,ctrlup=true,ctrldown=true;
@@ -232,7 +237,7 @@ public class Tablero extends BranchGroup{
                     }
                 }
                 //Comprobación lado derecho
-                if (ctrldch && (x + j) < getsizex()) {
+                if (ctrldch && (x + j) < matrizNaves.get(y).length()) {
                     if (getPosValor(x + j, y) == naveActual) {
                         hundido = false;
                     } else if (getPosValor(x + j, y) == '0') {
@@ -248,7 +253,7 @@ public class Tablero extends BranchGroup{
                     }
                 }
                 //Comprobación lado inferior
-                if (ctrldown && (y + j) < getsizey()) {
+                if (ctrldown && (y + j) < matrizNaves.size()) {
                     if (getPosValor(x, y + j) == naveActual) {
                         hundido = false;
                     }

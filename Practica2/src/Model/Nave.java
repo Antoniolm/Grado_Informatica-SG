@@ -15,7 +15,6 @@ import javax.vecmath.Vector3f;
  * @author ANTONIO DAVID LÓPEZ MACHADO, JAVIER MARTINEZ MONTILLA, MANUEL ALBERTO LAFUENTE ARANDA
  */
 public class Nave extends BranchGroup{
-    //NUEVO
     boolean horizontal;
     Nave(String ruta, int tipo,boolean horizon,Vector3f posicion){
         this.setPickable(false);
@@ -43,13 +42,14 @@ public class Nave extends BranchGroup{
         TransformGroup posn = new TransformGroup(trasn1);
         Transform3D rotx,roty,rotz;
         switch(tipo){
-            case 1:
+            case 1://Caso nave de 1 casilla
                 posn.addChild(modelo.getSceneGroup());
                 this.addChild(posn);
                 break;
-            case 2:
+            case 2://Caso nave de 2 casilla
                 TransformGroup escala2 = crece(1.75f);
                 escala2.addChild(modelo.getSceneGroup());
+                //Si la nave esta en horizontal se le aplica una rotacion en el eje Y
                 if(horizontal){
                     roty = new Transform3D();
                     roty.rotY(Math.PI/2);
@@ -63,7 +63,7 @@ public class Nave extends BranchGroup{
                 
                 this.addChild(posn);
                 break;
-            case 3:
+            case 3://Caso nave de 3 casilla
                 rotx = new Transform3D();
                 rotx.rotX(-Math.PI/2);
                 rotz = new Transform3D();
@@ -75,7 +75,7 @@ public class Nave extends BranchGroup{
                 escala3.addChild(modelo.getSceneGroup());
                 t2.addChild(escala3);
                 t1.addChild(t2);
-                
+                //Si la nave esta en horizontal se le aplica una rotacion en el eje Y
                 if(horizontal){
                     roty = new Transform3D();
                     roty.rotY(Math.PI/2);
@@ -89,10 +89,11 @@ public class Nave extends BranchGroup{
                 this.addChild(posn);
                 
                 break;
-            case 4:
+            case 4://Caso nave de 4 casilla
                 
                 TransformGroup escala4 = crece(4.0f);
                 escala4.addChild(modelo.getSceneGroup());
+                //Si la nave esta en horizontal se le aplica una rotacion en el eje Y
                 if(horizontal){
                     roty = new Transform3D();
                     roty.rotY(Math.PI/2);
@@ -107,7 +108,9 @@ public class Nave extends BranchGroup{
                 break;
         }
     }
-    
+     /**
+     * Cambia el tamaño de la nave.
+     */
     private TransformGroup crece(float crecimiento){
         TransformGroup esc = new TransformGroup();
         Transform3D tr = new Transform3D();
@@ -116,5 +119,5 @@ public class Nave extends BranchGroup{
         
         return esc;
     }
-    //FIN NUEVO
+    
 }

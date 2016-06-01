@@ -33,7 +33,11 @@ public class Tabla extends BranchGroup{
         
         matrizbloques=new ArrayList<ArrayList<Bloque>>();
         ArrayList<Bloque> auxArray;
+        //Translacion que nos permite ubicar el bloque en la posicion 0,0 de nuestra
+        //tabla para que desde esa posicion se posicionen todos los bloques en su lugar
+        //correspondiente
         Vector3f vector=new Vector3f(-9f,1.0f,-9f);
+        
         for(int i=0;i<10;i++){
             vector.x=-9f;
             auxArray=new ArrayList<Bloque>();
@@ -48,6 +52,10 @@ public class Tabla extends BranchGroup{
         this.addChild(box);
           
     }
+     /**
+     *  Carga las naves en la tabla y pone en color verde los bloques donde hay
+     *  posicionada una nave
+     */
     public void añadirNaves(ArrayList<String> naves){
         for(int i =0;i<naves.size();i++){
             for(int j=0;j<naves.get(i).length();j++){
@@ -60,12 +68,21 @@ public class Tabla extends BranchGroup{
     
     }
     
+    /**
+    * Cambia de color el bloque en la posicion x,y de la tabla
+    */
     public void setAcierto(int x,int y){
         matrizbloques.get(y).get(x).activarAcierto();
     }
+    /**
+    * Cambia de color el bloque en la posicion x,y de la tabla
+    */
     public void setFallo(int x,int y){
         matrizbloques.get(y).get(x).activarFallo();
     }
+    /**
+    * Cambia de color el bloque en la posicion x,y de la tabla
+    */
     public void setAgua(int x,int y){
         matrizbloques.get(y).get(x).activarAgua();
     }

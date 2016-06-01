@@ -25,9 +25,10 @@ import javax.vecmath.Vector3f;
  * @author LENOVO
  */
 public class Cartel extends BranchGroup {
+    
     public Cartel(String textura){
         TransformGroup translacion = new TransformGroup();
-        Vector3f vector = new Vector3f(0.0f, 35.0f, 1.0f);
+        Vector3f vector = new Vector3f(0.0f, 40.0f, 1.0f);
         Transform3D trans = new Transform3D();
         trans.setTranslation(vector);
         translacion.setTransform(trans);
@@ -48,7 +49,7 @@ public class Cartel extends BranchGroup {
         
         
         
-        Box box = new Box(14.0f, 11.0f, 1.0f, Primitive.GENERATE_NORMALS | 
+        Box box = new Box(14.0f, 15.0f, 1.0f, Primitive.GENERATE_NORMALS | 
         Primitive.GENERATE_TEXTURE_COORDS |
         Primitive.ENABLE_APPEARANCE_MODIFY,appearance);
         translacion.addChild(box);
